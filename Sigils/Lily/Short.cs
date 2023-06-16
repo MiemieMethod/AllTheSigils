@@ -29,10 +29,6 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             Short.ability = info.ability;
-
-            //ModdedSaveManager.SaveData.GetValueAsInt(Plugin.PluginGuid, "NumberOfItems");
-            //ModdedSaveManager.SaveData.SetValue(Plugin.PluginGuid, "NumberOfItems", value);
-            ModdedSaveManager.SaveData.SetValue("cyantist.inscryption.api", "Ability_org.memez4life.inscryption.customsigils_Short", 1017);
         }
     }
 

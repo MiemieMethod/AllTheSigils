@@ -4,8 +4,11 @@ using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
 using InscryptionAPI.Guid;
+using InscryptionAPI.Saves;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace AllTheSigils
@@ -20,6 +23,8 @@ namespace AllTheSigils
         public const string OldVoidPluginGuid = "extraVoid.inscryption.voidSigils";
         public const string OldAnthonyPluginGuid = "AnthonyPython.inscryption.AnthonysSigils";
 
+        public static List<String> OldPluginGuids = new List<String>() { OldLilyPluginGuid, OldVoidPluginGuid, OldAnthonyPluginGuid };
+
         private const string PluginName = "AllTheSigils";
 
         private const string PluginVersion = "1.0.0";
@@ -29,6 +34,8 @@ namespace AllTheSigils
         internal static ManualLogSource Log;
 
         public static bool voidCombatPhase;
+
+        public static Dictionary<Ability, String> NewSigilVersions = new Dictionary<Ability, string>();
 
         private void Awake()
         {
@@ -189,7 +196,74 @@ namespace AllTheSigils
             AddStrafePowerUp();
             AddMovingPowerUp();
 
+            foreach (AbilityInfo ability in AbilityManager.AllAbilityInfos)
+            {
+                string guid = GetSigilGuid(ability.ability);
+
+                if (OldPluginGuids.Contains(guid))
+                {
+                    AbilityInfo info = AbilityManager.New(
+                        PluginGuid,
+                        ability.rulebookName,
+                        ability.rulebookDescription,
+                        typeof(EmptySigil),
+                        GetTexture("placeholder")
+                    );
+                    NewSigilVersions.Add(info.ability, guid);
+                }
+            }
+
             //AddDevStuff();
+        }
+
+        public void Start()
+        {
+            ReplaceNewSigilsOnCards();
+        }
+
+        public void ReplaceNewSigilsOnCards()
+        {
+
+            for (int i = 0; i < CardManager.BaseGameCards.Count; i++)
+            {
+                CardInfo card = CardManager.BaseGameCards[i];
+                for (int j = 0; j < card.Abilities.Count; j++)
+                {
+                    Ability ability = card.Abilities[j];
+
+                    if (NewSigilVersions.ContainsKey(ability))
+                    {
+                        CardManager.BaseGameCards[i].abilities[j] = GetCustomAbility(NewSigilVersions[ability], AbilitiesUtil.GetInfo(ability).rulebookName);
+                    }
+                }
+            }
+
+            NewSigilVersions.Keys.ToList().ForEach(x => AbilityManager.Remove(x));
+        }
+
+        public string GetSigilGuid(Ability ability)
+        {
+            Dictionary<string, Dictionary<string, object>> SaveData = (Dictionary<string, Dictionary<string, object>>)AccessTools.Field(typeof(ModdedSaveData), "SaveData").GetValue(ModdedSaveManager.SaveData);
+
+            foreach (KeyValuePair<string, object> keyValuePair in SaveData["cyantist.inscryption.api"])
+            {
+                List<string> SubstringList = keyValuePair.Key.Split('_').ToList();
+                if (SubstringList[0] == "Ability")
+                {
+                    int AbilityID;
+                    if (!int.TryParse(ability.ToString(), out AbilityID))
+                    {
+                        continue;
+                    }
+                    int ValueID = int.Parse((string)keyValuePair.Value);
+
+                    if (ValueID == AbilityID)
+                    {
+                        return SubstringList[1];
+                    }
+                }
+            }
+            return null;
         }
 
         private void AddDevStuff()
