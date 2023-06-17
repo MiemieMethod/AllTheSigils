@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -16,23 +17,19 @@ namespace AllTheSigils
             // setup ability
             const string rulebookName = "BloodGuzzler";
             const string rulebookDescription = "[creature] deals damage, it gains 1 Health for each damage dealt.";
-            const string LearnDialogue = "Life, thru death";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 4, Plugin.configBloodGuzzler.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("ability_BloodGuzzler_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("ability_bloodguzzler");
-
+            const string LearnDialogue = "Gain life from the blood.";
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_BloodGuzzler);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_BloodGuzzler_a2);
+            int powerlevel = 0;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
 
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_BloodGuzzler), tex);
 
             // set ability to behaviour class
-            void_BloodGuzzler.ability = info.ability;
-
-
+            void_BloodGuzzler.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_BloodGuzzler), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 using Random = UnityEngine.Random;
 
@@ -20,28 +21,23 @@ namespace AllTheSigils
             const string rulebookName = "Herd";
             const string rulebookDescription = "[creature] will summon a copy of itself each upkeep, up to three times.";
             const string LearnDialogue = "Strength in Numbers";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 4);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Heard_3");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_herd), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Heard_3);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.no_a2);
+            int powerlevel = 4;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_herd.ability = info.ability;
-
-
+            void_Herd.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Herd), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
 
         }
     }
 
 
 
-    public class void_herd : AbilityBehaviour
+    public class void_Herd : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -66,142 +62,44 @@ namespace AllTheSigils
 
         public override IEnumerator OnUpkeep(bool playerUpkeep)
         {
-
             PlayableCard card = base.Card;
+            Texture2D tex2 = SigilUtils.LoadTextureFromResource(Art.void_Heard_2);
+            Texture2D tex1 = SigilUtils.LoadTextureFromResource(Art.void_Heard_1);
+            Texture2D tex0 = SigilUtils.LoadTextureFromResource(Art.void_Heard_0);
 
-            Texture2D tex2 = SigilUtils.LoadImageAndGetTexture("void_Heard_2");
+            List<CardSlot> allSlots = playerUpkeep ? Singleton<BoardManager>.Instance.playerSlots : Singleton<BoardManager>.Instance.opponentSlots;
+            List<CardSlot> targets = allSlots.Where(slot => slot.Card == null).ToList();
 
-            Texture2D tex1 = SigilUtils.LoadImageAndGetTexture("void_Heard_1");
-
-            Texture2D tex0 = SigilUtils.LoadImageAndGetTexture("void_Heard_0");
-            if (card.slot.IsPlayerSlot)
+            if (targets.Count > 0)
             {
-                // Get all slots
-                List<CardSlot> allSlots = Singleton<BoardManager>.Instance.playerSlots;
+                CardSlot target = targets[Random.Range(0, targets.Count)];
+                base.Card.Anim.LightNegationEffect();
+                yield return new WaitForSeconds(0.15f);
+                yield return base.PreSuccessfulTriggerSequence();
+                yield return Singleton<BoardManager>.Instance.CreateCardInSlot(base.Card.Info, target, 0.15f, true);
 
-                // Initalize target list
-                List<CardSlot> targets = new List<CardSlot>();
+                CardModificationInfo negateMod = new CardModificationInfo();
+                negateMod.negateAbilities.Add(void_Herd.ability);
 
-                // Go thru all slots to see if there is a card in it, and if there is, add it to the target list
-                for (int index = 0; index < allSlots.Count; index++)
-                {
-                    if (allSlots[index].Card == null)
-                    {
-                        targets.Add(allSlots[index]);
-                    }
-                }
-                // Add a card if there is one or more open slots
-                if (targets.Count > 0)
-                {
-                    // pick a random target from the target list
-                    CardSlot target = targets[Random.Range(0, (targets.Count))];
-                    base.Card.Anim.LightNegationEffect();
-                    yield return new WaitForSeconds(0.15f);
-                    yield return base.PreSuccessfulTriggerSequence();
-                    yield return Singleton<BoardManager>.Instance.CreateCardInSlot(base.Card.Info, target, 0.15f, true);
-                    //set up to negate the new card's herd ability, so it can't be spammed.
-                    CardModificationInfo negateMod = new CardModificationInfo();
-                    negateMod.negateAbilities.Add(void_herd.ability);
+                CardInfo OpponentCardInfo = target.Card.Info.Clone() as CardInfo;
+                OpponentCardInfo.Mods.Add(negateMod);
+                target.Card.SetInfo(OpponentCardInfo);
 
-                    //Clone the main card info so we don't touch the main card set
-                    CardInfo OpponentCardInfo = target.Card.Info.Clone() as CardInfo;
+                yield return new WaitForSeconds(0.15f);
+                yield return base.LearnAbility(0.25f);
+                herdCount--;
 
-                    //Add the modifincations
-                    OpponentCardInfo.Mods.Add(negateMod);
+                if (herdCount == 2)
+                    base.Card.RenderInfo.OverrideAbilityIcon(void_Herd.ability, tex2);
+                else if (herdCount == 1)
+                    base.Card.RenderInfo.OverrideAbilityIcon(void_Herd.ability, tex1);
+                else if (herdCount == 0)
+                    base.Card.RenderInfo.OverrideAbilityIcon(void_Herd.ability, tex0);
 
-                    //Update the opponant card info
-                    target.Card.SetInfo(OpponentCardInfo);
-                    yield return new WaitForSeconds(0.15f);
-                    yield return base.LearnAbility(0.25f);
-                    herdCount--;
-
-
-                    if (herdCount == 2)
-                    {
-                        base.Card.RenderInfo.OverrideAbilityIcon(void_herd.ability, tex2);
-                        base.Card.RenderCard();
-                    }
-
-                    if (herdCount == 1)
-                    {
-                        base.Card.RenderInfo.OverrideAbilityIcon(void_herd.ability, tex1);
-                        base.Card.RenderCard();
-                    }
-
-                    if (herdCount == 0)
-                    {
-                        base.Card.RenderInfo.OverrideAbilityIcon(void_herd.ability, tex0);
-                        base.Card.RenderCard();
-                    }
-                }
+                base.Card.RenderCard();
             }
-            else
-            {
-                // Get all slots
-                List<CardSlot> allSlots = Singleton<BoardManager>.Instance.opponentSlots;
 
-                // Initalize target list
-                List<CardSlot> targets = new List<CardSlot>();
-
-                // Go thru all slots to see if there is a card in it, and if there is, add it to the target list
-                for (int index = 0; index < allSlots.Count; index++)
-                {
-                    if (allSlots[index].Card == null)
-                    {
-                        targets.Add(allSlots[index]);
-                    }
-                }
-                // Add a card if there is one or more open slots
-                if (targets.Count > 0)
-                {
-                    // pick a random target from the target list
-                    CardSlot target = targets[Random.Range(0, (targets.Count))];
-                    base.Card.Anim.LightNegationEffect();
-                    yield return new WaitForSeconds(0.15f);
-                    yield return base.PreSuccessfulTriggerSequence();
-                    yield return Singleton<BoardManager>.Instance.CreateCardInSlot(base.Card.Info, target, 0.15f, true);
-                    //set up to negate the new card's herd ability, so it can't be spammed.
-                    CardModificationInfo negateMod = new CardModificationInfo();
-                    negateMod.negateAbilities.Add(void_herd.ability);
-
-                    //Clone the main card info so we don't touch the main card set
-                    CardInfo OpponentCardInfo = target.Card.Info.Clone() as CardInfo;
-
-                    //Add the modifincations
-                    OpponentCardInfo.Mods.Add(negateMod);
-
-                    //Update the opponant card info
-                    target.Card.SetInfo(OpponentCardInfo);
-                    yield return new WaitForSeconds(0.15f);
-                    yield return base.LearnAbility(0.25f);
-                    herdCount--;
-
-                    // Change icon
-                    if (herdCount == 2)
-                    {
-                        base.Card.RenderInfo.OverrideAbilityIcon(void_herd.ability, tex2);
-                        base.Card.RenderCard();
-                    }
-
-                    if (herdCount == 1)
-                    {
-                        base.Card.RenderInfo.OverrideAbilityIcon(void_herd.ability, tex1);
-                        base.Card.RenderCard();
-                    }
-
-                    if (herdCount == 0)
-                    {
-                        base.Card.RenderInfo.OverrideAbilityIcon(void_herd.ability, tex0);
-                        base.Card.RenderCard();
-                    }
-                }
-
-            }
             yield break;
         }
-
-
-
-
     }
 }

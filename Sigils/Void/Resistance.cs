@@ -3,6 +3,7 @@ using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,22 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Resistant";
             const string rulebookDescription = "[creature] will only ever take 1 damage from most things. Some effects might bypass this.";
             const string LearnDialogue = "A hardy creature that one is.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 4, Plugin.configResistant.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_Resistant_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Resistant");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Resistant), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Resistant);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Resistant_a2);
+            int powerlevel = 4;
+            bool LeshyUsable = Plugin.configResistant.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Resistant.ability = info.ability;
-
-
+            void_Resistant.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Resistant), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

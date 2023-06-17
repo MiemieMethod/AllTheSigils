@@ -1,6 +1,7 @@
 ﻿using APIPlugin;
 using BepInEx;
 using DiskCardGame;
+using InscryptionAPI.Card;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,37 @@ namespace AllTheSigils
 {
     public static class SigilUtils
     {
+
+
+        public static AbilityInfo CreateAbilityWithDefaultSettingsKCM(
+            string rulebookName, string rulebookDescription, Type behavior, Texture2D text_a1, Texture2D text_a2,
+            string LearnDialogue, bool withDialogue = false, int powerLevel = 0, bool leshyUsable = false, bool part1Modular = true, bool stack = false
+        )
+        {
+            AbilityInfo createdAbilityInfo = AbilityManager.New(
+                Plugin.OldVoidPluginGuid,
+                rulebookName,
+                rulebookDescription,
+                behavior,
+                text_a1
+            );
+            createdAbilityInfo.SetPixelAbilityIcon(text_a2);
+            // This sets up the learned Dialog event
+            if (withDialogue) { createdAbilityInfo.abilityLearnedDialogue = SetAbilityInfoDialogue(LearnDialogue); }
+            // How powerful the ability is
+            createdAbilityInfo.powerLevel = powerLevel;
+            // Can it show up on totems for leshy?
+            createdAbilityInfo.opponentUsable = leshyUsable;
+            // If true, allows in shops and in totems. If false, just the rule book
+            if (part1Modular)
+            { createdAbilityInfo.metaCategories = new List<AbilityMetaCategory>() { AbilityMetaCategory.Part1Modular, AbilityMetaCategory.Part1Rulebook }; }
+            else
+            { createdAbilityInfo.metaCategories = new List<AbilityMetaCategory>() { AbilityMetaCategory.Part1Rulebook }; }
+            // Does the ability stack?
+            createdAbilityInfo.canStack = stack;
+            return createdAbilityInfo;
+        }
+
 
         public static AbilityInfo CreateInfoWithDefaultSettings(
             string rulebookName, string rulebookDescription, string LearnDialogue, bool withDialogue = false, int powerLevel = 0, bool leshyUsable = false

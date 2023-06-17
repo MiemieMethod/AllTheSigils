@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 namespace AllTheSigils
@@ -19,22 +20,16 @@ namespace AllTheSigils
             const string rulebookName = "Multi-Strike";
             const string rulebookDescription = "[creature] will strike a card multiple times, if it lives through the first attack. Will not trigger -on attack- or -on damage- effects with the extra strikes.";
             const string LearnDialogue = "So fast, so many strikes";
-            // const string TextureFile = "Artwork/void_double_attack.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0, Plugin.configMultiStrike.Value);
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_doubleattack_a2"));
-            info.flipYIfOpponent = true;
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_double_attack");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_DoubleAttack), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_double_attack);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_doubleattack_a2);
+            int powerlevel = 0;
+            bool LeshyUsable = Plugin.configMultiStrike.Value;
+            bool part1Shops = true;
+            bool canStack = true;
 
             // set ability to behaviour class
-            void_DoubleAttack.ability = info.ability;
-
-
+            void_DoubleAttack.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_DoubleAttack), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -54,19 +49,19 @@ namespace AllTheSigils
                     switch (count)
                     {
                         case 1:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_double_attack_1");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_double_attack_1);
                             break;
                         case 2:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_double_attack_2");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_double_attack_2);
                             break;
                         case 3:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_double_attack_3");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_double_attack_3);
                             break;
                         case 4:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_double_attack_4");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_double_attack_4);
                             break;
                         case 5:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_double_attack_5");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_double_attack_5);
                             break;
                     }
                 }

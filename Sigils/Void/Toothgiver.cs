@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -14,32 +15,26 @@ namespace AllTheSigils
     public partial class Plugin
     {
         //Original
-        private void AddTooth()
+        private void AddToothPuller()
         {
             // setup ability
             const string rulebookName = "Toothpuller";
             const string rulebookDescription = "At the end of the owner's turn, [creature] will add one point of damage to the opponent's scale.";
             const string LearnDialogue = "That Hurts";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 7);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_toothGiver_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_toothGiver");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_toothGiver), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_ToothGiver);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_ToothGiver_a2);
+            int powerlevel = 7;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_toothGiver.ability = info.ability;
-
-
+            void_ToothGiver.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_ToothGiver), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class void_toothGiver : AbilityBehaviour
+    public class void_ToothGiver : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -54,7 +49,7 @@ namespace AllTheSigils
         {
             yield return base.PreSuccessfulTriggerSequence();
             yield return new WaitForSeconds(0.1f);
-            yield return ShowDamageSequence(1, 1, playerTurnEnd, 0.25f, ResourceBank.Get<GameObject>("Prefabs/Environment/ScaleWeights/Weight_RealTooth"), 0f, true);
+            yield return ShowDamageSequence(1, 1, !base.Card.slot.IsPlayerSlot, 0.25f, ResourceBank.Get<GameObject>("Prefabs/Environment/ScaleWeights/Weight_RealTooth"), 0f, true);
             yield return new WaitForSeconds(0.1f);
             yield return base.LearnAbility(0.1f);
             yield return new WaitForSeconds(0.1f);

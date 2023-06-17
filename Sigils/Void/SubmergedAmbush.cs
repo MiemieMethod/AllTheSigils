@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -18,24 +19,18 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Submerged Ambush";
-            const string rulebookDescription = "[creature] will deal 1 damage to cards that attacked over it while it was face-down.";
+            const string rulebookDescription = "[creature] will deal 1 damage to cards that attacked over it while it was face-down. Does not affect cards that are Airborne.";
             const string LearnDialogue = "It strikes from the water.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 4);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_SubmergedAmbush_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_SubmergedAmbush");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_SubmergedAmbush), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_SubmergedAmbush);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_SubmergedAmbush_a2);
+            int powerlevel = 4;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_SubmergedAmbush.ability = info.ability;
-
-
+            void_SubmergedAmbush.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_SubmergedAmbush), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -45,72 +40,6 @@ namespace AllTheSigils
 
         public static Ability ability;
 
-        public static IEnumerator TakeDamage(int damage, PlayableCard defender, PlayableCard attacker)
-        {
-            yield return new WaitForSeconds(1.0f);
-            bool flag = defender.HasShield();
-            if (flag)
-            {
-                defender.Status.lostShield = true;
-                defender.Anim.StrongNegationEffect();
-                bool flag2 = defender.Info.name == "MudTurtle";
-                if (flag2)
-                {
-                    defender.SwitchToAlternatePortrait();
-                }
-                defender.UpdateFaceUpOnBoardEffects();
-            }
-            else
-            {
-                defender.Status.damageTaken += damage;
-                defender.UpdateStatsText();
-                bool flag3 = defender.Health > 0;
-                if (flag3)
-                {
-                    defender.Anim.PlayHitAnimation();
-                }
-                bool flag4 = defender.TriggerHandler.RespondsToTrigger(Trigger.TakeDamage, new object[]
-                {
-                    attacker
-                });
-                if (flag4)
-                {
-                    yield return defender.TriggerHandler.OnTrigger(Trigger.TakeDamage, new object[]
-                    {
-                        attacker
-                    });
-                }
-                bool flag5 = defender.Health <= 0;
-                if (flag5)
-                {
-                    yield return defender.Die(false, attacker, true);
-                }
-                bool flag6 = attacker != null;
-                if (flag6)
-                {
-                    bool flag7 = attacker.TriggerHandler.RespondsToTrigger(Trigger.DealDamage, new object[]
-                    {
-                        damage,
-                        defender
-                    });
-                    if (flag7)
-                    {
-                        yield return attacker.TriggerHandler.OnTrigger(Trigger.DealDamage, new object[]
-                        {
-                            damage,
-                            defender
-                        });
-                    }
-                    yield return Singleton<GlobalTriggerHandler>.Instance.TriggerCardsOnBoard(Trigger.OtherCardDealtDamage, false, new object[]
-                    {
-                        attacker,
-                        attacker.Attack,
-                        defender
-                    });
-                }
-            }
-            yield break;
-        }
 
     }
 
@@ -120,7 +49,7 @@ namespace AllTheSigils
         [HarmonyPostfix]
         public static IEnumerator Postfix(IEnumerator enumerator, CardSlot attackingSlot, CardSlot opposingSlot, float waitAfter = 0f)
         {
-            if (attackingSlot.Card != null && opposingSlot.Card != null && opposingSlot.Card.FaceDown && opposingSlot.Card.HasAbility(void_SubmergedAmbush.ability) && !attackingSlot.Card.AttackIsBlocked(opposingSlot))
+            if (attackingSlot.Card != null && opposingSlot.Card != null && opposingSlot.Card.FaceDown && opposingSlot.Card.HasAbility(void_SubmergedAmbush.ability) && !attackingSlot.Card.AttackIsBlocked(opposingSlot) && !attackingSlot.Card.HasAbility(Ability.Flying))
             {
                 yield return enumerator;
                 yield return new WaitForSeconds(0.55f);

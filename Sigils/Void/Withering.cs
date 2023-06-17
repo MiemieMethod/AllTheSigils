@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,25 +21,20 @@ namespace AllTheSigils
             const string rulebookName = "Withering";
             const string rulebookDescription = "[creature] will perish at the end of the opponant's turn.";
             const string LearnDialogue = "Gone like the dust";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, -1);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_Withering_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Withering");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(voidWithering), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Withering);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Withering_a2);
+            int powerlevel = -1;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            voidWithering.ability = info.ability;
-
-
+            void_Withering.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Withering), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class voidWithering : AbilityBehaviour
+    public class void_Withering : AbilityBehaviour
     {
         public override Ability Ability => ability;
 

@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,22 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Blight";
             const string rulebookDescription = "When [creature] is sacrificed, it subtracts its stat values to the card it was sacrificed for.";
             const string LearnDialogue = "A disease shouldnt spread.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, -3);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_Blight_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Blight");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Blight), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Blight);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Blight_a2);
+            int powerlevel = -5;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Blight.ability = info.ability;
-
-
+            void_Blight.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Blight), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

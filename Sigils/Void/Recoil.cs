@@ -4,6 +4,7 @@ using HarmonyLib;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 namespace AllTheSigils
@@ -17,23 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Recoil";
             const string rulebookDescription = "[creature] will take 1 damage each time they attack.";
             const string LearnDialogue = "The strength causes the creature pain.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, -1, Plugin.configDying.Value);
-            info.canStack = false;
-            info.flipYIfOpponent = true;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_recoil_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Recoil");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Recoil), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Recoil);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Recoil_a2);
+            int powerlevel = -1;
+            bool LeshyUsable = Plugin.configRecoil.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Recoil.ability = info.ability;
-
-
+            void_Recoil.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Recoil), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

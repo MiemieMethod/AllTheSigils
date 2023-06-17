@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -19,23 +20,17 @@ namespace AllTheSigils
             // setup ability
             const string rulebookName = "Maneuver";
             const string rulebookDescription = "At the start of the owner's turn, [creature] will strafe in the direction inscribed on the sigil if there is a creature in the opposing slot from it. Else it will strafe in the opposite direction inscribed on the sigil.";
-            const string LearnDialogue = "That is not a noble, or worthy sacrifice";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_Maneuver_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Maneuver");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Maneuver), tex);
+            const string LearnDialogue = "It runs";
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Maneuver);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Maneuver_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Maneuver.ability = info.ability;
-
-
+            void_Maneuver.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Maneuver), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -50,7 +45,6 @@ namespace AllTheSigils
             return base.Card != null && base.Card.OpponentCard != playerUpkeep;
         }
 
-        // Token: 0x06001577 RID: 5495 RVA: 0x00057180 File Offset: 0x00055380
         public override IEnumerator OnUpkeep(bool playerUpkeep)
         {
             CardSlot toLeft = Singleton<BoardManager>.Instance.GetAdjacent(base.Card.Slot, true);
@@ -68,7 +62,6 @@ namespace AllTheSigils
             yield break;
         }
 
-        // Token: 0x06001578 RID: 5496 RVA: 0x00057196 File Offset: 0x00055396
         protected virtual IEnumerator DoStrafe(CardSlot toLeft, CardSlot toRight)
         {
             bool toLeftValid = toLeft != null && toLeft.Card == null;
@@ -95,7 +88,6 @@ namespace AllTheSigils
             yield break;
         }
 
-        // Token: 0x06001579 RID: 5497 RVA: 0x000571B3 File Offset: 0x000553B3
         protected IEnumerator MoveToSlot(CardSlot destination, bool destinationValid)
         {
             base.Card.RenderInfo.SetAbilityFlipped(this.Ability, this.movingLeft);
@@ -118,7 +110,6 @@ namespace AllTheSigils
             yield break;
         }
 
-        // Token: 0x0600157A RID: 5498 RVA: 0x000571D0 File Offset: 0x000553D0
         protected virtual IEnumerator PostSuccessfulMoveSequence(CardSlot oldSlot)
         {
             bool flag = base.Card.Info.name == "Snelk";
@@ -133,7 +124,6 @@ namespace AllTheSigils
             yield break;
         }
 
-        // Token: 0x04000F1F RID: 3871
         protected bool movingLeft;
     }
 }

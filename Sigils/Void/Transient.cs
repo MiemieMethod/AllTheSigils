@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,21 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Transient";
             const string rulebookDescription = "At the end of the owner's turn, [creature] will return to your hand.";
             const string LearnDialogue = "The creature blinks back into the owner's hand at the end of their turn.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, -1);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("ability_transient_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("ability_transient");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Transient), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Transient);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Transient_a2);
+            int powerlevel = -1;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Transient.ability = info.ability;
-
-
+            void_Transient.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Transient), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

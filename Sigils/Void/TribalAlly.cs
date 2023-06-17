@@ -5,6 +5,7 @@ using InscryptionAPI.Card;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 using Random = UnityEngine.Random;
 
@@ -19,21 +20,16 @@ namespace AllTheSigils
             const string rulebookName = "Tribal Ally";
             const string rulebookDescription = "When [creature] is played, A card of the same tribe is created in your hand. No tribe counts as a tribe of tribeless.";
             const string LearnDialogue = "It calls for it's kin.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2, false);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_tribeAlly");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_TribalAlly), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_tribeAlly);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.no_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_TribalAlly.ability = info.ability;
-
-
+            void_TribalAlly.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_TribalAlly), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -47,17 +43,17 @@ namespace AllTheSigils
             {
                 if (info != null)
                 {
-                    Texture2D tex1 = SigilUtils.LoadImageAndGetTexture("void_tribeAlly_bird");
+                    Texture2D tex1 = SigilUtils.LoadTextureFromResource(Art.void_tribeAlly_bird);
 
-                    Texture2D tex2 = SigilUtils.LoadImageAndGetTexture("void_tribeAlly_canine");
+                    Texture2D tex2 = SigilUtils.LoadTextureFromResource(Art.void_tribeAlly_canine);
 
-                    Texture2D tex3 = SigilUtils.LoadImageAndGetTexture("void_tribeAlly_hooved");
+                    Texture2D tex3 = SigilUtils.LoadTextureFromResource(Art.void_tribeAlly_hooved);
 
-                    Texture2D tex4 = SigilUtils.LoadImageAndGetTexture("void_tribeAlly_insect");
+                    Texture2D tex4 = SigilUtils.LoadTextureFromResource(Art.void_tribeAlly_insect);
 
-                    Texture2D tex5 = SigilUtils.LoadImageAndGetTexture("void_tribeAlly_reptile");
+                    Texture2D tex5 = SigilUtils.LoadTextureFromResource(Art.void_tribeAlly_reptile);
 
-                    Texture2D tex6 = SigilUtils.LoadImageAndGetTexture("void_tribeAlly_none");
+                    Texture2D tex6 = SigilUtils.LoadTextureFromResource(Art.void_tribeAlly_none);
 
                     if (info.IsOfTribe(Tribe.Bird))
                     {
@@ -151,7 +147,7 @@ namespace AllTheSigils
             }
 
             ///pick a random card from that list
-            CardInfo target = targets[Random.Range(0, (targets.Count))];
+            CardInfo target = targets[SeededRandom.Range(0, (targets.Count), base.GetRandomSeed())];
 
             yield return base.PreSuccessfulTriggerSequence();
             base.Card.Anim.StrongNegationEffect();

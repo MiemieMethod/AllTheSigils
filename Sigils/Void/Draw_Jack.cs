@@ -4,6 +4,7 @@ using HarmonyLib;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,28 +18,22 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Draw Jackalope";
-            const string rulebookDescription = "[creature] is played, a Jackalope is created in your hand.";
+            const string rulebookDescription = "When [creature] is played, a Jackalope is created in your hand.";
             const string LearnDialogue = "Pull a Jackalope from a hat why don't ya.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 3);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_drawjack");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(ability_drawjack), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_DrawJack);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.no_a2);
+            int powerlevel = 3;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            ability_drawjack.ability = info.ability;
-
-
+            void_DrawJack.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_DrawJack), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class ability_drawjack : DrawCreatedCard
+    public class void_DrawJack : DrawCreatedCard
     {
         public override Ability Ability => ability;
 
@@ -48,7 +43,9 @@ namespace AllTheSigils
         {
             get
             {
-                return CardLoader.GetCardByName("void_Jackalope");
+                CardInfo cardByName = CardLoader.GetCardByName("void_Jackalope");
+                cardByName.Mods.AddRange(base.Card.temporaryMods);
+                return cardByName;
             }
         }
 

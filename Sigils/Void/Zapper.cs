@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -11,31 +12,26 @@ namespace AllTheSigils
     public partial class Plugin
     {
         //Original
-        private void AddShocker()
+        private void AddZapper()
         {
             // setup ability
             const string rulebookName = "Zapper";
             const string rulebookDescription = "When [creature] damages another creature, that creature will gain the Paralysis Sigil. The Paralysis sigil is defined as: A card bearing this sigil only attack every other turn.";
             const string LearnDialogue = "Shocking";
-            // const string TextureFile = "Artwork/void_weaken.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2, Plugin.configToxin.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_shocker_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Shocker");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Shocker), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Zapper);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Zapper_a2);
+            int powerlevel = 1;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Shocker.ability = info.ability;
-
-
+            void_Zapper.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Zapper), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability; ;
         }
     }
 
-    public class void_Shocker : AbilityBehaviour
+    public class void_Zapper : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -47,7 +43,7 @@ namespace AllTheSigils
             {
                 return false;
             }
-            return base.Card.HasAbility(void_Shocker.ability);
+            return base.Card.HasAbility(void_Zapper.ability);
         }
 
         public override IEnumerator OnDealDamage(int amount, PlayableCard target)

@@ -4,7 +4,7 @@ using InscryptionAPI.Card;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Art = AllTheSigils.Artwork.Resources;
 using Random = UnityEngine.Random;
 
 
@@ -19,22 +19,16 @@ namespace AllTheSigils
             const string rulebookName = "Thief";
             const string rulebookDescription = "[creature] will try to steal a random default sigil from an opposing creature when played, or at the start of the owner's turn until it does.";
             const string LearnDialogue = "If only I could steal the moon...";
-            // const string TextureFile = "Artwork/void_vicious.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 3, Plugin.configThief.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_thief_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_thief");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Thief), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Thief);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Thief_a2);
+            int powerlevel = 3;
+            bool LeshyUsable = Plugin.configThief.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Thief.ability = info.ability;
-
-
+            void_Thief.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Thief), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

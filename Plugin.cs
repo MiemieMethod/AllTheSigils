@@ -15,6 +15,17 @@ namespace AllTheSigils
 {
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     [BepInDependency("cyantist.inscryption.api", BepInDependency.DependencyFlags.HardDependency)]
+
+    // COMMENTS TO COMMUNICATE YAY :D
+    //TO DO...
+    //Finish porting all missing sigils
+    //Fix haste/stampede and other "fake combat" effects
+    //Fix Sticky
+    //Fix Strong Wind
+    //Fix Deadly Waters
+    //Fix Trample
+
+
     public partial class Plugin : BaseUnityPlugin
     {
         public const string PluginGuid = "ATS";
@@ -92,109 +103,122 @@ namespace AllTheSigils
             Voids_work.Cards.Acid_Puddle.AddCard();
             Voids_work.Cards.Jackalope.AddCard();
 
-            //Attack sigils
+
+            AddAbundance();
             AddAcidTrail();
+            AddAntler();
+            AddAgile();
             AddAmbush();
+            AddBlight();
+            AddBlindingStrike();
+            AddBloodGrowth();
+            AddBloodGuzzler();
+            AddBodyguard();
+            AddBombardier();
+            AddBonePicker();
+            AddBoneless();
+            AddBoneShard();
+            AddBox();
+            AddBroken();
+            AddBurning();
+            AddCaustic();
+            addCoinFinder();
+            AddConsumer();
+            AddCoward();
+            ///			AddDeadlyWaters();
             AddDeathburst();
+            AddDesperation();
+            AddDiseaseAbsorbtion();
+            AddDiveBones();
+            AddDiveEnergy();
+            AddDrawBlood();
+            AddDrawBone();
+            AddDrawIce();
+            AddDrawJack();
+            AddDrawStrafe();
+            AddDwarf();
+            AddDying();
             AddEletric();
             AddEnforcer();
-            AddInsectKiller();
+            AddEnrage();
+            AddEntomophage();
             AddFamiliar();
-            AddDoubleAttack();
-            AddHaste();
-            AddRetaliate();
-            AddStampede();
-            AddSubmergedAmbush();
-            AddPierce();
-            AddTrample();
-
-            //Buff Attack Sigils
-            AddDesperation();
-            AddZapper();
+            AddFireStarter();
+            AddFishHook();
+            AddFrightful();
             AddGiant();
-            AddLifeStatsUp();
-            AddPredator();
-            AddOpportunist();
-            AddVicious();
-
-            //Defensive sigils
-            AddAgile();
-            AddBodyguard();
-            AddCaustic();
             AddGrazing();
+            AddGripper();
+            AddHaste();
+            AddHasteful();
+            AddHerd();
+            AddHighTide();
+            AddInjured();
+            AddHourglass();
+            AddLeech();
+            AddLeadBones();
+            AddLeadEnergy();
+            AddLifeStatsUp(); //Life Gambler
+            AddLowTide();
+            AddFisher(); //Lure
+            AddManeuver();
             AddMedic();
+            AddMidas();
+            AddDoubleAttack(); //multstrike
+            AddNutritious();
+            AddOpportunist();
+            AddParalise();
+            AddPathetic();
+            AddPierce();
+            AddPoisonous();
+            AddPossessor();
+            AddPossessorPowerful(); // Powerful Possessor
+            AddMovingPowerUp(); // Power from movement
+            AddPredator();
+            AddPrideful();
+            AddProtector();
+            AddRam();
+            AddRandomStrafe();
+            AddBlind(); // Random Strikes
+            AddRecoil();
             AddRegenFull();
             AddRegen1();
             AddRegen2();
             AddRegen3();
+            AddRepellant();
             AddResistant();
-            AddProtector();
-            AddPoisonous();
+            AddRetaliate();
+            AddSchooling();
+            AddScissors();
+            //			AddShadowStep();
+            AddSickness();
+            AddSluggish();
+            AddStampede();
+            AddStrongWind();
+            AddSubmergedAmbush();
+            AddTakeOffBones();
+            AddTakeOffEnergy();
             AddThickShell();
-
-            //Debuff sigils
-            AddDwarf();
-            AddFireStarter();
-            AddShocker();
+            AddThief();
+            AddToothBargain();
+            AddToothPuller();
+            AddToothShard();
             AddToxin();
             AddToxinStrength();
             AddToxinVigor();
             AddToxinDeadly();
             AddToxinSickly();
-
-            //Negative Sigils
-            AddAppetizing();
-            AddBlight();
-            AddBlind();
-            AddBroken();
-            AddBombardier();
-            AddBoneless();
-            AddBurning();
-            AddCoward();
-            AddDying();
-            AddPathetic();
-            AddParalise();
-            AddPrideful();
-            AddRecoil();
-            AddSickness();
-            AddToothpicker();
+            AddTrample();
             AddTransient();
-            AddWithering();
-
-            //Utility Sigils
-            AddAntler();
-            AddAbundance();
-            AddBloodGrowth();
-            AddBloodGuzzler();
-            AddBonePicker();
-            AddBox();
-            AddConsumer();
-            addCoinFinder();
-            AddTakeAllNegatives();
-            AddDrawBlood();
-            AddDrawBone();
-            AddDrawIce();
-            AddDrawJack();
-            AddFishHook();
-            AddFrightful();
-            AddLeech();
-            AddFisher();
-            AddHerd();
-            AddHourglass();
-            AddManeuver();
-            AddMidas();
-            AddNutritious();
-            AddPossessor();
-            AddRandomStrafe();
-            AddShove();
-            AddRepellant();
-            AddScissors();
-            AddThief();
-            AddTooth();
             AddTribalAlly();
             AddTribalTutor();
-            AddStrafePowerUp();
-            AddMovingPowerUp();
+            addTurbulentWaters();
+            AddStrafePowerUp(); // Velocity
+            AddVicious();
+            AddWithering();
+            AddZapper();
+
+
 
             foreach (AbilityInfo ability in AbilityManager.AllAbilityInfos)
             {

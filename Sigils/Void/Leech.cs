@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,21 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Leech";
             const string rulebookDescription = "When [creature] deals damage, it will heal 1 Health for each damage dealt to a card.";
             const string LearnDialogue = "Vigor from blood!";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 3, Plugin.configLeech.Value);
-            info.canStack = true;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("ability_leech_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("ability_leech");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Leech), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Leech);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Leech_a2);
+            int powerlevel = 3;
+            bool LeshyUsable = Plugin.configLeech.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Leech.ability = info.ability;
-
-
+            void_Leech.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Leech), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 using Random = UnityEngine.Random;
 
@@ -20,22 +21,16 @@ namespace AllTheSigils
             const string rulebookName = "Medic";
             const string rulebookDescription = "At the start of the owner's turn, [creature] will try heal 1 damage to a friendly card for each instance of Medic.";
             const string LearnDialogue = "A good patching";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 4);
-            info.canStack = true;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_medic_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Medic");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Medic), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Medic);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Medic_a2);
+            int powerlevel = 3;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = true;
 
             // set ability to behaviour class
-            void_Medic.ability = info.ability;
-
-
+            void_Medic.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Medic), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
 
         }
     }
@@ -56,19 +51,19 @@ namespace AllTheSigils
                     switch (count)
                     {
                         case 1:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_Medic_1");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_Medic_1);
                             break;
                         case 2:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_Medic_2");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_Medic_2);
                             break;
                         case 3:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_Medic_3");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_Medic_3);
                             break;
                         case 4:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_Medic_4");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_Medic_4);
                             break;
                         case 5:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_Medic_5");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_Medic_5);
                             break;
                     }
                 }

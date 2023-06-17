@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,22 +21,16 @@ namespace AllTheSigils
             const string rulebookName = "Bone Shard";
             const string rulebookDescription = "[creature] will generate 1 bone when hit, if it lives through the attack.";
             const string LearnDialogue = "A splinter of bone.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_BoneShard_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_BoneShard");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_BoneShard), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_BoneShard);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_BoneShard_a2);
+            int powerlevel = 0;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = true;
 
             // set ability to behaviour class
-            void_BoneShard.ability = info.ability;
-
-
+            void_BoneShard.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_BoneShard), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

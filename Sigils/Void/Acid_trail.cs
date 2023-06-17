@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,21 +18,18 @@ namespace AllTheSigils
             const string rulebookName = "Acidic Trail";
             const string rulebookDescription = "At the end of the owner's turn, [creature] will move in the direction inscribed in the sigil, and deal 1 damage to the opposing creature if it is able to move.";
             const string LearnDialogue = "The trail they leave behind, hurts.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_AcidTrail);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_AcidTrail_a2);
+            int powerlevel = 4;
+            bool LeshyUsable = Plugin.configAcidTrail.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
 
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2, Plugin.configAcidTrail.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_Acid_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_acid");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_AcidTrail), tex);
 
             // set ability to behaviour class
-            void_AcidTrail.ability = info.ability;
+            void_AcidTrail.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_AcidTrail), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

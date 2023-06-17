@@ -4,6 +4,7 @@ using InscryptionAPI.Card;
 using System;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -18,21 +19,16 @@ namespace AllTheSigils
             const string rulebookName = "Vicious";
             const string rulebookDescription = "When [creature] is attacked, it gains 1 power.";
             const string LearnDialogue = "A hit just makes it angry.";
-            // const string TextureFile = "Artwork/void_vicious.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 1, Plugin.configVicious.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_vicious_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_vicious");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Vicious), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Vicious);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Vicious_a2);
+            int powerlevel = 1;
+            bool LeshyUsable = Plugin.configVicious.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Vicious.ability = info.ability;
-
-
+            void_Vicious.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Vicious), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

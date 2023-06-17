@@ -1,13 +1,12 @@
 ﻿using APIPlugin;
 using DiskCardGame;
-using HarmonyLib;
 using InscryptionAPI.Card;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
-using Random = UnityEngine.Random;
+
 
 namespace AllTheSigils
 {
@@ -20,26 +19,22 @@ namespace AllTheSigils
             const string rulebookName = "Antler Bearer";
             const string rulebookDescription = "When [creature] is killed, gain three random hooved tribe cards.";
             const string LearnDialogue = "The herd sticks together.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_antler");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_antler), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Antler);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.no_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_antler.ability = info.ability;
+            void_Antler.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Antler), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
 
 
         }
     }
 
-    public class void_antler : AbilityBehaviour
+    public class void_Antler : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -81,17 +76,17 @@ namespace AllTheSigils
                 yield return new WaitForSeconds(0.2f);
             }
 
-            var target = targets[Random.Range(0, (targets.Count))];
+            var target = targets[SeededRandom.Range(0, (targets.Count), base.GetRandomSeed() + 1)];
 
             yield return Singleton<CardSpawner>.Instance.SpawnCardToHand(target, null, 0.25f, null);
             yield return new WaitForSeconds(0.45f);
 
-            target = targets[Random.Range(0, (targets.Count))];
+            target = targets[SeededRandom.Range(0, (targets.Count), base.GetRandomSeed() + 2)];
 
             yield return Singleton<CardSpawner>.Instance.SpawnCardToHand(target, null, 0.25f, null);
             yield return new WaitForSeconds(0.45f);
 
-            target = targets[Random.Range(0, (targets.Count))];
+            target = targets[SeededRandom.Range(0, (targets.Count), base.GetRandomSeed() + 3)];
 
             yield return Singleton<CardSpawner>.Instance.SpawnCardToHand(target, null, 0.25f, null);
             yield return new WaitForSeconds(0.45f);

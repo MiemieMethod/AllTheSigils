@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,26 +18,20 @@ namespace AllTheSigils
             const string rulebookName = "Pierce";
             const string rulebookDescription = "[creature] attacks the card in queue behind it's initial target first when declaring an attack.";
             const string LearnDialogue = "My creatures!";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 4);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_pierce_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_pierce");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_pierce), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Pierce);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Pierce_a2);
+            int powerlevel = 4;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_pierce.ability = info.ability;
-
-
+            void_Pierce.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Pierce), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class void_pierce : AbilityBehaviour
+    public class void_Pierce : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -48,7 +43,7 @@ namespace AllTheSigils
             PlayableCard target = slot.Card;
             PlayableCard queuedCard = Singleton<BoardManager>.Instance.GetCardQueuedForSlot(opposingSlot);
 
-            return target != null && !target.Dead && queuedCard != null && attacker.HasAbility(void_pierce.ability);
+            return target != null && !target.Dead && queuedCard != null && attacker.HasAbility(void_Pierce.ability);
         }
 
         public override IEnumerator OnSlotTargetedForAttack(CardSlot slot, PlayableCard attacker)
@@ -72,7 +67,7 @@ namespace AllTheSigils
                 yield return queuedCard.TakeDamage(base.Card.Info.Attack, base.Card);
                 yield return base.LearnAbility(0f);
             }
-            else if (queuedCard == null && base.Card.Info.HasAbility(void_trample.ability))
+            else if (queuedCard == null && base.Card.Info.HasAbility(void_Trample.ability))
             {
                 yield return base.PreSuccessfulTriggerSequence();
                 yield return new WaitForSeconds(0.25f);
@@ -148,6 +143,5 @@ namespace AllTheSigils
             }
             yield break;
         }
-
     }
 }

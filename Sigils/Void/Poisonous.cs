@@ -3,7 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
-
+using Art = AllTheSigils.Artwork.Resources;
 
 
 namespace AllTheSigils
@@ -17,22 +17,16 @@ namespace AllTheSigils
             const string rulebookName = "Poisonous";
             const string rulebookDescription = "When [creature] perishes, the creature that killed it perishes as well.";
             const string LearnDialogue = "Attacking something poisonous, isn't that smart.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("ability_poisonous_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("ability_poisonous");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Poisonous), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Poisonous);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Poisonous_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Poisonous.ability = info.ability;
-
-
+            void_Poisonous.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Poisonous), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

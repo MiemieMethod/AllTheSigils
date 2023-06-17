@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,26 +21,20 @@ namespace AllTheSigils
             const string rulebookName = "Random Strafe";
             const string rulebookDescription = "[creature] is drawn, it will gain a random strafe sigil.";
             const string LearnDialogue = "How will it move?";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 1);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_randomStrafe_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_randomStrafe");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_randomStrafe), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_RandomStrafe);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_RandomStrafe_a2);
+            int powerlevel = 1;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_randomStrafe.ability = info.ability;
-
-
+            void_RandomStrafe.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_RandomStrafe), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class void_randomStrafe : AbilityBehaviour
+    public class void_RandomStrafe : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -93,7 +88,7 @@ namespace AllTheSigils
             Ability result;
             if (flag)
             {
-                result = learnedAbilities[UnityEngine.Random.Range(0, learnedAbilities.Count)];
+                result = learnedAbilities[SeededRandom.Range(0, learnedAbilities.Count, base.GetRandomSeed())];
             }
             else
             {
@@ -103,7 +98,4 @@ namespace AllTheSigils
         }
 
     }
-
-
-
 }

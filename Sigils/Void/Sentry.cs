@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,21 +21,16 @@ namespace AllTheSigils
             const string rulebookName = "Ambush";
             const string rulebookDescription = "When a creature moves into the space opposing a card bearing this sigil, they are dealt 1 damage.";
             const string LearnDialogue = "Out of the shadows, they strike";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 3, true);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_ambush");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Ambush), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Ambush);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Ambush_a2);
+            int powerlevel = 3;
+            bool LeshyUsable = true;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Ambush.ability = info.ability;
-
-
+            void_Ambush.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Ambush), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -45,7 +41,7 @@ namespace AllTheSigils
         [HarmonyPostfix]
         public static void Postfix(ref Texture __result, ref CardInfo info, ref AbilityInfo ability)
         {
-            if (ability.ability == void_Ambush.ability)
+            if (ability.ability == void_Ambush.ability && !SaveManager.SaveFile.IsPart2)
             {
                 if (info != null)
                 {
@@ -55,19 +51,19 @@ namespace AllTheSigils
                     switch (count)
                     {
                         case 1:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_ambush_1"); ;
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_ambush_1);
                             break;
                         case 2:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_ambush_2");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_ambush_2);
                             break;
                         case 3:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_ambush_3");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_ambush_3);
                             break;
                         case 4:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_ambush_4");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_ambush_4);
                             break;
                         case 5:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_ambush_5");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_ambush_5);
                             break;
                     }
                 }

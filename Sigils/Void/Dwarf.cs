@@ -4,6 +4,7 @@ using InscryptionAPI.Card;
 using System;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -16,24 +17,18 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Dwarf";
-
             const string rulebookDescription = "When [creature] is drawn, it will loose one unit of cost, as well as 1 power and 2 health (can't go below 1 health). A unit is defined as: 1 blood, 3 bones, 3 energy, or all mox.";
             const string LearnDialogue = "What a tiny creature you have there";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Dwarf");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Dwarf), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Dwarf);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.no_a2);
+            int powerlevel = 0;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Dwarf.ability = info.ability;
-
-
+            void_Dwarf.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Dwarf), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -50,6 +45,7 @@ namespace AllTheSigils
 
         public override IEnumerator OnDrawn()
         {
+            yield return base.PreSuccessfulTriggerSequence();
             (Singleton<PlayerHand>.Instance as PlayerHand3D).MoveCardAboveHand(base.Card);
             yield return base.Card.FlipInHand(new Action(this.AddMod));
             yield return base.LearnAbility(0.5f);

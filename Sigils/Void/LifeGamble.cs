@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 using Random = UnityEngine.Random;
 
@@ -15,26 +16,21 @@ namespace AllTheSigils
             // setup ability
             const string rulebookName = "Life Gambler";
             const string rulebookDescription = "At the end of the owner's turn, [creature] will deal 2 damage to the owner in exchange for a 0 to 6 increase in stats. Failing to pay this cost will result in death.";
-            const string LearnDialogue = "Vigor from blood!";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2);
-            info.canStack = false;
-            info.opponentUsable = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_lifeStatsUp_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_lifeStatsUp");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(ability_lifeStatsUp), tex);
+            const string LearnDialogue = "Your blood, their strength!";
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_LifeStatsUp);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_LifeStatsUp_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            ability_lifeStatsUp.ability = info.ability;
-
-
+            void_LifeStatsUp.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_LifeStatsUp), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class ability_lifeStatsUp : AbilityBehaviour
+    public class void_LifeStatsUp : AbilityBehaviour
     {
         public override Ability Ability => ability;
 

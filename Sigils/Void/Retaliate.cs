@@ -4,6 +4,7 @@ using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
 
+using Art = AllTheSigils.Artwork.Resources;
 
 
 namespace AllTheSigils
@@ -17,22 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Retaliate";
             const string rulebookDescription = "[creature] will strike those who strike their adjacent allies.";
             const string LearnDialogue = "It will defend it's allies";
-            // const string TextureFile = "Artwork/void_vicious.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 5, Plugin.configFamiliar.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_Retaliate_a2"));
-            info.flipYIfOpponent = true;
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Retaliate");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Retaliate), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Retaliate);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Retaliate_a2);
+            int powerlevel = 5;
+            bool LeshyUsable = Plugin.configFamiliar.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Retaliate.ability = info.ability;
-
-
+            void_Retaliate.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Retaliate), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

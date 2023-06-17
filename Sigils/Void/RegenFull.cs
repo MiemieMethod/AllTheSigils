@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,22 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Regen";
             const string rulebookDescription = "At the end of the owner's turn, [creature] will regen to full health.";
             const string LearnDialogue = "This creature will heal to full Health at the end of it's owner's turn.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 4);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("ability_regen_full_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("ability_regen_full");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_RegenFull), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Regen_Full);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Regen_Full_a2);
+            int powerlevel = 4;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_RegenFull.ability = info.ability;
-
-
+            void_RegenFull.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_RegenFull), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,22 +21,18 @@ namespace AllTheSigils
             const string rulebookName = "Caustic";
             const string rulebookDescription = "At the end of the towner's turn, [creature] will move in the direction inscribed in the sigil, and drop an acid puddle in their old space.";
             const string LearnDialogue = "What it leaves behind is deadly.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_caustic_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_caustic");
-
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Caustic);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Caustic_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
 
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Caustic), tex);
 
             // set ability to behaviour class
-            void_Caustic.ability = info.ability;
-
-
+            void_Caustic.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Caustic), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -47,10 +44,14 @@ namespace AllTheSigils
 
         public override IEnumerator PostSuccessfulMoveSequence(CardSlot cardSlot)
         {
+
             bool flag = cardSlot.Card == null;
             if (flag)
             {
+                yield return base.PreSuccessfulTriggerSequence();
+                yield return new WaitForSeconds(0.25f);
                 yield return Singleton<BoardManager>.Instance.CreateCardInSlot(CardLoader.GetCardByName("void_Acid_Puddle"), cardSlot, 0.1f, true);
+                yield return new WaitForSeconds(0.25f);
             }
             yield break;
         }

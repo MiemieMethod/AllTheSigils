@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,25 +21,16 @@ namespace AllTheSigils
             const string rulebookName = "Protector";
             const string rulebookDescription = "[creature] will attacks on adjacent allies to hit directly.";
             const string LearnDialogue = "They protect their allies, but who protects you?";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_protector_a2"));
-            info.metaCategories.Remove(AbilityMetaCategory.Part1Modular);
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_protector");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Protector), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Protector);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Protector_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = false;
+            bool part1Shops = false;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Protector.ability = info.ability;
-
-
-
-
+            void_Protector.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Protector), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

@@ -4,6 +4,7 @@ using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
 
+using Art = AllTheSigils.Artwork.Resources;
 
 
 namespace AllTheSigils
@@ -11,30 +12,26 @@ namespace AllTheSigils
     public partial class Plugin
     {
         //Original
-        private void AddInsectKiller()
+        private void AddEntomophage()
         {
             // setup ability
             const string rulebookName = "Entomophage";
             const string rulebookDescription = "[creature] will deal 2 additional damage to cards of the insect tribe.";
             const string LearnDialogue = "They are a good source of protine I hear.";
-            // const string TextureFile = "Artwork/void_weaken.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0);
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_insectKiller");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_InsectKiller), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Entomophage);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.no_a2);
+            int powerlevel = 0;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_InsectKiller.ability = info.ability;
-
-
+            void_Entomophage.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Entomophage), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class void_InsectKiller : AbilityBehaviour
+    public class void_Entomophage : AbilityBehaviour
     {
         public override Ability Ability => ability;
 

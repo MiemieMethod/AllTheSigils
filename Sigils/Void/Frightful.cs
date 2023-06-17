@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,22 +21,16 @@ namespace AllTheSigils
             const string rulebookName = "Frightful";
             const string rulebookDescription = "[creature] will cause opposing creatures to move out of the way when it attacks.";
             const string LearnDialogue = "Scary";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 5);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_Frightful_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Frightful");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Frightful), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Frightful);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Frightful_a2);
+            int powerlevel = 5;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Frightful.ability = info.ability;
-
-
+            void_Frightful.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Frightful), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

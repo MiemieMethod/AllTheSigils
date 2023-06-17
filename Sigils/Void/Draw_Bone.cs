@@ -4,6 +4,7 @@ using InscryptionAPI.Card;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,28 +18,22 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Draw Bone";
-            const string rulebookDescription = "[creature] is played, a card costing bone is created in your hand.";
+            const string rulebookDescription = "When [creature] is played, a card costing bone is created in your hand.";
             const string LearnDialogue = "What will it release on death?";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 3);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_drawbone");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(ability_drawbone), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_DrawBone);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_DrawBone_a2);
+            int powerlevel = 3;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            ability_drawbone.ability = info.ability;
-
-
+            void_DrawBone.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_DrawBone), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class ability_drawbone : DrawCreatedCard
+    public class void_DrawBone : DrawCreatedCard
     {
         public override Ability Ability => ability;
 
@@ -48,7 +43,7 @@ namespace AllTheSigils
         {
             get
             {
-                var creatureWithinId = GetRandomChoosableCardWithCost(SaveManager.SaveFile.GetCurrentRandomSeed());
+                var creatureWithinId = GetRandomChoosableCardWithCost(base.GetRandomSeed());
 
                 return CardLoader.GetCardByName(creatureWithinId.name);
             }
@@ -82,7 +77,7 @@ namespace AllTheSigils
             if (flag1)
             {
                 list.Clear();
-                list = CardLoader.GetUnlockedCards(CardMetaCategory.GBCPack, CardTemple.Undead).FindAll((CardInfo x) => x.BloodCost > 0);
+                list = CardLoader.GetUnlockedCards(CardMetaCategory.GBCPack, CardTemple.Undead).FindAll((CardInfo x) => x.bonesCost > 0);
             }
             bool flag = list.Count == 0;
             CardInfo result;

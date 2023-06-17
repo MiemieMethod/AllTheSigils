@@ -4,6 +4,7 @@ using InscryptionAPI.Card;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 using Random = UnityEngine.Random;
 
@@ -16,28 +17,23 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Possessor";
-            const string rulebookDescription = "When [creature] perishes, it will grant a random friendly card it's base power and health.";
+            const string rulebookDescription = "When [creature] perishes, it will grant a random friendly card that is on the board it's base power and health.";
             const string LearnDialogue = "It passes it's strength onto those who remain";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0, true);
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_possessor_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_possessor");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_possessor), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Possessor);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Possessor_a2);
+            int powerlevel = 1;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_possessor.ability = info.ability;
-
-
+            void_Possessor.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Possessor), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
 
         }
     }
 
-    public class void_possessor : AbilityBehaviour
+    public class void_Possessor : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -82,11 +78,12 @@ namespace AllTheSigils
                 if (targets.Count > 0)
                 {
                     // pick a random target from the target list
-                    PlayableCard target = targets[Random.Range(0, (targets.Count))];
+                    PlayableCard target = targets[SeededRandom.Range(0, (targets.Count), base.GetRandomSeed())];
                     base.Card.Anim.LightNegationEffect();
                     yield return base.PreSuccessfulTriggerSequence();
                     target.Anim.StrongNegationEffect();
                     target.temporaryMods.Add(this.mod);
+                    target.Anim.PlayTransformAnimation();
                     yield return base.LearnAbility(0.25f);
                 }
 
@@ -115,14 +112,11 @@ namespace AllTheSigils
                     yield return base.PreSuccessfulTriggerSequence();
                     target.Anim.StrongNegationEffect();
                     target.temporaryMods.Add(this.mod);
+                    target.Anim.PlayTransformAnimation();
                     yield return base.LearnAbility(0.25f);
                 }
             }
             yield break;
         }
-
-
-
-
     }
 }

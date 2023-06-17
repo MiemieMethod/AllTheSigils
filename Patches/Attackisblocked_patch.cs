@@ -10,7 +10,6 @@ namespace AllTheSigils
     [HarmonyPatch(typeof(PlayableCard), "AttackIsBlocked", 0)]
     public class Attackisblocked_patch
     {
-        // Token: 0x06000038 RID: 56 RVA: 0x00003178 File Offset: 0x00001378
         [HarmonyPostfix]
         public static void Postfix(CardSlot opposingSlot, bool __result, ref PlayableCard __instance)
         {

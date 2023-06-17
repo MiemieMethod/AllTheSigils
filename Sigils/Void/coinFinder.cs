@@ -6,6 +6,7 @@ using InscryptionAPI.Card;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 namespace AllTheSigils
@@ -19,27 +20,21 @@ namespace AllTheSigils
             const string rulebookName = "Coin Finder";
             const string rulebookDescription = "At the end of the owner's turn, [creature] will grant the owner 1 foil.";
             const string LearnDialogue = "A tooth for your thoughts?";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2, false);
-            info.canStack = true;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_coinFinder_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_coinFinder");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_coinFinder), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_CoinFinder);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_CoinFinder_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = true;
 
             // set ability to behaviour class
-            void_coinFinder.ability = info.ability;
-
-
+            void_CoinFinder.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_CoinFinder), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
 
         }
     }
 
-    public class void_coinFinder : AbilityBehaviour
+    public class void_CoinFinder : AbilityBehaviour
     {
         public override Ability Ability => ability;
 

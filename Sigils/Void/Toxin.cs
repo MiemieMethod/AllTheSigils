@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,22 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Toxin";
             const string rulebookDescription = "When [creature] damages another creature, that creature looses 1 power and 1 health.";
             const string LearnDialogue = "All things can be worn down, and in different ways.";
-            // const string TextureFile = "Artwork/void_weaken.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2, Plugin.configToxin.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_toxin"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_toxin");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Toxin), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Toxin);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Toxin_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = Plugin.configToxin.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Toxin.ability = info.ability;
-
-
+            void_Toxin.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Toxin), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -53,7 +48,7 @@ namespace AllTheSigils
 
         public override IEnumerator OnDealDamage(int amount, PlayableCard target)
         {
-            if (target)
+            if (target && !target.HasAbility(Ability.MadeOfStone))
             {
                 Singleton<ViewManager>.Instance.SwitchToView(View.Board, false, true);
                 yield return new WaitForSeconds(0.1f);

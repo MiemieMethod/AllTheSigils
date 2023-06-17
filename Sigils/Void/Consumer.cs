@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,22 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Consumer";
             const string rulebookDescription = "When [creature] kills another creature, it gains 2 health.";
             const string LearnDialogue = "Nothing but bones left in its wake. A truly horrific appetite.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 4, Plugin.configConsumer.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_consumer");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Consumer), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Consumer);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.no_a2);
+            int powerlevel = 4;
+            bool LeshyUsable = Plugin.configConsumer.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Consumer.ability = info.ability;
-
-
+            void_Consumer.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Consumer), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -60,8 +55,10 @@ namespace AllTheSigils
         public override IEnumerator OnOtherCardDie(PlayableCard card, CardSlot deathSlot, bool fromCombat, PlayableCard killer)
         {
             yield return base.PreSuccessfulTriggerSequence();
+            yield return new WaitForSeconds(0.25f);
             this.mod.healthAdjustment += 2;
             base.Card.OnStatsChanged();
+            yield return new WaitForSeconds(0.25f);
             base.Card.Anim.StrongNegationEffect();
             yield return new WaitForSeconds(0.25f);
             yield return base.LearnAbility(0.25f);

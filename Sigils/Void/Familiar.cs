@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,22 +21,16 @@ namespace AllTheSigils
             const string rulebookName = "Familiar";
             const string rulebookDescription = "A familiar will help with attacking when it's adjacent allies attack a card.";
             const string LearnDialogue = "A familiar helps those in need.";
-            // const string TextureFile = "Artwork/void_vicious.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 1, Plugin.configFamiliar.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_familair_a2"));
-            info.flipYIfOpponent = true;
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_familair");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Familiar), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Familiar);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Familiar_a2);
+            int powerlevel = 1;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Familiar.ability = info.ability;
-
-
+            void_Familiar.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Familiar), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,26 +18,20 @@ namespace AllTheSigils
             const string rulebookName = "Toxin (Sickening)";
             const string rulebookDescription = "When [creature] damages another creature, that creature gains the Sickness Sigil. The Sickness Sigil is defined as: When ever a creature bearing this sigil declares an attack, they will loose one attack.";
             const string LearnDialogue = "Even once combat is over, it leaves sickness spreads in what it fights.";
-            // const string TextureFile = "Artwork/void_weaken.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2, Plugin.configToxin.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_toxin_sickness_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_toxin_sickness");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_ToxinSickly), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Toxin_Sickness);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Toxin_Sickness_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = Plugin.configToxin.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_ToxinSickly.ability = info.ability;
-
-
+            void_Toxin_Sickness.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Toxin_Sickness), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class void_ToxinSickly : AbilityBehaviour
+    public class void_Toxin_Sickness : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -48,19 +43,19 @@ namespace AllTheSigils
             {
                 return false;
             }
-            return base.Card.HasAbility(void_ToxinSickly.ability);
+            return base.Card.HasAbility(void_Toxin_Sickness.ability);
         }
 
         public override IEnumerator OnDealDamage(int amount, PlayableCard target)
         {
-            if (target != null)
+            if (target != null && !target.HasAbility(Ability.MadeOfStone))
             {
                 Singleton<ViewManager>.Instance.SwitchToView(View.Board, false, true);
                 yield return new WaitForSeconds(0.1f);
                 base.Card.Anim.LightNegationEffect();
                 yield return base.PreSuccessfulTriggerSequence();
                 //make the card mondification info
-                CardModificationInfo cardModificationInfo = new CardModificationInfo(void_sickness.ability);
+                CardModificationInfo cardModificationInfo = new CardModificationInfo(void_Sickness.ability);
                 //Clone the main card info so we don't touch the main card set
                 CardInfo targetCardInfo = target.Info.Clone() as CardInfo;
                 //Add the modifincations to the cloned info

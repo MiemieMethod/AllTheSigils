@@ -5,6 +5,7 @@ using InscryptionAPI.Card;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -19,21 +20,21 @@ namespace AllTheSigils
             const string rulebookName = "Abundance";
             const string rulebookDescription = "[creature] will grant one tooth per instance of Abundance when killed.";
             const string LearnDialogue = "Gooooooooldddddd! *cough* sorry about that. Couldn't resist.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Abundance);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Abundance_a2);
+            int powerlevel = 1;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 3, false);
-            info.canStack = true;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_Abundance_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Abundance");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Abundance), tex);
 
 
             // set ability to behaviour class
-            void_Abundance.ability = info.ability;
+            void_Abundance.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Abundance), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+
+
+
         }
     }
 

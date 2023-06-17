@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,27 +21,20 @@ namespace AllTheSigils
             const string rulebookName = "Box";
             const string rulebookDescription = "[creature] will get removed from your deck on death, and a new creature contained within will be added to it.";
             const string LearnDialogue = "What is contained within?";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 1);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-            info.metaCategories.Remove(AbilityMetaCategory.Part1Modular);
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_crate");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_crate), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Box);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.no_a2);
+            int powerlevel = 0;
+            bool LeshyUsable = false;
+            bool part1Shops = false;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_crate.ability = info.ability;
-
-
+            void_Box.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Box), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class void_crate : AbilityBehaviour
+    public class void_Box : AbilityBehaviour
     {
         public override Ability Ability => ability;
 

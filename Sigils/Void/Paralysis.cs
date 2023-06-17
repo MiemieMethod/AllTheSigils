@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,22 +21,16 @@ namespace AllTheSigils
             const string rulebookName = "Paralysis";
             const string rulebookDescription = "[creature] will only attack every other turn. Some effects from sigils may bypass this.";
             const string LearnDialogue = "A shocking event.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, -1, Plugin.configPrideful.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_paralysis_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_paralysis");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Paralysis), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Paralysis);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Paralysis_a2);
+            int powerlevel = -1;
+            bool LeshyUsable = Plugin.configParalysis.Value;
+            bool part1Shops = true;
+            bool canStack = true;
 
             // set ability to behaviour class
-            void_Paralysis.ability = info.ability;
-
-
+            void_Paralysis.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Paralysis), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

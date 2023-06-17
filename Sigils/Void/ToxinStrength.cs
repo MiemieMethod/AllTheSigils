@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,26 +18,20 @@ namespace AllTheSigils
             const string rulebookName = "Toxin (Strength)";
             const string rulebookDescription = "When [creature] damages another creature, that creature looses 1 power.";
             const string LearnDialogue = "Even once combat is over, strength leaves it's target";
-            // const string TextureFile = "Artwork/void_weaken.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 1, Plugin.configToxin.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_toxin_strength_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_toxin_strength");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_ToxinStrength), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Toxin_Strength);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Toxin_Strength_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = Plugin.configToxin.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_ToxinStrength.ability = info.ability;
-
-
+            void_Toxin_Strength.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Toxin_Strength), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class void_ToxinStrength : AbilityBehaviour
+    public class void_Toxin_Strength : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -61,17 +56,17 @@ namespace AllTheSigils
 
         public override IEnumerator OnDealDamage(int amount, PlayableCard target)
         {
-            if (target != null)
+            if (target != null && !target.HasAbility(Ability.MadeOfStone))
             {
                 Singleton<ViewManager>.Instance.SwitchToView(View.Board, false, true);
                 yield return new WaitForSeconds(0.1f);
                 base.Card.Anim.LightNegationEffect();
                 yield return base.PreSuccessfulTriggerSequence();
-                CardModificationInfo cardModificationInfo = target.TemporaryMods.Find((CardModificationInfo x) => x.singletonId == "void_ToxinStrength");
+                CardModificationInfo cardModificationInfo = target.TemporaryMods.Find((CardModificationInfo x) => x.singletonId == "void_Toxin_Strength");
                 if (cardModificationInfo == null)
                 {
                     cardModificationInfo = new CardModificationInfo();
-                    cardModificationInfo.singletonId = "void_ToxinStrength";
+                    cardModificationInfo.singletonId = "void_Toxin_Strength";
                     target.AddTemporaryMod(cardModificationInfo);
                 }
                 cardModificationInfo.attackAdjustment--;

@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -19,27 +20,21 @@ namespace AllTheSigils
             // setup ability
             const string rulebookName = "Desperation";
             const string rulebookDescription = "[creature] is damaged to 1 health, it will gain 3 power.";
-            const string LearnDialogue = "So close to death, it strikes out.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_desperation");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_desperation), tex);
+            const string LearnDialogue = "When so close to death, it strikes out.";
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Desperation);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.no_a2);
+            int powerlevel = 0;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = true;
 
             // set ability to behaviour class
-            void_desperation.ability = info.ability;
-
-
+            void_Desperation.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Desperation), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class void_desperation : AbilityBehaviour
+    public class void_Desperation : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -61,6 +56,7 @@ namespace AllTheSigils
         public override IEnumerator OnTakeDamage(PlayableCard source)
         {
             yield return base.PreSuccessfulTriggerSequence();
+            yield return new WaitForSeconds(0.55f);
             base.Card.Anim.StrongNegationEffect();
             yield return new WaitForSeconds(0.55f);
             base.Card.temporaryMods.Add(this.mod);

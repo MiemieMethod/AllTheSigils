@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,25 +18,20 @@ namespace AllTheSigils
             const string rulebookName = "Grazing";
             const string rulebookDescription = "At the end of the owner's turn, [creature] will regen 1 health if there is no opposing creature.";
             const string LearnDialogue = "This creature will heal 1 Health at the end of it's owner's turn.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_grazing");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_grazing), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Grazing);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.no_a2);
+            int powerlevel = 1;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_grazing.ability = info.ability;
-
-
+            void_Grazing.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Grazing), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class void_grazing : AbilityBehaviour
+    public class void_Grazing : AbilityBehaviour
     {
         public override Ability Ability => ability;
 

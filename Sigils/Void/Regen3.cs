@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,22 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Regen 3";
             const string rulebookDescription = "At the end of the owner's turn, [creature] will regen 3 health.";
             const string LearnDialogue = "This creature will heal 3 Health at the end of it's owner's turn.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 3);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("ability_regen_3_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("ability_regen_3");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Regen3), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Regen_3);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Regen_3_a2);
+            int powerlevel = 3;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Regen3.ability = info.ability;
-
-
+            void_Regen3.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Regen3), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

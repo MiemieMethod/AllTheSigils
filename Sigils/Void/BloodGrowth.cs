@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,21 +21,18 @@ namespace AllTheSigils
             const string rulebookName = "Blood Growth";
             const string rulebookDescription = "When [creature] attacks, the amount of blood it is counted as when sacrificed will increase.";
             const string LearnDialogue = "There is power in the blood.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_bloodgrowth");
-
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_BloodGrowth);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_BloodGrowth_a2);
+            int powerlevel = 0;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
 
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_BloodGrowth), tex);
 
             // set ability to behaviour class
-            void_BloodGrowth.ability = info.ability;
-
+            void_BloodGrowth.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_BloodGrowth), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
 
         }
     }
@@ -49,6 +47,9 @@ namespace AllTheSigils
 
         private CardModificationInfo mod;
 
+
+        public static readonly Ability CustomAbility1 = InscryptionAPI.Guid.GuidManager.GetEnumValue<Ability>("org.memez4life.inscryption.customsigils", "Noble Sacrifice");
+        public static readonly Ability CustomAbility2 = InscryptionAPI.Guid.GuidManager.GetEnumValue<Ability>("org.memez4life.inscryption.customsigils", "Superior Sacrifice");
 
 
         private void Start()
@@ -68,13 +69,13 @@ namespace AllTheSigils
             yield return base.PreSuccessfulTriggerSequence();
             base.Card.Status.hiddenAbilities.Add(this.Ability);
 
-            attacks += 1;
+            this.attacks += 1;
 
-            switch (attacks)
+            switch (this.attacks)
             {
                 case 1:
                     base.Card.RemoveTemporaryMod(this.mod);
-                    Ability Ab1 = Bi_Blood.ability;
+                    Ability Ab1 = CustomAbility1;
                     this.mod.abilities.Clear();
                     this.mod.abilities.Add(Ab1);
                     base.Card.AddTemporaryMod(this.mod);
@@ -88,7 +89,7 @@ namespace AllTheSigils
                     break;
                 case 3:
                     base.Card.RemoveTemporaryMod(this.mod);
-                    Ability Ab3 = Quadra_Blood.ability;
+                    Ability Ab3 = CustomAbility2;
                     this.mod.abilities.Clear();
                     this.mod.abilities.Add(Ab3);
                     base.Card.AddTemporaryMod(this.mod);

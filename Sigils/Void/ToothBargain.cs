@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 namespace AllTheSigils
@@ -13,28 +14,22 @@ namespace AllTheSigils
     public partial class Plugin
     {
         //Request by blind
-        private void AddToothpicker()
+        private void AddToothBargain()
         {
             // setup ability
             const string rulebookName = "Tooth Bargain";
             const string rulebookDescription = "When [creature] is played, it will put 1 point of damage of it's opponent's side of the scale. When it perishes, it will put 2 damage on the owner's side of the scale.";
             const string LearnDialogue = "A deal with a devil I see...";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_tooth_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_tooth");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Toothpicker), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Tooth);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Tooth_a2);
+            int powerlevel = 0;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Toothpicker.ability = info.ability;
-
-
+            void_Toothpicker.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Toothpicker), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

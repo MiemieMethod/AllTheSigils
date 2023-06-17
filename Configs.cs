@@ -22,6 +22,8 @@ namespace AllTheSigils
         internal static ConfigEntry<bool> configDeathburst;
         internal static ConfigEntry<bool> configMultiStrike;
         internal static ConfigEntry<bool> configDying;
+        internal static ConfigEntry<bool> configRecoil;
+        internal static ConfigEntry<bool> configParalysis;
         internal static ConfigEntry<bool> configElectric;
         internal static ConfigEntry<bool> configFamiliar;
         internal static ConfigEntry<bool> configLeech;
@@ -63,6 +65,8 @@ namespace AllTheSigils
             configBurning = Config.Bind("Bad Sigil", "Burning", true, "Should Leshy have this?");
             configCowardly = Config.Bind("Bad Sigil", "Cowardly", true, "Should Leshy have this?");
             configDying = Config.Bind("Bad Sigil", "Dying", true, "Should Leshy have this?");
+            configParalysis = Config.Bind("Bad Sigil", "Paralysis", true, "Should Leshy have this?");
+            configRecoil = Config.Bind("Bad Sigil", "Recoil", true, "Should Leshy have this?");
             configPrideful = Config.Bind("Bad Sigil", "Prideful", true, "Should Leshy have this?");
             configSickness = Config.Bind("Bad Sigil", "Sickness", true, "Should Leshy have this?");
 

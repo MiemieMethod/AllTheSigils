@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 using Object = UnityEngine.Object;
 
@@ -18,23 +19,18 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Fish Hook";
-            const string rulebookDescription = "When [creature], a targeted card is moved to your side of the board.";
+            const string rulebookDescription = "When [creature], a targeted card is moved to the owner's side of the board.";
             const string LearnDialogue = "Go Fish";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_fish_hook_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_fish_hook");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_FishHook), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_FishHook);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_FishHook_a2);
+            int powerlevel = 0;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_FishHook.ability = info.ability;
-
-
+            void_FishHook.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_FishHook), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -46,19 +42,32 @@ namespace AllTheSigils
 
         public override bool RespondsToResolveOnBoard()
         {
-            return SigilUtils.GetSlot(Card).IsPlayerSlot;
+            return true;
         }
 
         public override IEnumerator OnResolveOnBoard()
         {
-            if (GetValidTargets().Count == 0)
+            if (base.Card.slot.IsPlayerSlot)
             {
-                Card.Anim.StrongNegationEffect();
-                yield return new WaitForSeconds(0.3f);
-                yield break;
+                if (GetPlayerValidTargets().Count == 0)
+                {
+                    Card.Anim.StrongNegationEffect();
+                    yield return new WaitForSeconds(0.3f);
+                    yield break;
+                }
+                yield return ActivateSequence();
             }
+            else
+            {
+                if (GetLeshyValidTargets().Count == 0)
+                {
+                    Card.Anim.StrongNegationEffect();
+                    yield return new WaitForSeconds(0.3f);
+                    yield break;
+                }
+                yield return LeshyActivateSequence();
 
-            yield return ActivateSequence();
+            }
 
             Singleton<ViewManager>.Instance.SwitchToView(View.Default, false, false);
             yield return new WaitForSeconds(0.1f);
@@ -77,7 +86,7 @@ namespace AllTheSigils
             firstPersonItem.localEulerAngles = new Vector3(0f, 0f, 0f);
             Singleton<InteractionCursor>.Instance.InteractionDisabled = false;
             CardSlot target = null;
-            List<CardSlot> validTargets = this.GetValidTargets();
+            List<CardSlot> validTargets = this.GetPlayerValidTargets();
             this.MoveItemToPosition(firstPersonItem, validTargets[validTargets.Count - 1].transform.position);
             Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Unlocked;
             yield return Singleton<BoardManager>.Instance.ChooseTarget(this.GetAllTargets(), validTargets, delegate (CardSlot slot)
@@ -100,10 +109,51 @@ namespace AllTheSigils
             yield break;
         }
 
+        private IEnumerator LeshyActivateSequence()
+        {
+            yield return new WaitForSeconds(0.1f);
+            Singleton<UIManager>.Instance.Effects.GetEffect<EyelidMaskEffect>().SetIntensity(0.6f, 0.2f);
+            Singleton<ViewManager>.Instance.SwitchToView(View.BoardCentered, false, false);
+            yield return new WaitForSeconds(0.25f);
+            Singleton<InteractionCursor>.Instance.InteractionDisabled = false;
+            CardSlot target = null;
+            List<CardSlot> validTargets = this.GetLeshyValidTargets();
+            target = validTargets[SeededRandom.Range(0, validTargets.Count, base.GetRandomSeed())];
+            Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Locked;
+            Singleton<InteractionCursor>.Instance.InteractionDisabled = true;
+            Singleton<UIManager>.Instance.Effects.GetEffect<EyelidMaskEffect>().SetIntensity(0f, 0.2f);
+            Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Unlocked;
+            yield break;
+        }
+
         private void MoveItemToPosition(Transform item, Vector3 targetPos)
         {
             Tween.Position(item, new Vector3(targetPos.x, item.position.y, item.position.z), 0.2f, 0f, Tween.EaseOut, Tween.LoopType.None, null, null, true);
         }
+
+        private IEnumerator OnLeshyValidTargetSelected(CardSlot target, GameObject firstPersonItem)
+        {
+            Singleton<ViewManager>.Instance.SwitchToView(View.Default, false, false);
+            yield return new WaitForSeconds(0.2f);
+            AudioController.Instance.PlaySound3D("angler_use_hook", MixerGroup.TableObjectsSFX, target.transform.position, 1f, 0.1f, null, null, null, null, false);
+            yield return new WaitForSeconds(0.75f);
+            if (target.opposingSlot.Card != null)
+            {
+                yield return Singleton<TurnManager>.Instance.Opponent.ReturnCardToQueue(target.opposingSlot.Card, 0.25f);
+            }
+            if (target.Card.Status != null)
+            {
+                target.Card.Status.anglerHooked = true;
+            }
+            target.Card.SetIsOpponentCard(true);
+            target.Card.transform.eulerAngles += new Vector3(0f, 0f, -180f);
+            CardSlot cardSlot = target;
+            yield return Singleton<BoardManager>.Instance.AssignCardToSlot(cardSlot.Card, cardSlot.opposingSlot, 0.25f, null, true);
+            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.4f);
+            yield break;
+        }
+
 
         private IEnumerator OnValidTargetSelected(CardSlot target, GameObject firstPersonItem)
         {
@@ -125,11 +175,18 @@ namespace AllTheSigils
             yield break;
         }
 
-        private List<CardSlot> GetValidTargets()
+        private List<CardSlot> GetPlayerValidTargets()
         {
             List<CardSlot> opponentSlotsCopy = Singleton<BoardManager>.Instance.OpponentSlotsCopy;
             opponentSlotsCopy.RemoveAll((CardSlot x) => x.Card == null || x.opposingSlot.Card != null || x.Card.Info.HasTrait(Trait.Uncuttable));
             return opponentSlotsCopy;
+        }
+
+        private List<CardSlot> GetLeshyValidTargets()
+        {
+            List<CardSlot> playerSlotsCopy = Singleton<BoardManager>.Instance.PlayerSlotsCopy;
+            playerSlotsCopy.RemoveAll((CardSlot x) => x.Card == null || x.opposingSlot.Card != null || x.Card.Info.HasTrait(Trait.Uncuttable));
+            return playerSlotsCopy;
         }
 
         private List<CardSlot> GetAllTargets()

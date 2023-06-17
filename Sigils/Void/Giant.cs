@@ -4,6 +4,7 @@ using InscryptionAPI.Card;
 using System;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -18,21 +19,16 @@ namespace AllTheSigils
             const string rulebookName = "Giant";
             const string rulebookDescription = "When [creature] is drawn, it will gain one unit blood of cost, as well as one attack and two health.";
             const string LearnDialogue = "What a large creature you have there";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Giant");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Giant), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Giant);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Giant_a2);
+            int powerlevel = 4;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Giant.ability = info.ability;
-
-
+            void_Giant.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Giant), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -49,6 +45,7 @@ namespace AllTheSigils
 
         public override IEnumerator OnDrawn()
         {
+            yield return base.PreSuccessfulTriggerSequence();
             (Singleton<PlayerHand>.Instance as PlayerHand3D).MoveCardAboveHand(base.Card);
             yield return base.Card.FlipInHand(new Action(this.AddMod));
             yield return base.LearnAbility(0.5f);

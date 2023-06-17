@@ -6,6 +6,7 @@ using InscryptionAPI.Card;
 using System;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -20,21 +21,16 @@ namespace AllTheSigils
             const string rulebookName = "Tooth Shard";
             const string rulebookDescription = "[creature] will generate 1 foil when hit, if it lives through the attack.";
             const string LearnDialogue = "A splinter of gold.";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 1);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_ToothShard_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_ToothShard");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_ToothShard), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_ToothShard);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_ToothShard_a2);
+            int powerlevel = 1;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_ToothShard.ability = info.ability;
-
-
+            void_ToothShard.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_ToothShard), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

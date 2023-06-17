@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,26 +18,20 @@ namespace AllTheSigils
             const string rulebookName = "Toxin (Deadly)";
             const string rulebookDescription = "When [creature] damages another creature, that creature gains the Dying Sigil. The Dying Sigil is defined as: When ever a creature bearing this sigil declares an attack, they will loose one health.";
             const string LearnDialogue = "Even once combat is over, it leaves a deadly mark";
-            // const string TextureFile = "Artwork/void_weaken.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2, Plugin.configToxin.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_toxin_deadly_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_toxin_deadly");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_ToxinDeadly), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Toxin_Deadly);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Toxin_Deadly_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = Plugin.configToxin.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_ToxinDeadly.ability = info.ability;
-
-
+            void_Toxin_Deadly.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Toxin_Deadly), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class void_ToxinDeadly : AbilityBehaviour
+    public class void_Toxin_Deadly : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -48,19 +43,19 @@ namespace AllTheSigils
             {
                 return false;
             }
-            return base.Card.HasAbility(void_ToxinDeadly.ability);
+            return base.Card.HasAbility(void_Toxin_Deadly.ability);
         }
 
         public override IEnumerator OnDealDamage(int amount, PlayableCard target)
         {
-            if (target != null)
+            if (target != null && !target.HasAbility(Ability.MadeOfStone))
             {
                 Singleton<ViewManager>.Instance.SwitchToView(View.Board, false, true);
                 yield return new WaitForSeconds(0.1f);
                 base.Card.Anim.LightNegationEffect();
                 yield return base.PreSuccessfulTriggerSequence();
                 //make the card mondification info
-                CardModificationInfo cardModificationInfo = new CardModificationInfo(void_dying.ability);
+                CardModificationInfo cardModificationInfo = new CardModificationInfo(void_Dying.ability);
                 //Clone the main card info so we don't touch the main card set
                 CardInfo targetCardInfo = target.Info.Clone() as CardInfo;
                 //Add the modifincations to the cloned info
@@ -68,7 +63,6 @@ namespace AllTheSigils
                 //Set the target's info to the clone'd info
                 target.SetInfo(targetCardInfo);
                 target.Anim.PlayTransformAnimation();
-                Plugin.Log.LogWarning("toxin debug " + target + " should have dying");
                 yield return new WaitForSeconds(0.1f);
                 yield return base.LearnAbility(0.1f);
                 Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Unlocked;

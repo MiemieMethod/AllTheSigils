@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,21 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Nutritious";
             const string rulebookDescription = "When [creature] is sacrificed, it adds 1 power and 2 health to the card it was sacrificed for.";
             const string LearnDialogue = "That creature is so full of nutrients, the creature you play comes in stronger!";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 2);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("no_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("ability_nutritious");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Nutritious), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Nutritious);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Nutritious_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Nutritious.ability = info.ability;
-
-
+            void_Nutritious.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Nutritious), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -42,13 +38,6 @@ namespace AllTheSigils
         public static Ability ability;
 
 
-        private void Start()
-        {
-            this.mod = new CardModificationInfo();
-            this.mod.healthAdjustment = 2;
-            this.mod.attackAdjustment = 1;
-        }
-
         public override bool RespondsToSacrifice()
         {
             return true;
@@ -57,14 +46,12 @@ namespace AllTheSigils
         public override IEnumerator OnSacrifice()
         {
             yield return base.PreSuccessfulTriggerSequence();
-            Singleton<BoardManager>.Instance.currentSacrificeDemandingCard.AddTemporaryMod(this.mod);
-            Singleton<BoardManager>.Instance.currentSacrificeDemandingCard.OnStatsChanged();
-            yield return new WaitForSeconds(0.25f);
-            yield return base.LearnAbility(0.25f);
+            CardModificationInfo mod = new CardModificationInfo(1, 2);
+            Singleton<BoardManager>.Instance.CurrentSacrificeDemandingCard.AddTemporaryMod(mod);
+            yield return base.LearnAbility(0f);
             yield break;
         }
 
-        private CardModificationInfo mod;
     }
 
 }

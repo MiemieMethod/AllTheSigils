@@ -1,9 +1,11 @@
 ﻿using APIPlugin;
+using DigitalRuby.LightningBolt;
 using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -16,27 +18,22 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Electric";
-            const string rulebookDescription = "When [creature] decalres an attack, they will deal half the damage to creatures adjacent to the target.";
+            const string rulebookDescription = "When [creature] decalres an attack, they will deal half the damage to cards adjacent to the target.";
             const string LearnDialogue = "Shocking";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 3, Plugin.configElectric.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_Electric_a2"));
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Electric");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_eletric), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Electric);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Electric_a2);
+            int powerlevel = 4;
+            bool LeshyUsable = Plugin.configElectric.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_eletric.ability = info.ability;
-
-
+            void_Electric.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Electric), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
-    public class void_eletric : AbilityBehaviour
+    public class void_Electric : AbilityBehaviour
     {
         public override Ability Ability => ability;
 
@@ -70,13 +67,31 @@ namespace AllTheSigils
 
         private IEnumerator ShockCard(PlayableCard target, PlayableCard attacker, int damage)
         {
-
+            CardSlot centerSlot = target.slot;
             double newDamage = System.Math.Floor(damage * 0.5);
             int finalDamage = (int)newDamage;
-            target.Anim.SetOverclocked(true);
-            target.Anim.PlayHitAnimation();
+            if (!SaveManager.SaveFile.IsPart2)
+            {
+                Singleton<TableVisualEffectsManager>.Instance.ThumpTable(0.3f);
+                AudioController.Instance.PlaySound3D("teslacoil_overload", MixerGroup.TableObjectsSFX, centerSlot.transform.position, 1f, 0f, null, null, null, null, false);
+                GameObject gameObject = Object.Instantiate<GameObject>(ResourceBank.Get<GameObject>("Prefabs/Environment/TableEffects/LightningBolt"));
+                gameObject.GetComponent<LightningBoltScript>().StartObject = attacker.gameObject;
+                gameObject.GetComponent<LightningBoltScript>().EndObject = centerSlot.Card.gameObject;
+                yield return new WaitForSeconds(0.2f);
+                Object.Destroy(gameObject, 0.25f);
+                centerSlot.Card.Anim.StrongNegationEffect();
+                target.Anim.PlayHitAnimation();
+            }
+            else
+            {
+                bool impactFrameReached = false;
+                base.Card.Anim.PlayAttackAnimation(false, centerSlot, delegate ()
+                {
+                    impactFrameReached = true;
+                });
+                yield return new WaitUntil(() => impactFrameReached);
+            }
             yield return target.TakeDamage(finalDamage, attacker);
-            target.Anim.SetOverclocked(false);
             yield return new WaitForSeconds(0.2f);
             yield break;
         }

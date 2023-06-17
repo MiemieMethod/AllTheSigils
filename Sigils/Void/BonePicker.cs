@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,22 +18,16 @@ namespace AllTheSigils
             const string rulebookName = "Bone Picker";
             const string rulebookDescription = "[creature] kills a creature, it will generate 1 Bone.";
             const string LearnDialogue = "My creature's bones, You thief!";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0);
-            info.canStack = true;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("ability_bonepicker_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("ability_bonepicker");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_BonePicker), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_BonePicker);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_BonePicker_a2);
+            int powerlevel = 1;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = true;
 
             // set ability to behaviour class
-            void_BonePicker.ability = info.ability;
-
-
+            void_BonePicker.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_BonePicker), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

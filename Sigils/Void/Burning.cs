@@ -3,6 +3,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 
@@ -17,22 +18,18 @@ namespace AllTheSigils
             const string rulebookName = "Burning";
             const string rulebookDescription = "[creature] is on fire, and will gain 1 power and loose 1 health each upkeep.";
             const string LearnDialogue = "It rampages while on fire.";
-            // const string TextureFile = "Artwork/void_weaken.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 0, Plugin.configToxin.Value);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_burning_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_burning");
-
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Burning);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Burning_a2);
+            int powerlevel = 0;
+            bool LeshyUsable = Plugin.configToxin.Value;
+            bool part1Shops = true;
+            bool canStack = false;
 
 
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Burning), tex);
 
             // set ability to behaviour class
-            void_Burning.ability = info.ability;
-
-
+            void_Burning.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Burning), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 

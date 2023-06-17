@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Art = AllTheSigils.Artwork.Resources;
 
 
 namespace AllTheSigils
@@ -19,22 +20,16 @@ namespace AllTheSigils
             const string rulebookName = "Predator";
             const string rulebookDescription = "[creature] will gain 1 power for each instance of Predator, when the opposing slot has a card.";
             const string LearnDialogue = "It hunts";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 3);
-            info.canStack = true;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_Predator_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_Predator");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Predator), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Predator);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Predator_a2);
+            int powerlevel = 2;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Predator.ability = info.ability;
-
-
+            void_Predator.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Predator), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -54,19 +49,19 @@ namespace AllTheSigils
                     switch (count)
                     {
                         case 1:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_Predator_1");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_Predator_1);
                             break;
                         case 2:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_Predator_2");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_Predator_2);
                             break;
                         case 3:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_Predator_3");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_Predator_3);
                             break;
                         case 4:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_Predator_4");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_Predator_4);
                             break;
                         case 5:
-                            __result = SigilUtils.LoadImageAndGetTexture("void_Predator_5");
+                            __result = SigilUtils.LoadTextureFromResource(Art.void_Predator_5);
                             break;
                     }
                 }

@@ -6,7 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Art = AllTheSigils.Artwork.Resources;
 using Object = UnityEngine.Object;
 
 namespace AllTheSigils
@@ -20,22 +20,16 @@ namespace AllTheSigils
             const string rulebookName = "Scissors";
             const string rulebookDescription = "When [creature] is played, a targeted card cut in two.";
             const string LearnDialogue = "My card!";
-            // const string TextureFile = "Artwork/void_pathetic.png";
-
-            AbilityInfo info = SigilUtils.CreateInfoWithDefaultSettings(rulebookName, rulebookDescription, LearnDialogue, true, 5);
-            info.canStack = false;
-            info.SetPixelAbilityIcon(SigilUtils.LoadImageAndGetTexture("void_scissors_a2"));
-
-            Texture2D tex = SigilUtils.LoadImageAndGetTexture("void_scissors");
-
-
-
-            AbilityManager.Add(OldVoidPluginGuid, info, typeof(void_Scissors), tex);
+            Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Scissors);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Scissors_a2);
+            int powerlevel = 5;
+            bool LeshyUsable = false;
+            bool part1Shops = true;
+            bool canStack = false;
 
             // set ability to behaviour class
-            void_Scissors.ability = info.ability;
-
-
+            void_Scissors.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Scissors), tex_a1, tex_a2, LearnDialogue,
+                                                                                    true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
         }
     }
 
@@ -47,21 +41,33 @@ namespace AllTheSigils
 
         public override bool RespondsToResolveOnBoard()
         {
-            return base.Card.slot.IsPlayerSlot;
+            return true;
         }
 
         public override IEnumerator OnResolveOnBoard()
         {
             yield return base.PreSuccessfulTriggerSequence();
             yield return new WaitForSeconds(0.5f);
-            if (GetValidTargets().Count == 0)
+            if (base.Card.slot.IsPlayerSlot)
             {
-                Card.Anim.StrongNegationEffect();
-                yield return new WaitForSeconds(0.3f);
-                yield break;
+                if (GetPlayerValidTargets().Count == 0)
+                {
+                    Card.Anim.StrongNegationEffect();
+                    yield return new WaitForSeconds(0.3f);
+                    yield break;
+                }
+                yield return ActivateSequence();
             }
-
-            yield return ActivateSequence();
+            else
+            {
+                if (GetLeshyValidTargets().Count == 0)
+                {
+                    Card.Anim.StrongNegationEffect();
+                    yield return new WaitForSeconds(0.3f);
+                    yield break;
+                }
+                yield return EnemyActivateSequence();
+            }
             Singleton<ViewManager>.Instance.SwitchToView(View.Default, false, false);
             yield return new WaitForSeconds(0.1f);
             Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Unlocked;
@@ -79,7 +85,7 @@ namespace AllTheSigils
             ///			firstPersonItem.localEulerAngles = new Vector3(0f, 0f, 0f);
             Singleton<InteractionCursor>.Instance.InteractionDisabled = false;
             CardSlot target = null;
-            List<CardSlot> validTargets = this.GetValidTargets();
+            List<CardSlot> validTargets = this.GetPlayerValidTargets();
             Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Unlocked;
             yield return Singleton<BoardManager>.Instance.ChooseTarget(this.GetAllTargets(), validTargets, delegate (CardSlot slot)
             {
@@ -94,6 +100,25 @@ namespace AllTheSigils
                 yield return this.OnValidTargetSelected(target);
             }
 
+            ///			Object.Destroy(firstPersonItem.gameObject);
+            Singleton<UIManager>.Instance.Effects.GetEffect<EyelidMaskEffect>().SetIntensity(0f, 0.2f);
+            Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Unlocked;
+            yield break;
+        }
+
+        private IEnumerator EnemyActivateSequence()
+        {
+            yield return new WaitForSeconds(0.1f);
+            Singleton<UIManager>.Instance.Effects.GetEffect<EyelidMaskEffect>().SetIntensity(0.6f, 0.2f);
+            Singleton<ViewManager>.Instance.SwitchToView(View.BoardCentered, false, true);
+            yield return new WaitForSeconds(0.25f);
+            Singleton<InteractionCursor>.Instance.InteractionDisabled = false;
+            CardSlot target = null;
+            List<CardSlot> validTargets = this.GetPlayerValidTargets();
+            target = validTargets[SeededRandom.Range(0, validTargets.Count, base.GetRandomSeed())];
+            Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Locked;
+            Singleton<InteractionCursor>.Instance.InteractionDisabled = true;
+            yield return this.OnValidTargetSelected(target);
             ///			Object.Destroy(firstPersonItem.gameObject);
             Singleton<UIManager>.Instance.Effects.GetEffect<EyelidMaskEffect>().SetIntensity(0f, 0.2f);
             Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Unlocked;
@@ -124,11 +149,18 @@ namespace AllTheSigils
             yield break;
         }
 
-        private List<CardSlot> GetValidTargets()
+        private List<CardSlot> GetPlayerValidTargets()
         {
             List<CardSlot> opponentSlotsCopy = Singleton<BoardManager>.Instance.OpponentSlotsCopy;
             opponentSlotsCopy.RemoveAll((CardSlot x) => x.Card == null || x.Card.Info.HasTrait(Trait.Uncuttable));
             return opponentSlotsCopy;
+        }
+
+        private List<CardSlot> GetLeshyValidTargets()
+        {
+            List<CardSlot> playerSlotsCopy = Singleton<BoardManager>.Instance.PlayerSlotsCopy;
+            playerSlotsCopy.RemoveAll((CardSlot x) => x.Card == null || x.Card.Info.HasTrait(Trait.Uncuttable));
+            return playerSlotsCopy;
         }
 
         private List<CardSlot> GetAllTargets()
