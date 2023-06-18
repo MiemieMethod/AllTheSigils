@@ -46,6 +46,8 @@ namespace AllTheSigils
 
         public static bool voidCombatPhase;
 
+        public static GameObject anthonyClawPrefab;
+
         public static Dictionary<Ability, String> NewSigilVersions = new Dictionary<Ability, string>();
 
         private void Awake()
@@ -59,7 +61,7 @@ namespace AllTheSigils
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll();
 
-            //Old Lily's sigils
+            //Lily's sigils
             AddBond();
             AddShort();
             AddTribe_Attack();
@@ -98,7 +100,7 @@ namespace AllTheSigils
             AddPuppets_Gift();
             AddInstakill();
 
-
+            //Void's sigils
             //Add Card
             Voids_work.Cards.Acid_Puddle.AddCard();
             Voids_work.Cards.Jackalope.AddCard();
@@ -218,8 +220,39 @@ namespace AllTheSigils
             AddWithering();
             AddZapper();
 
+            //Anthony's sigils
+            anthonyClawPrefab = ResourceBank.Get<GameObject>("Prefabs/Cards/SpecificCardModels/LatchClaw");
+            AddActivactedNanoShield();
+            AddActivactedBrittle();
+            AddActivactedExplodeOnDeath();
+            AddActivactedReach();
+            AddDecreasePowerIncreaseHealth();
+            AddTransformChickenLooseCannon();
+            AddTransformChickenEnemyOnly();
+            AddEatChicken();
+            AddChicken();
+            AddChickenCard();
 
+            //ATS sigils
 
+            AddTemporarySigils();
+
+            //WriteSigilPartOfTheWikiToFileInPluginDirectory();
+            //AddDevStuff();
+        }
+
+        public void WriteSigilPartOfTheWikiToFileInPluginDirectory()
+        {
+
+        }
+
+        public void Start()
+        {
+            ReplaceNewSigilsOnCards();
+        }
+
+        public void AddTemporarySigils()
+        {
             foreach (AbilityInfo ability in AbilityManager.AllAbilityInfos)
             {
                 string guid = GetSigilGuid(ability.ability);
@@ -236,13 +269,6 @@ namespace AllTheSigils
                     NewSigilVersions.Add(info.ability, guid);
                 }
             }
-
-            //AddDevStuff();
-        }
-
-        public void Start()
-        {
-            ReplaceNewSigilsOnCards();
         }
 
         public void ReplaceNewSigilsOnCards()
@@ -305,6 +331,15 @@ namespace AllTheSigils
         {
             string folder = Act2 ? "Act2" : "Act1";
             byte[] imgBytes = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(base.Info.Location), "Artwork/", "Lily", $"{folder}/", $"{path}.png"));
+            Texture2D tex = new Texture2D(2, 2);
+            tex.LoadImage(imgBytes);
+            tex.filterMode = FilterMode.Point;
+            return tex;
+        }
+
+        public Texture2D GetTextureAnthony(string path)
+        {
+            byte[] imgBytes = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(base.Info.Location), "Artwork/", "Anthony", $"{path}.png"));
             Texture2D tex = new Texture2D(2, 2);
             tex.LoadImage(imgBytes);
             tex.filterMode = FilterMode.Point;
