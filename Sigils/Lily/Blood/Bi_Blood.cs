@@ -14,7 +14,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                     OldLilyPluginGuid,
                     "Noble Sacrifice",
-                    "A card bearing this sigil is counted as 2 blood rather than 1 blood when sacrificed.",
+                    "[creature] is counted as 2 blood rather than 1 blood when sacrificed.",
                     typeof(Bi_Blood),
                     GetTexture("bi_blood")
                 );

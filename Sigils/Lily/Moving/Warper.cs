@@ -17,7 +17,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                          OldLilyPluginGuid,
                          "Warper",
-                         "At the end of the owner's turn, the creature bearing this sigil will move to the right, it will jump over any creatures in its path, if it encounters the edge of the board, it will loop over to the other side.",
+                         "At the end of its owner's turn, [creature] will move to the right, jumping over any creatures in its path, if it encounters the edge of the board, it will loop over to the other side.",
                          typeof(Warper),
                          GetTexture("warper")
                      );

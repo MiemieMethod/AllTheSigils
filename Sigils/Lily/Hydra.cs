@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                  OldLilyPluginGuid,
                  "Exhaustion",
-                 "The attack of a card bearing this sigil will be decreased by the same amount as its lost health.",
+                 "The attack of [creature] will be decreased by the same amount as its lost health.",
                  typeof(Hydra),
                  GetTexture("exhaustion")
              );

@@ -14,7 +14,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                              OldLilyPluginGuid,
                              "Superior Sacrifice",
-                             "A card bearing this sigil is counted as 4 blood rather than 1 blood when sacrificed.",
+                             "[creature] is counted as 4 blood rather than 1 blood when sacrificed.",
                              typeof(Quadra_Blood),
                              GetTexture("quadra_blood")
                          );

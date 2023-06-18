@@ -18,7 +18,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                        OldLilyPluginGuid,
                        "Short",
-                       "A card bearing this sigil will not be blocked by an opposing creature bearing the airborn sigil.",
+                       "[creature] will not be blocked by an opposing creature bearing the airborn sigil.",
                        typeof(Short),
                        GetTexture("short")
                    );

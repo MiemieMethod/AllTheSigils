@@ -16,7 +16,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                  OldLilyPluginGuid,
                  "Bait",
-                 "When an opposing creature is played and there is no card opposite of the card bearing this sigil, the opposing creature will move to that spot.",
+                 "When an opposing creature is played and there is no card opposite of [creature], the opposing creature will move to that spot.",
                  typeof(Bait),
                  GetTexture("bait")
              );

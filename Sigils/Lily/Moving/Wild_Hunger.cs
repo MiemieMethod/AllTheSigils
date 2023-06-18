@@ -16,7 +16,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                            OldLilyPluginGuid,
                            "Wild hunger",
-                           "At the end of the owner's turn, the card bearing this sigil will move in the direction inscrybed in the sigil, but if it hits a card whilst moving, that card perishes and the card bearing this sigil gains 1+/1+.",
+                           "At the end of its owner's turn, [creature] will move in the direction inscribed on the sigil, however if it hits a card whilst moving, [creature] will stop, the card it hit will perish and [creature] will gain 1+/1+.",
                            typeof(Wild_Hunger),
                            GetTexture("wild_hunger")
                        );

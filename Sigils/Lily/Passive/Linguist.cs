@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                        OldLilyPluginGuid,
                        "Linguist",
-                       "While a card bearing this sigil is on the board, all talking cards on your side of the board get +1 attack.",
+                       "While [creature] is on the board, all talking cards on your side of the board get +1 attack.",
                        typeof(Linguist),
                        GetTexture("linguist")
                    );

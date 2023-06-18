@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                  OldLilyPluginGuid,
                  "Instant",
-                 "A card bearing this sigil will perish immediately after its played.",
+                 "[creature] will perish immediately after its played.",
                  typeof(Instakill),
                  GetTexture("instant")
              );

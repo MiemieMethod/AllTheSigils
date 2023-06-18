@@ -38,10 +38,15 @@ namespace AllTheSigils
                 }
                 if (__instance.HasAbility(Bond.ability))
                 {
-                    CardSlot RightSlot = Singleton<BoardManager>.Instance.GetAdjacentSlots(__instance.slot)[1];
-                    if (RightSlot?.Card != null)
+                    List<CardSlot> slots = __instance.OpponentCard ? Singleton<BoardManager>.Instance.OpponentSlotsCopy : Singleton<BoardManager>.Instance.PlayerSlotsCopy;
+                    int RightSlotIndex = __instance.Slot.Index + 1;
+                    if (RightSlotIndex >= 0 && RightSlotIndex < slots.Count)
                     {
-                        __result += 1;
+                        CardSlot RightSlot = slots[RightSlotIndex];
+                        if (RightSlot?.Card != null)
+                        {
+                            __result += 1;
+                        }
                     }
                 }
             }

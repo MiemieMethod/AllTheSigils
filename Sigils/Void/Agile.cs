@@ -19,7 +19,7 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Agile";
-            const string rulebookDescription = "When a card bearing this sigil would be struck, it will move out of the way.";
+            const string rulebookDescription = "When [creature] would be struck, it will move out of the way.";
             const string LearnDialogue = "The Card jumped out of the way to save itself...";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Agile);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Agile_a2);

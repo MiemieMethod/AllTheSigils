@@ -4,6 +4,7 @@ using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
@@ -17,7 +18,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                                OldLilyPluginGuid,
                                "Launcher",
-                               "At the end of the owner's turn, a card bearing this sigil will create another creature on a random empty space on the owner's side of the table.",
+                               "At the end of its owner's turn, [creature] will create another creature on a random empty space on the owner's side of the table.",
                                typeof(Launcher),
                                GetTexture("launcher")
                            );
@@ -51,16 +52,9 @@ namespace AllTheSigils
         // Token: 0x06000082 RID: 130 RVA: 0x000040BC File Offset: 0x000022BC
         public override IEnumerator OnTurnEnd(bool playerTurnEnd)
         {
-            List<CardSlot> cards = playerTurnEnd ? Singleton<BoardManager>.Instance.PlayerSlotsCopy : Singleton<BoardManager>.Instance.OpponentSlotsCopy;
-            List<CardSlot> openspots = new List<CardSlot>();
-            foreach (CardSlot slot in cards)
-            {
-                if (slot.Card == null)
-                {
-                    openspots.Add(slot);
-                }
-            }
-            if (openspots.Count != 0)
+            List<CardSlot> slots = playerTurnEnd ? Singleton<BoardManager>.Instance.PlayerSlotsCopy : Singleton<BoardManager>.Instance.OpponentSlotsCopy;
+            List<CardSlot> openspots = slots.Where(x => x.Card == null).ToList();
+            if (openspots.Count > 0)
             {
                 Random random = new Random();
 
@@ -68,7 +62,7 @@ namespace AllTheSigils
                 Singleton<ViewManager>.Instance.SwitchToView(View.Board, false, false);
                 yield return new WaitForSeconds(0.3f);
 
-                if (base.Card.Info.iceCubeParams.creatureWithin != null)
+                if (base.Card.Info?.iceCubeParams?.creatureWithin != null)
                 {
                     yield return Singleton<BoardManager>.Instance.CreateCardInSlot(base.Card.Info.iceCubeParams.creatureWithin, openspots[random.Next(openspots.Count)], 0.1f, true);
                 }

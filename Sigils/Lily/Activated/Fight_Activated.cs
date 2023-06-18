@@ -16,7 +16,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                OldLilyPluginGuid,
                "Charge",
-               "Pay 3 bones to choose a enemy creature that a card bearing this sigil will strike.",
+               "Pay 3 bones to choose an enemy creature that [creature] will strike.",
                typeof(Fight_Activated),
                GetTexture("charge")
            );

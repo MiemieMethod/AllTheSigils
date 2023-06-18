@@ -18,7 +18,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                  OldLilyPluginGuid,
                  "Imbuing",
-                 "A card bearing this sigil will get specific buffs depending on which tribe is most promenent in the sacrifices that were used to summon the card.",
+                 "[creature] will get specific buffs depending on which tribe is most promenent in the sacrifices that were used to summon it.",
                  typeof(Imbuing),
                  GetTexture("imbuing")
              );
@@ -61,14 +61,7 @@ namespace AllTheSigils
         // Token: 0x060013EE RID: 5102 RVA: 0x000441EB File Offset: 0x000423EB
         public override IEnumerator OnResolveOnBoard()
         {
-            List<Tribe> tribes = new List<Tribe>();
-            foreach (CardInfo cardinfo in Singleton<BoardManager>.Instance.LastSacrificesInfo)
-            {
-                if (cardinfo.tribes.Count > 0)
-                {
-                    cardinfo.tribes.ForEach(x => tribes.Add(x));
-                }
-            }
+            List<Tribe> tribes = Singleton<BoardManager>.Instance.LastSacrificesInfo.SelectMany(x => x.tribes).ToList();
 
             if (tribes.Count > 0)
             {
@@ -78,11 +71,15 @@ namespace AllTheSigils
                             select new { grp.Key, Count = grp.Count() });
 
                 List<Tribe> result = most.SelectMany(a => Enumerable.Repeat(a.Key, a.Count)).ToList();
+
                 Random random = new Random();
-                CardModificationInfo mod = Imbuing.SpecialEffects[result[random.Next(result.Count)]];
-                base.Card.AddTemporaryMod(mod);
-                base.Card.Status.hiddenAbilities.Add(Imbuing.ability);
-                base.Card.Info.Abilities.Remove(Imbuing.ability);
+                CardModificationInfo mod = new CardModificationInfo();
+                if (Imbuing.SpecialEffects.TryGetValue(result[random.Next(result.Count)], out mod))
+                {
+                    base.Card.AddTemporaryMod(mod);
+                    base.Card.Status.hiddenAbilities.Add(Imbuing.ability);
+                    base.Card.Info.Abilities.Remove(Imbuing.ability);
+                }
             }
             yield break;
         }

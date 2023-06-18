@@ -16,7 +16,7 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Zapper";
-            const string rulebookDescription = "When [creature] damages another creature, that creature will gain the Paralysis Sigil. The Paralysis sigil is defined as: A card bearing this sigil only attack every other turn.";
+            const string rulebookDescription = "When [creature] damages another creature, that creature will gain the Paralysis Sigil. The Paralysis sigil is defined as: A card bearing this sigil will only attack every other turn.";
             const string LearnDialogue = "Shocking";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Zapper);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Zapper_a2);

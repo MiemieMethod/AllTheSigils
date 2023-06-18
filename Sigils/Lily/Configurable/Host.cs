@@ -16,7 +16,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                                OldLilyPluginGuid,
                                "Host",
-                               "A card bearing this sigil is the host of other creatures. It will give you such creature when struck.",
+                               "[creature] is the host of other creatures. It will give you such creature when struck.",
                                typeof(Host),
                                GetTexture("host")
                            );

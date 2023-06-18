@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                       OldLilyPluginGuid,
                       "Song of sleep",
-                      "If a creature moves into the space opposing a card bearing this sigil, that creature will obtain the asleep sigil.",
+                      "If a creature moves into the space opposing [creature], that creature will obtain the asleep sigil.",
                       typeof(Song_Of_Sleep),
                       GetTexture("song_of_sleep")
                   );

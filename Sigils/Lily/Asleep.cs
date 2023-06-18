@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                OldLilyPluginGuid,
                "Asleep",
-               "A card bearing this sigil has 0 attack for as long as it has this sigil, and this sigil will be removed after 1 turn.",
+               "[creature] has 0 attack for as long as it has this sigil, at the start of its owner's turn this sigil will be removed from [creature].",
                typeof(Asleep),
                GetTexture("asleep")
            );

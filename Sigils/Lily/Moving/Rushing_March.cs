@@ -16,7 +16,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                        OldLilyPluginGuid,
                        "Rushing march",
-                       "At the end of the owner's turn, a card bearing this sigil will move to the direction inscrybed to the sigil, if it hits a card however whilst moving, the card bearing this sigil stops and the card it hits perishes.",
+                       "At the end of its owner's turn, [creature] will move in the direction inscribed on the sigil, however if it hits a card whilst moving, [creature] will stop and the card it hit will perish.",
                        typeof(Rushing_March),
                        GetTexture("rushing_march")
                    );

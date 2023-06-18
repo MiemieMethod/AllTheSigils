@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                                 OldLilyPluginGuid,
                                 "Bone hoarder 1",
-                                "When a card bearing this sigil is played, 1 bone is rewarded.",
+                                "When [creature] is played, 1 bone is rewarded.",
                                 typeof(OneSummonBones),
                                 GetTexture("onesummonbones")
                             );

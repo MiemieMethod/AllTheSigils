@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                                OldLilyPluginGuid,
                                "Spawner",
-                               "At the end of the owners turn, a card bearing this sigil will move in the direction inscribed in the sigil and create another creature in its old space.",
+                               "At the end of its owner's turn, [creature] will move in the direction inscribed on the sigil and will create another creature in its old space.",
                                typeof(Spawner),
                                GetTexture("spawner")
                            );

@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                          OldLilyPluginGuid,
                          "Tribe Health",
-                         "While a card bearing this sigil is on the board, all other cards on your side of the board of the same tribe will gain +1 health.",
+                         "While [creature] is on the board, all other cards on your side of the board of the same tribe will gain +1 health.",
                          typeof(Tribe_Health),
                          GetTexture("tribe_health")
                      );

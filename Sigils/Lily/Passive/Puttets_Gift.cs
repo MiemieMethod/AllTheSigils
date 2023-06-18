@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                           OldLilyPluginGuid,
                           "Puppets gift",
-                          "As long as a card bearing this sigil is on the board any cards with brittle won't die because of brittle.",
+                          "As long as [creature] is on the board any cards with brittle won't die because of brittle.",
                           typeof(Puppets_Gift),
                           GetTexture("puppets_gift")
                       );

@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                       OldLilyPluginGuid,
                       "Tribe Attack",
-                      "While a card bearing this sigil is on the board, all other cards on your side of the board of the same tribe will gain +1 attack.",
+                      "While [creature] is on the board, all other cards on your side of the board of the same tribe will gain +1 attack.",
                       typeof(Tribe_Attack),
                       GetTexture("tribe_attack")
                   );

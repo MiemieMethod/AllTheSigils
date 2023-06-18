@@ -16,7 +16,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                              OldLilyPluginGuid,
                              "Bone lord 6",
-                             "When a card bearing this sigil dies, 6 bones are rewarded instead of 1.",
+                             "When [creature] dies, 6 bones are rewarded instead of 1.",
                              typeof(SixDeathBones),
                              GetTexture("sixdeathbones")
                          );

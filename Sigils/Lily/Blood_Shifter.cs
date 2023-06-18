@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                     OldLilyPluginGuid,
                     "Blood shifter",
-                    "When a card bearing this sigils kills another card, it will turn into that card.",
+                    "When [creature] kills another card, it will turn into that card.",
                     typeof(Blood_Shifter),
                     GetTexture("blood_shifter")
                 );

@@ -16,7 +16,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                 OldLilyPluginGuid,
                 "Fearful",
-                "When a card bearing this sigil is struck without it resulting in death, it will be returned to the owner's hand.",
+                "When [creature] is struck without it resulting in death, it will be returned to its owner's hand.",
                 typeof(Fearful),
                 GetTexture("fearful")
             );

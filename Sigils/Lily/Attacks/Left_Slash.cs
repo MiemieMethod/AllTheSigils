@@ -14,7 +14,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                     OldLilyPluginGuid,
                     "Left scratch",
-                    "When a card bearing this sigil attacks it also attacks the space on the left of the attacked slot.",
+                    "When [creature] attacks it also attacks the space on the left of the attacked slot.",
                     typeof(Left_Slash),
                     GetTexture("left_scratch")
                 );

@@ -14,7 +14,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                           OldLilyPluginGuid,
                           "Picky",
-                          "A Card bearing this sigil cannnot be summoned using any free cards as sacrifice.",
+                          "[creature] cannnot be summoned by using any free cards as sacrifice.",
                           typeof(Picky),
                           GetTexture("picky")
                       );

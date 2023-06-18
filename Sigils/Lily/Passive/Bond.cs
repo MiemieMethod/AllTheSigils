@@ -14,7 +14,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                        OldLilyPluginGuid,
                        "Bond",
-                       "When a creature bearing this sigil has a adjacent creature it will gain +1 attack/health dependent on which side the adjacent creature is.",
+                       "Any creatures adjacent to [creature] will gain either +1 attack or +1 health, depending on which stat it is closest to.",
                        typeof(Bond),
                        GetTexture("Bond")
                    );

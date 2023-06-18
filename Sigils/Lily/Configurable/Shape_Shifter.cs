@@ -17,7 +17,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                                OldLilyPluginGuid,
                                "Shapeshifter",
-                               "A card bearing this sigil is ever changing. It will change its form once it's struck.",
+                               "[creature] is ever changing. It will change its form once it's struck.",
                                typeof(Shape_Shifter),
                                GetTexture("shape_shifter")
                            );

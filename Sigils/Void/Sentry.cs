@@ -19,7 +19,7 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Ambush";
-            const string rulebookDescription = "When a creature moves into the space opposing a card bearing this sigil, they are dealt 1 damage.";
+            const string rulebookDescription = "When a creature moves into the space opposing [creature], they are dealt 1 damage.";
             const string LearnDialogue = "Out of the shadows, they strike";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Ambush);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Ambush_a2);

@@ -17,7 +17,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                 OldLilyPluginGuid,
                 "Support call",
-                "When a card bearing this sigil is played, a card from your sidedeck is created in your hand.",
+                "When [creature] is played, a card from your sidedeck is created in your hand.",
                 typeof(Draw_Side_Deck_OnSummon),
                 GetTexture("support_call")
             );

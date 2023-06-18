@@ -15,7 +15,7 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                 OldLilyPluginGuid,
                 "All seeing",
-                "While a card bearing this sigil is on the board, all talking cards on your side of the board get +2 health.",
+                "While [creature] is on the board, all talking cards on your side of the board get +2 health.",
                 typeof(All_Seeing),
                 GetTexture("all_seeing")
             );
