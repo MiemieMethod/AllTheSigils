@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gravi\\Source\\Repos\\AllTheSigils\\AllTheSigils.csproj": {}
+    "C:\\Users\\gravi\\source\\repos\\AllTheSigils\\AllTheSigils.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gravi\\Source\\Repos\\AllTheSigils\\AllTheSigils.csproj": {
+    "C:\\Users\\gravi\\source\\repos\\AllTheSigils\\AllTheSigils.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gravi\\Source\\Repos\\AllTheSigils\\AllTheSigils.csproj",
+        "projectUniqueName": "C:\\Users\\gravi\\source\\repos\\AllTheSigils\\AllTheSigils.csproj",
         "projectName": "AllTheSigils",
-        "projectPath": "C:\\Users\\gravi\\Source\\Repos\\AllTheSigils\\AllTheSigils.csproj",
+        "projectPath": "C:\\Users\\gravi\\source\\repos\\AllTheSigils\\AllTheSigils.csproj",
         "packagesPath": "C:\\Users\\gravi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gravi\\Source\\Repos\\AllTheSigils\\obj\\",
+        "outputPath": "C:\\Users\\gravi\\source\\repos\\AllTheSigils\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\gravi\\AppData\\Roaming\\NuGet\\NuGet.Config",

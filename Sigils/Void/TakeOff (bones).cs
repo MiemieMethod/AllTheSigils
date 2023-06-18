@@ -2,7 +2,9 @@
 using DiskCardGame;
 using InscryptionAPI.Card;
 using System.Collections;
+using System.Reflection;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using Art = AllTheSigils.Artwork.Resources;
 
 
@@ -31,7 +33,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack);
 
             test.activated = true;
-            test.pixelIcon = SigilUtils.LoadSpriteFromResource(Art.void_Dive_Bones_a2);
+            test.pixelIcon = SigilUtils.LoadSpriteFromResource(Art.void_TakeOff_Bones_a2);
 
 
             // set ability to behaviour class
@@ -63,12 +65,8 @@ namespace AllTheSigils
                 //make the card mondification info
                 cardModificationInfo = new CardModificationInfo(Ability.Flying);
                 cardModificationInfo.singletonId = "void_TakeOff_Flying";
-                //Clone the main card info so we don't touch the main card set
-                CardInfo targetCardInfo = base.Card.Info.Clone() as CardInfo;
-                //Add the modifincations to the cloned info
-                targetCardInfo.Mods.Add(cardModificationInfo);
-                //Set the target's info to the clone'd info
-                base.Card.SetInfo(targetCardInfo);
+                base.Card.TemporaryMods.Add(cardModificationInfo);
+                base.Card.Anim.SetHovering(true);
                 base.Card.Anim.PlayTransformAnimation();
             }
             yield return new WaitForSeconds(0.3f);
@@ -88,13 +86,15 @@ namespace AllTheSigils
             yield return new WaitForSeconds(0.15f);
             yield return base.PreSuccessfulTriggerSequence();
             CardModificationInfo cardModificationInfo = base.Card.TemporaryMods.Find((CardModificationInfo x) => x.singletonId == "void_TakeOff_Flying");
-            CardInfo targetCardInfo = base.Card.Info.Clone() as CardInfo;
-            //Add the modifincations to the cloned info
-            targetCardInfo.Mods.Remove(cardModificationInfo);
-            //Set the target's info to the clone'd info
-            base.Card.SetInfo(targetCardInfo);
-            base.Card.Anim.PlayTransformAnimation();
-            yield return new WaitForSeconds(0.3f);
+            if (cardModificationInfo != null)
+            {
+                base.Card.TemporaryMods.Remove(cardModificationInfo);
+                base.Card.Anim.SetHovering(false);
+                base.Card.Anim.PlayTransformAnimation();
+
+            }
+            yield return new WaitForSeconds(0.15f);
+
             yield break;
         }
     }

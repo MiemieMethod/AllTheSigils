@@ -865,8 +865,14 @@
   <data name="void_TakeOff_Bones" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Void\void_TakeOff_Bones.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="void_TakeOff_Bones_a2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Void\void_TakeOff_Bones_a2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="void_TakeOff_Energy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Void\void_TakeOff_Energy.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="void_TakeOff_Energy_a2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Void\void_TakeOff_Energy_a2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="void_ThickShell" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Void\ability_thickshell.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

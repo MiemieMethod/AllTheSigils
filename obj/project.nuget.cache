@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gAdBkgVR8nUdGumRgU3FDjaM+W6fj3TVPQeu1Kb5mHbdG4UQiZuiEqtboG70xmO5JSq6PVePsO29ZmSvD2jOTA==",
+  "dgSpecHash": "EpHiC+hAdDOVaXtKp0f7UoDGgs9+NihMr2btqlIebr2X5NKmCrTcINSVhQyroq1kCBxLJsj3W1yJMmIKLLJktQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\gravi\\Source\\Repos\\AllTheSigils\\AllTheSigils.csproj",
+  "projectFilePath": "C:\\Users\\gravi\\source\\repos\\AllTheSigils\\AllTheSigils.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gravi\\.nuget\\packages\\bepinex.analyzers\\1.0.8\\bepinex.analyzers.1.0.8.nupkg.sha512",
     "C:\\Users\\gravi\\.nuget\\packages\\bepinex.baselib\\5.4.19\\bepinex.baselib.5.4.19.nupkg.sha512",
