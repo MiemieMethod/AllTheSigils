@@ -28,6 +28,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             Warper.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "warper";
+            }
         }
     }
 

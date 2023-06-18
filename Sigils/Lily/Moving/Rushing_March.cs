@@ -27,6 +27,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             Rushing_March.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "rushing_march";
+            }
         }
     }
 

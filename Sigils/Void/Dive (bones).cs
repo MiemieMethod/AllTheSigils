@@ -39,6 +39,11 @@ namespace AllTheSigils
 
             // set ability to behaviour class
             void_Dive_Bone.ability = test.ability;
+
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Dive_Bone.ability] = "void_Dive_Bones";
+            }
         }
     }
 

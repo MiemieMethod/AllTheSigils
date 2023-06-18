@@ -30,6 +30,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_DrawJack.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_DrawJack), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_DrawJack.ability] = "void_drawjack";
+            }
         }
     }
 

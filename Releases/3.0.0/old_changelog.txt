@@ -1,0 +1,186 @@
+v1.8.0
+Void's Extra Sigils changes:
+- Updated the readme of my section
+- Updated the rulebook on a few sigils, adding a missed peroid
+- Updated draw blood to work in act 2
+- Updated draw bone to work in act 2
+- New Sigils: Maneuver
+- Added new Woodcarver fuctionality: the wood carver will give you 2 totems instead of just one if you have one bad totem in your inventory.
+- Internal code changes
+
+v1.7.0
+Void's Extra Sigils changes:
+- Ported Disease Absorbtion from Void's Life and Currency Cardpack. It didn't require anything special, so why keep it there.
+- Ported Life Gambler from Void's Life and Currency Cardpack. It didn't require anything special, so why keep it there.
+- New Sigils: Retaliate
+- Rewrote a lot of the sigil descriptions while having the game open. they all should better match what is in the game.
+- Rewrote the code for a few sigils (Familar, and a few others)
+- Reorganized art assets as they were getting a bit out of hand to manage at 90+ sigils in my section alone.
+- Added a "no act two" icon for sigils that might or might not work in act 2, instead of them just appearing blank.
+- various tweaks which I forgot cause I shouldn't be working on this when super tired :,D
+
+Sigil Manager changes:
+- Renamed Sigil Manager from well, sigil replacer to sigil manager to better communicate it's purpose.
+- Added Sigil Manager info into the readme
+- Added a config option in the sigil manager (default:true) to add all vanilla abilities it finds on cards to the act 1 rulebook. This is ran before the sigil hider. 
+
+
+v1.6.0
+Void's Extra Sigils changes:
+- Caustic now has new act 2 art and a new act 2 icon thanks to Hazel
+- Removed Log spam of Protector and Bodyguard since they seem to be in a mostly working state.
+- Adjusted Electric, just code stuff. should work better and no more infinite loops till a card dies.
+- Fixed Medic from locking up the game if it was the only card on the field
+- Midas, Abundance, and Coin Finder should now have some feedback with the card shaking in act 2
+- New Sigils: Recoil, Zapper, Paralysis, Enforcer
+
+v1.5.8
+Void's Extra Sigils changes:
+- Tried to fix the missing icon
+- Added Coin Finder
+- Touched up a few (not all) typos. 
+
+v1.5.5
+Sylvie's Sigils changes:
+- Fixed Tribe Attack, Tribe Health, Bond, Linguist and All seeing
+- Cleaned up the code for Imbuing and Picky so there should be less bugs with those sigils
+- Made all sigils that could be stacked stackable
+- Added act 2 art for most sigils that would work in act 2
+- New Sigils: Right scratch, Left scractch, Double scratch, Warper, Rushing march, Wild hunger, Puppets gift and Instant
+- Added the right power levels to all sigils
+- Added default cards for the configurable sigils
+- Cleaned up the credits
+
+v1.5.4
+Void's Extra Sigils changes:
+- Made Scissors work when paired with corpse eater, or other effects that might draw it out during combat phase
+- Touched up haste and Stampede code. Might still cause issues.
+
+v1.5.3
+Void's Extra Sigils changes:
+- Added act 2 icon for regen 1/2/3/full, for burning, and for toothgiver
+- Made it so some icons flip in Y position if the enemy has them (Random strike, Trample, ect)
+- Fixed Icecube breaking the quadbones patch
+- Fixed Trample still dealing overkill damage to the queue card (did both to the queue and to leshy, when it was meant to redirect the overkill to leshy)
+- Fixed Midas and Abundence to play nicer with the Life Cost API. If it detects that mod, it should no longer make the bowl vanish
+- New Sigils: "Power from Movement", Velocity, Bone Shard, Tooth Shard
+
+v1.5.2
+- Fixed Ram and Acid trail bugs
+- Added Random Strafe to the readme (woops)
+
+v1.5.1
+General changes:
+- Updated to the latest API version number
+- Updated to the latest unofficial patch version number
+
+Void's Extra Sigils changes:
+- Fixed Packmule when given by antler bearer to work for the player how it works when leshy plays it.
+
+v1.5.0
+Void's Extra Sigils changes:
+- New Sigils: Hourglass, Withering
+- Changed Toothbargin to work like how it works for the player, when leshy plays it. 
+
+v1.4.0
+Void's Extra Sigils changes:
+- New Sigils: Box, Draw Blood, Draw Bone, and Blood Growth
+
+v1.3.3
+Void's Extra Sigils changes:
+- maybe fixed jackalope causing issues
+
+v1.3.2
+Void's Extra Sigils changes:
+- Changed antler bearer from onDie trigger effect to predeath trigger effect to hopefully prevent strange null errors from happening at times.
+- Also fixed jackalope tokens being goop
+
+v1.3.1
+Void's Extra Sigils changes:
+- Fixed Draw Card giving an error if the creature has no ice cube set. it should now give an Oppossum if it has no icecube set.
+
+v1.3.0
+Void's Extra Sigils changes:
+- New Sigils: Consumer, Caustic, Grazing, Antler Bearer, Draw Jackalope, Draw Card, Desperation
+- Added Acid Token form Caustic
+- Added Jackalope token from Draw Jackalope
+- Hopefully updated readme with all the missing abilities that this mod has, such as giant, dwarf, toothpuller, and nutritious. 
+- Changed Bombard to only trigger on the owner's endphase (sad the chaos as lessen now =/ )
+
+v1.2.1
+Void's Extra Sigils changes:
+- reworked bodyguard
+- Fixed Ram with tails and icecube by just not making it work in combat
+- Fixed issue with enrage
+- added pixel icons for a lot of abilities for act 2. Some might not function however correctly so please test making cards beforehand.
+
+v1.2.0
+Void's Extra Sigils changes:
+- Updated thick shell to a patch that lowers damage by 1 instead of the way the original worked by adding 1 temperary health.
+- Updated Leech's description to state on a card
+- Updated Acidic trail's art
+- New Sigils: Giant, Blind, Dwarf, Firestarter
+- Added Config options so you can turn on or off some sigils that are given to leshy (on by default)
+- Maybe fixed Abundance once again.
+
+Sigil Replacer Updated, changes below
+- Restructed the mod's code
+- Renamed to Sigil Manager
+- Added a "HIDE ALL UNUSED SIGILS" config option. this is OFF be default. It searches for any sigil that is NOT on a card; then removes it from the rulebook, leshy, and shops. 
+- Added a whitelist, so people can configer what unused sigils. The current default sigils are sigils used by other sigils, and might break if you don't have them listed.
+
+v1.1.2
+- oops fixed changelog version mistype
+
+v1.1.1
+- Added AnthonysSigils
+- New Sigils: Activated Latch Nano Shield, Activated Latch Brittle, Activated Latch Explode On Death, Activated Latch Reach, Docile, To The Slaughter, Chicken, Transform Chicken (Loose Cannon), Transform Chicken (Enemy Only)
+
+v1.1.0
+- Linguist Added to Sylvie's Sigils
+- All seeing Added to Sylvie's Sigils
+- Blood shifter Added to Sylvie's Sigils
+- Asleep Added to Sylvie's Sigils
+- Song of sleep Added to Sylvie's Sigils
+
+v1.0.9
+- Fixed softlock with Familiar
+
+v1.0.8
+- Fixed issue with Haste and Ignite
+- Ignite renamed Stampede
+- Stampede icon updated
+- Bloodlust renamed to enrage
+- Enrage icon updated
+- Haste icon updated
+- Added New Sigils: Boneless, Predator, Opportunist, Prideful, Cowardly, Burning
+- Added some configs for leshy
+- Updated Familiar to work on any card targeted by an ally and not just the direct opposit card. 
+
+v1.0.7
+- Temperary fix for bees within patch: it won't trigger if the card is in queue
+- Added New Sigils: Haste, Herd, Ignite, Medic, Possessor
+
+v1.0.5
+- Fixed folder paths
+
+v1.0.4
+- Improved read-ability of Midas and Abundance. The camera now switches to the scales and lets you see the bowl drop to show you getting gold teeth.
+- Fixed a bug with a lot of skills checking card info and not card for abilities, meaning totems wouldn't work with them. Examples include: repellent, ram, thief. 
+
+v1.0.3
+- Fixed extra space in Abundance.
+
+v1.0.2
+- Fixed Mod Description / readme
+
+v1.0.1
+- Updated Icon art
+
+v1.0.0
+- Release
+- Midas Added to Void Sigils
+- Abundance Added to Void Sigils
+- Ported Alarm as Appatizing to Void Sigils
+- Made Stat Swapper visible in act 1 rulebok
+- Made Sniper Visible in act 1 rulebook

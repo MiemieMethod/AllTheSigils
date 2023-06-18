@@ -37,6 +37,11 @@ namespace AllTheSigils
 
             // set ability to behaviour class
             void_Lead_Energy.ability = test.ability;
+
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Lead_Energy.ability] = "void_Dive_Energy";
+            }
         }
     }
 

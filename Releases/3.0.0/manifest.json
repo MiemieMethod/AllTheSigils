@@ -1,0 +1,10 @@
+{
+    "name": "All_The_Sigils",
+    "version_number": "3.0.0",
+    "website_url": "",
+    "description": "A very large collection of sigils for modders to use. Over 150 sigils!",
+    "dependencies": [
+        "API_dev-API-2.14.1",
+        "BepInEx-BepInExPack_Inscryption-5.4.1902"
+    ]
+}

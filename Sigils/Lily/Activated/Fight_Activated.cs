@@ -28,6 +28,10 @@ namespace AllTheSigils
             info.activated = true;
 
             Fight_Activated.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "charge";
+            }
         }
     }
 

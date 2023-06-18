@@ -38,6 +38,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             ActivatedLatchNanoShield.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "activatedlatch-deathshield";
+            }
         }
         private void AddActivactedBrittle()
         {
@@ -54,6 +58,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             ActivatedLatchBrittle.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "activatedlatch-brittle";
+            }
         }
         private void AddActivactedExplodeOnDeath()
         {
@@ -70,6 +78,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             ActivatedLatchExplodeOnDeath.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "activatedlatch-explodeondeath";
+            }
         }
         private void AddActivactedReach()
         {
@@ -86,6 +98,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             ActivatedLatchReach.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "acticatedlatch-Reach";
+            }
         }
         private void AddIncreasePowerDecreaseHealth()
         {
@@ -101,6 +117,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             IncreasePowerDecreaseHealth.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "old-timer";
+            }
         }
         private void AddDecreasePowerIncreaseHealth()
         {
@@ -116,6 +136,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             DecreasePowerIncreaseHealth.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "docile";
+            }
         }
         private void AddEatChicken()
         {
@@ -131,6 +155,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             EatChickens.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "eatchicken";
+            }
         }
         private void AddChickenCard()
         {
@@ -169,6 +197,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             JustChicken.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "chicken";
+            }
         }
         private void AddTransformChickenOpp()
         {
@@ -184,6 +216,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             TurnIntoChickenOpp.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "TransformChick_Sigil";
+            }
         }
         private void AddTransformChickenLooseCannon()
         {
@@ -199,6 +235,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             TurnIntoChickenLooseCannon.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "TransformChick_Sigil";
+            }
         }
         private void AddTransformChickenEnemyOnly()
         {
@@ -214,6 +254,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             TurnIntoChickenEnemyOnly.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "TransformChick_Sigil";
+            }
         }
         public class TurnIntoChickenOpp : AbilityBehaviour
         {

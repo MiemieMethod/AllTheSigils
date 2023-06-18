@@ -31,6 +31,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_Protector.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Protector), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Protector.ability] = "void_protector";
+            }
         }
     }
 

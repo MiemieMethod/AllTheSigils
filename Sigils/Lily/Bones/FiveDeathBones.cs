@@ -27,6 +27,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             FiveDeathBones.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "fivedeathbones";
+            }
         }
     }
 

@@ -35,6 +35,10 @@ namespace AllTheSigils
 
             // set ability to behaviour class
             void_TakeOff_Energy.ability = test.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_TakeOff_Energy.ability] = "void_TakeOff_Energy";
+            }
         }
     }
 

@@ -29,6 +29,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             Short.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "short";
+            }
         }
     }
 

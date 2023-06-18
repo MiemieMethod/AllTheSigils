@@ -26,6 +26,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             Blood_Shifter.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "blood_shifter";
+            }
         }
     }
 

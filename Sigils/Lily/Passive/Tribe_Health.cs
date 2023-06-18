@@ -26,6 +26,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             Tribe_Health.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "tribe_health";
+            }
         }
     }
 

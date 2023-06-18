@@ -26,6 +26,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             Right_Slash.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "right_scratch";
+            }
         }
     }
 

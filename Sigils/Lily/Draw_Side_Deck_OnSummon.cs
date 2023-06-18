@@ -28,6 +28,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             Draw_Side_Deck_OnSummon.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "support_call";
+            }
         }
     }
 

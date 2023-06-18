@@ -30,6 +30,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_Stampede.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Stampede), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Stampede.ability] = "void_stampede";
+            }
         }
     }
 

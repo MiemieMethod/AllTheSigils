@@ -29,6 +29,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_Possessor_Powerful.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Possessor_Powerful), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Possessor_Powerful.ability] = "void_Possessor_Powerful";
+            }
 
         }
     }

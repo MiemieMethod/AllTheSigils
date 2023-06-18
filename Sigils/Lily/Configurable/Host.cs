@@ -27,6 +27,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             Host.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "host";
+            }
         }
     }
 

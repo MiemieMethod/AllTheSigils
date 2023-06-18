@@ -25,6 +25,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             Bond.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "bond";
+            }
         }
     }
 

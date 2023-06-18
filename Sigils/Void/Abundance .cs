@@ -32,9 +32,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_Abundance.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Abundance), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
-
-
-
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Abundance.ability] = "void_Abundance";
+            }
         }
     }
 

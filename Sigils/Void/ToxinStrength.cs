@@ -28,6 +28,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_Toxin_Strength.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Toxin_Strength), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Toxin_Strength.ability] = "void_toxin_strength";
+            }
         }
     }
 

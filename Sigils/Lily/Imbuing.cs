@@ -29,6 +29,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             Imbuing.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "imbuing";
+            }
         }
     }
 

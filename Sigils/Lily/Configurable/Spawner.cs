@@ -26,6 +26,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             Spawner.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "spawner";
+            }
         }
     }
 

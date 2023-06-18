@@ -2549,8 +2549,8 @@ namespace AllTheSigils.Artwork {
                 return ((byte[])(obj));
             }
         }
-		
-		/// <summary>
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] void_TakeOff_Bones_a2 {
@@ -2569,8 +2569,8 @@ namespace AllTheSigils.Artwork {
                 return ((byte[])(obj));
             }
         }
-		
-		/// <summary>
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] void_TakeOff_Energy_a2 {

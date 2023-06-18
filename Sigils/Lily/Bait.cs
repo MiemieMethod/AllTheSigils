@@ -27,6 +27,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             Bait.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "bait";
+            }
         }
     }
 

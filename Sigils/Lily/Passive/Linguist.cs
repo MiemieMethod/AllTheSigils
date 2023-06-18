@@ -26,6 +26,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             Linguist.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "linguist";
+            }
         }
     }
 

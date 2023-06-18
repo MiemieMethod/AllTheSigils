@@ -26,6 +26,14 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             Asleep.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "";
+            }
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "asleep";
+            }
         }
     }
 

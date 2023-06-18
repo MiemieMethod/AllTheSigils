@@ -31,6 +31,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_Ram.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Ram), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Ram.ability] = "void_shove";
+            }
         }
     }
 

@@ -25,6 +25,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             Bi_Blood.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "bi_blood";
+            }
         }
     }
 

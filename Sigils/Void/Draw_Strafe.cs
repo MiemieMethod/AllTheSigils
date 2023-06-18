@@ -31,6 +31,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_DrawStrafe.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_DrawStrafe), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_DrawStrafe.ability] = "void_DrawStrafe";
+            }
         }
     }
 

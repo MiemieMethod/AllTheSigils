@@ -27,6 +27,10 @@ namespace AllTheSigils
             info.opponentUsable = true;
 
             Wild_Hunger.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "wild_hunger";
+            }
         }
     }
 

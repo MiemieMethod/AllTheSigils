@@ -30,6 +30,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             ability_TakeAllNegatives.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(ability_TakeAllNegatives), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[ability_TakeAllNegatives.ability] = "void_takeDisease";
+            }
         }
     }
 

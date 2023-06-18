@@ -28,6 +28,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_Regen1.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Regen1), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Regen1.ability] = "ability_regen_1";
+            }
         }
     }
 

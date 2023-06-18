@@ -30,6 +30,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_Toothpicker.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Toothpicker), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Toothpicker.ability] = "void_tooth";
+            }
         }
     }
 

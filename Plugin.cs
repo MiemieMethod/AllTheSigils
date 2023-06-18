@@ -18,12 +18,13 @@ namespace AllTheSigils
 
     // COMMENTS TO COMMUNICATE YAY :D
     //TO DO...
-    //Finish porting all missing sigils
+    //Finish porting all missing sigils (done unless if there were more missing sigils besides Anthony's)
     //Fix haste/stampede and other "fake combat" effects
     //Fix Sticky
     //Fix Strong Wind
     //Fix Deadly Waters
     //Fix Trample
+    //Find out what the best method is to add all future sigils (if there is time all old sigils can also be updated to use this method)
 
 
     public partial class Plugin : BaseUnityPlugin
@@ -48,7 +49,11 @@ namespace AllTheSigils
 
         public static GameObject anthonyClawPrefab;
 
+        public static Dictionary<Ability, String> SigilArtNames = new Dictionary<Ability, string>();
+
         public static Dictionary<Ability, String> NewSigilVersions = new Dictionary<Ability, string>();
+
+        public static bool GenerateWiki = true;
 
         private void Awake()
         {
@@ -235,20 +240,78 @@ namespace AllTheSigils
 
             //ATS sigils
 
-            AddTemporarySigils();
-
-            //WriteSigilPartOfTheWikiToFileInPluginDirectory();
+            if (GenerateWiki)
+            {
+                WriteSigilPartOfTheWikiToFileInPluginDirectory();
+            }
             //AddDevStuff();
+
+            AddTemporarySigils();
+        }
+        public void Start()
+        {
+            ReplaceNewSigilsOnCards();
         }
 
         public void WriteSigilPartOfTheWikiToFileInPluginDirectory()
         {
 
-        }
+            String dir = Path.Combine(Path.GetDirectoryName(base.Info.Location), "Wiki/");
+            if (!System.IO.Directory.Exists(dir))
+            {
+                System.IO.Directory.CreateDirectory(dir);
+            }
 
-        public void Start()
-        {
-            ReplaceNewSigilsOnCards();
+            String TopText = $"## Sigils\n\n<details>\n<summary>List of Sigils (Click to Expand)</summary>\n\n|Icon|Sigil Name|Power Level|Description|Notes|\n|-|:-:|:-:|:-:|:-:|";
+            String BottomText = $"\n</details>";
+
+            String SigilInfoText = "";
+
+            string assetFolderLink = $"https://raw.githubusercontent.com/Memez4Life7/AllTheSigils/master/Artwork";
+            foreach (AbilityInfo ability in AbilityManager.AllAbilityInfos)
+            {
+                string guid = GetSigilGuid(ability.ability);
+
+                if (OldPluginGuids.Contains(guid) || guid == "ATS")
+                {
+                    string folderName = "";
+                    switch (guid)
+                    {
+                        case OldLilyPluginGuid:
+                            folderName = "Lily/Act1";
+                            break;
+                        case OldVoidPluginGuid:
+                            folderName = "Void_Merged";
+                            break;
+                        case OldAnthonyPluginGuid:
+                            folderName = "Anthony";
+                            break;
+                        case PluginGuid:
+                            folderName = "ATS";
+                            break;
+                    }
+
+                    string sigilArtName = "";
+                    string link = "";
+                    if (SigilArtNames.TryGetValue(ability.ability, out sigilArtName))
+                    {
+                        link = $"{assetFolderLink}/{folderName}/{sigilArtName}.png";
+                    }
+                    else
+                    {
+                        link = $"{assetFolderLink}/Lily/Act1/placeholder.png";
+                    }
+                    string name = ability.rulebookName;
+                    string powerLevel = ability.powerLevel.ToString();
+                    string description = ability.rulebookDescription;
+                    SigilInfoText += $"\n|<img align=\"center\" src=\"{link}\">|**{name}**|{powerLevel}|{description}||";
+                }
+            }
+
+            String WikiText = $"{TopText}{SigilInfoText}\n{BottomText}";
+            File.WriteAllText(Path.Combine(dir, "wiki.txt"), WikiText);
+
+            Plugin.Log.LogWarning($"FINISHED WRITING WIKI TEXT TO:\n{Path.Combine(dir, "wiki.txt")}");
         }
 
         public void AddTemporarySigils()

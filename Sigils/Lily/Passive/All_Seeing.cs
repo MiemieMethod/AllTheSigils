@@ -26,6 +26,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             All_Seeing.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "all_seeing";
+            }
         }
     }
 

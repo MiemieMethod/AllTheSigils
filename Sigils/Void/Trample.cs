@@ -29,6 +29,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_Trample.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Trample), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Trample.ability] = "void_trample";
+            }
         }
     }
 

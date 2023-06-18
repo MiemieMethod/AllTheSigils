@@ -26,6 +26,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             Instakill.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "instant";
+            }
         }
     }
 

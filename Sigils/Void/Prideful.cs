@@ -31,6 +31,10 @@ namespace AllTheSigils
             // set ability to behaviour class
             void_Prideful.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Prideful), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[void_Prideful.ability] = "void_Prideful";
+            }
         }
     }
 

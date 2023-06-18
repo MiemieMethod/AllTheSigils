@@ -28,6 +28,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             TwoSummonBones.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "twosummonbones";
+            }
         }
     }
 

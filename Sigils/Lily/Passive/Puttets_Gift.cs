@@ -26,6 +26,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             Puppets_Gift.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "puppets_gift";
+            }
         }
     }
 

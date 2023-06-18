@@ -25,6 +25,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             Picky.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "picky";
+            }
         }
     }
 

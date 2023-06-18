@@ -27,6 +27,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             TwoDeathBones.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "twodeathbones";
+            }
         }
     }
 

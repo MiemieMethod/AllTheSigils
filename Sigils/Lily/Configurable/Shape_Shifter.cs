@@ -28,6 +28,10 @@ namespace AllTheSigils
             info.opponentUsable = false;
 
             Shape_Shifter.ability = info.ability;
+            if (Plugin.GenerateWiki)
+            {
+                Plugin.SigilArtNames[info.ability] = "shape_shifter";
+            }
         }
     }
 
