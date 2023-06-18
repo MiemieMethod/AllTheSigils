@@ -2553,9 +2553,29 @@ namespace AllTheSigils.Artwork {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] void_TakeOff_Bones_a2 {
+            get {
+                object obj = ResourceManager.GetObject("void_TakeOff_Bones_a2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] void_TakeOff_Energy {
             get {
                 object obj = ResourceManager.GetObject("void_TakeOff_Energy", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] void_TakeOff_Energy_a2 {
+            get {
+                object obj = ResourceManager.GetObject("void_TakeOff_Energy_a2", resourceCulture);
                 return ((byte[])(obj));
             }
         }

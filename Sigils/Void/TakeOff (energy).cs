@@ -29,7 +29,7 @@ namespace AllTheSigils
             var test = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_TakeOff_Energy), tex_a1, tex_a2, LearnDialogue,
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack);
             test.activated = true;
-            test.pixelIcon = SigilUtils.LoadSpriteFromResource(Art.void_Dive_Energy_a2);
+            test.pixelIcon = SigilUtils.LoadSpriteFromResource(Art.void_TakeOff_Energy_a2);
 
 
 
