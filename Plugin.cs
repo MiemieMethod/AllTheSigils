@@ -43,8 +43,6 @@ namespace AllTheSigils
 
         public static Dictionary<Ability, string> NewSigilVersions = new Dictionary<Ability, string>();
 
-        public static Dictionary<Ability, String> NewSigilVersions = new Dictionary<Ability, string>();
-
         public const bool GenerateWiki = false;
 
         private void Awake()
