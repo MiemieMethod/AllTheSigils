@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,9 +19,9 @@ namespace AllTheSigils
                                 "Bone prince 2",
                                 "When [creature] dies, 2 bones are rewarded instead of 1.",
                                 typeof(TwoDeathBones),
-                                GetTexture("twodeathbones")
+                                GetTextureLily("twodeathbones")
                             );
-            info.SetPixelAbilityIcon(GetTexture("twodeathbones", true));
+            info.SetPixelAbilityIcon(GetTextureLily("twodeathbones", true));
             info.powerLevel = 1;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -29,7 +30,7 @@ namespace AllTheSigils
             TwoDeathBones.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "twodeathbones";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("twodeathbones", "");
             }
         }
     }

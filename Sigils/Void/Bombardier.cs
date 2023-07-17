@@ -32,7 +32,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Bombardier.ability] = "void_Bombardier";
+                Plugin.SigilWikiInfos[void_Bombardier.ability] = new Tuple<string, string>("void_Bombardier", "");
             }
         }
     }

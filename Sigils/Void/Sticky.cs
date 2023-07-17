@@ -2,9 +2,12 @@
 using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
+using InscryptionAPI.Triggers;
 using Pixelplacement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Art = AllTheSigils.Artwork.Resources;
 
@@ -37,84 +40,28 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Sticky.ability] = "void_Sticky";
+                Plugin.SigilWikiInfos[void_Sticky.ability] = new Tuple<string, string>("void_Sticky", "");
             }
         }
     }
 
-    public class void_Sticky : AbilityBehaviour
+    public class void_Sticky : AbilityBehaviour, IOnCardAssignedToSlotContext
     {
         public override Ability Ability => ability;
 
         public static Ability ability;
 
-        public CardSlot otherslot;
-
-        public PlayableCard othercard;
-
-
-        public override bool RespondsToResolveOnBoard()
+        public bool RespondsToCardAssignedToSlotContext(PlayableCard card, CardSlot oldSlot, CardSlot newSlot)
         {
-            return true;
+            return base.Card.OnBoard && oldSlot == base.Card.OpposingSlot();
         }
 
-        public override IEnumerator OnResolveOnBoard()
+        public IEnumerator OnCardAssignedToSlotContext(PlayableCard card, CardSlot oldSlot, CardSlot newSlot)
         {
-            if (base.Card.slot.opposingSlot.Card != null)
-            {
-                othercard = base.Card.slot.opposingSlot.Card;
-                otherslot = base.Card.slot.opposingSlot;
-            }
-            yield break;
-        }
+            List<CardSlot> AllSlots = base.Card.OpponentCard ? Singleton<BoardManager>.Instance.OpponentSlotsCopy : Singleton<BoardManager>.Instance.PlayerSlotsCopy;
+            CardSlot baseCardNewSlot = AllSlots.Where(x => x.Index == newSlot.Index).First();
 
-        public override bool RespondsToOtherCardResolve(PlayableCard otherCard)
-        {
-            return base.Card.OnBoard;
-        }
-
-        public override IEnumerator OnOtherCardResolve(PlayableCard otherCard)
-        {
-            if (base.Card.slot.opposingSlot.Card == otherCard)
-            {
-                othercard = otherCard;
-                otherslot = otherCard.slot;
-            }
-            yield break;
-        }
-
-        public override bool RespondsToOtherCardAssignedToSlot(PlayableCard otherCard)
-        {
-            return base.Card.OnBoard;
-        }
-
-        public override IEnumerator OnOtherCardAssignedToSlot(PlayableCard otherCard)
-        {
-            if (othercard == otherCard)
-            {
-                if (otherCard.slot.opposingSlot.Card == null)
-                {
-                    Singleton<ViewManager>.Instance.SwitchToView(View.Board, false, false);
-                    yield return new WaitForSeconds(0.05f);
-                    yield return base.PreSuccessfulTriggerSequence();
-                    Vector3 a = base.Card.Slot.IsPlayerSlot ? Vector3.back : Vector3.forward;
-                    Tween.Position(base.Card.transform, base.Card.transform.position + a * 2f + Vector3.up * 0.25f, 0.15f, 0f, Tween.EaseOut, Tween.LoopType.None, null, null, true);
-                    yield return new WaitForSeconds(0.15f);
-                    Tween.Position(base.Card.transform, new Vector3(otherCard.slot.opposingSlot.transform.position.x, base.Card.transform.position.y, base.Card.transform.position.z), 0.1f, 0f, null, Tween.LoopType.None, null, null, true);
-                    yield return new WaitForSeconds(0.1f);
-                    yield return Singleton<BoardManager>.Instance.AssignCardToSlot(base.Card, otherCard.slot.opposingSlot, 0.1f, null, true);
-                    yield return new WaitForSeconds(0.05f);
-                    yield return base.LearnAbility(0f);
-                }
-                else
-                {
-                    othercard = null;
-                }
-            }
-            if (othercard == null)
-            {
-                othercard = base.Card.slot.opposingSlot.Card;
-            }
+            yield return SigilEffectUtils.moveCard(base.Card, baseCardNewSlot);
             yield break;
         }
     }

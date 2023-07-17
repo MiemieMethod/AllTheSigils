@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,9 +18,9 @@ namespace AllTheSigils
                  "Instant",
                  "[creature] will perish immediately after its played.",
                  typeof(Instakill),
-                 GetTexture("instant")
+                 GetTextureLily("instant")
              );
-            info.SetPixelAbilityIcon(GetTexture("instant", true));
+            info.SetPixelAbilityIcon(GetTextureLily("instant", true));
             info.powerLevel = -3;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = false;
@@ -28,7 +29,7 @@ namespace AllTheSigils
             Instakill.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "instant";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("instant", "");
             }
         }
     }

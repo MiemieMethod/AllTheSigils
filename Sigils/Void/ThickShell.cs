@@ -1,6 +1,7 @@
 ﻿using APIPlugin;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using UnityEngine;
 using Art = AllTheSigils.Artwork.Resources;
@@ -30,7 +31,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_ThickShell.ability] = "ability_thickshell";
+                Plugin.SigilWikiInfos[void_ThickShell.ability] = new Tuple<string, string>("ability_thickshell", "");
             }
         }
     }

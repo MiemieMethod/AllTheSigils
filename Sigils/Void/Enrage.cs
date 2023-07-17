@@ -2,6 +2,7 @@
 using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +32,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Enrage.ability] = "void_enrage";
+                Plugin.SigilWikiInfos[void_Enrage.ability] = new Tuple<string, string>("void_enrage", "");
             }
         }
     }

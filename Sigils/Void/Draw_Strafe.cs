@@ -2,6 +2,7 @@
 using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Draw Strafe";
-            const string rulebookDescription = "When [creature] moves, a card with a movement sigil is created in your hand.";
+            const string rulebookDescription = "When [creature] moves, a random card with a movement sigil is created in your hand.";
             const string LearnDialogue = "What will it release on death?";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_DrawStrafe);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_DrawStrafe_a2);
@@ -33,7 +34,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_DrawStrafe.ability] = "void_DrawStrafe";
+                Plugin.SigilWikiInfos[void_DrawStrafe.ability] = new Tuple<string, string>("void_DrawStrafe", "");
             }
         }
     }

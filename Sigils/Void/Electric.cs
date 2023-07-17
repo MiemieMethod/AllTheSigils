@@ -2,10 +2,12 @@
 using DigitalRuby.LightningBolt;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Art = AllTheSigils.Artwork.Resources;
+using Object = UnityEngine.Object;
 
 
 
@@ -32,7 +34,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Electric.ability] = "void_Electric";
+                Plugin.SigilWikiInfos[void_Electric.ability] = new Tuple<string, string>("void_Electric", "");
             }
         }
     }

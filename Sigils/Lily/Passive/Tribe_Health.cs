@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,9 +18,9 @@ namespace AllTheSigils
                          "Tribe Health",
                          "While [creature] is on the board, all other cards on your side of the board of the same tribe will gain +1 health.",
                          typeof(Tribe_Health),
-                         GetTexture("tribe_health")
+                         GetTextureLily("tribe_health")
                      );
-            info.SetPixelAbilityIcon(new Texture2D(17, 17));
+            info.SetPixelAbilityIcon(GetTextureLily("placeholder", true));
             info.powerLevel = 2;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -28,7 +29,7 @@ namespace AllTheSigils
             Tribe_Health.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "tribe_health";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("tribe_health", "");
             }
         }
     }

@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections.Generic;
 
 
@@ -16,9 +17,9 @@ namespace AllTheSigils
                              "Superior Sacrifice",
                              "[creature] is counted as 4 blood rather than 1 blood when sacrificed.",
                              typeof(Quadra_Blood),
-                             GetTexture("quadra_blood")
+                             GetTextureLily("quadra_blood")
                          );
-            info.SetPixelAbilityIcon(GetTexture("quadra_blood", true));
+            info.SetPixelAbilityIcon(GetTextureLily("quadra_blood", true));
             info.powerLevel = 3;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -27,7 +28,7 @@ namespace AllTheSigils
             Quadra_Blood.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "quadra_blood";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("quadra_blood", "");
             }
         }
     }

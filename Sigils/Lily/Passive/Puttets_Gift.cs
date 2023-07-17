@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,9 +18,9 @@ namespace AllTheSigils
                           "Puppets gift",
                           "As long as [creature] is on the board any cards with brittle won't die because of brittle.",
                           typeof(Puppets_Gift),
-                          GetTexture("puppets_gift")
+                          GetTextureLily("puppets_gift")
                       );
-            info.SetPixelAbilityIcon(GetTexture("puppets_gift", true));
+            info.SetPixelAbilityIcon(GetTextureLily("puppets_gift", true));
             info.powerLevel = 2;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = false;
@@ -28,7 +29,7 @@ namespace AllTheSigils
             Puppets_Gift.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "puppets_gift";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("puppets_gift", "");
             }
         }
     }

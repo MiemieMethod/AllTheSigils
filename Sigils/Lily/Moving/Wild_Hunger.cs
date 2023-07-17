@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,9 +19,9 @@ namespace AllTheSigils
                            "Wild hunger",
                            "At the end of its owner's turn, [creature] will move in the direction inscribed on the sigil, however if it hits a card whilst moving, [creature] will stop, the card it hit will perish and [creature] will gain 1+/1+.",
                            typeof(Wild_Hunger),
-                           GetTexture("wild_hunger")
+                           GetTextureLily("wild_hunger")
                        );
-            info.SetPixelAbilityIcon(GetTexture("wild_hunger", true));
+            info.SetPixelAbilityIcon(GetTextureLily("wild_hunger", true));
             info.powerLevel = 4;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -29,7 +30,7 @@ namespace AllTheSigils
             Wild_Hunger.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "wild_hunger";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("wild_hunger", "");
             }
         }
     }

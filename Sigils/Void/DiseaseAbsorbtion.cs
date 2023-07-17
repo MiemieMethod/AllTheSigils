@@ -32,7 +32,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[ability_TakeAllNegatives.ability] = "void_takeDisease";
+                Plugin.SigilWikiInfos[ability_TakeAllNegatives.ability] = new Tuple<string, string>("void_takeDisease", "");
             }
         }
     }

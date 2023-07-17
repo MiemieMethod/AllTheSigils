@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,9 +18,9 @@ namespace AllTheSigils
                       "Song of sleep",
                       "If a creature moves into the space opposing [creature], that creature will obtain the asleep sigil.",
                       typeof(Song_Of_Sleep),
-                      GetTexture("song_of_sleep")
+                      GetTextureLily("song_of_sleep")
                   );
-            info.SetPixelAbilityIcon(GetTexture("song_of_sleep", true));
+            info.SetPixelAbilityIcon(GetTextureLily("song_of_sleep", true));
             info.powerLevel = 2;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = false;
@@ -28,7 +29,7 @@ namespace AllTheSigils
             Song_Of_Sleep.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "song_of_sleep";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("song_of_sleep", "");
             }
         }
     }

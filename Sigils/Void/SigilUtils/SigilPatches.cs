@@ -18,29 +18,6 @@ namespace AllTheSigils.Sigils.Void.SigilUtils
 
     internal class SigilPatches
     {
-
-        ///Removed Packmule patch as the API fixes that already
-
-        [HarmonyPatch(typeof(CombatPhaseManager), "DoCombatPhase", MethodType.Normal)]
-        public class Shove_Combatphase_Startpatch
-        {
-            [HarmonyPrefix]
-            public static void DoCombatPhase()
-            {
-                Plugin.voidCombatPhase = true;
-            }
-        }
-
-        [HarmonyPatch(typeof(TurnManager), "DoUpkeepPhase", MethodType.Normal)]
-        public class Shove_Combatphase_Endpatch
-        {
-            [HarmonyPrefix]
-            public static void DoUpkeepPhase()
-            {
-                Plugin.voidCombatPhase = false;
-            }
-        }
-
         [HarmonyPatch(typeof(BuildTotemSequencer))]
         public class void_NegativeTotemBoonSequencer
         {

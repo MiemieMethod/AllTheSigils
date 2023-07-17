@@ -2,7 +2,9 @@
 using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
+using InscryptionAPI.Triggers;
 using Pixelplacement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +35,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_DeadlyWaters.ability] = "void_DeadlyWaters";
+                Plugin.SigilWikiInfos[void_DeadlyWaters.ability] = new Tuple<string, string>("void_DeadlyWaters", "");
             }
         }
     }
@@ -44,12 +46,40 @@ namespace AllTheSigils
 
         public static Ability ability;
 
-        private bool attacked = false;
+        public static List<PlayableCard> cardsThatHitBaseCard = new List<PlayableCard>();
 
-
-        public override bool RespondsToSlotTargetedForAttack(CardSlot slot, PlayableCard attacker)
+        public override bool RespondsToTurnEnd(bool playerTurnEnd)
         {
-            return base.Card == attacker;
+            return true;
+        }
+
+        public override IEnumerator OnTurnEnd(bool playerTurnEnd)
+        {
+            if (playerTurnEnd == base.Card.OpponentCard)
+            {
+                for (int i = 0; i < cardsThatHitBaseCard.Count; i++)
+                {
+                    yield return cardsThatHitBaseCard[i].Die(false, base.Card);
+                    cardsThatHitBaseCard.Remove(cardsThatHitBaseCard[i]);
+                }
+            }
+            yield break;
+        }
+
+        [HarmonyPatch(typeof(CombatPhaseManager), nameof(CombatPhaseManager.SlotAttackSlot))]
+        public class DeadlyWatersPatch
+        {
+            [HarmonyPostfix]
+            public static void Postfix(ref CardSlot attackingSlot, ref CardSlot opposingSlot)
+            {
+                if (opposingSlot?.Card != null)
+                {
+                    if (opposingSlot.Card.HasAbility(void_DeadlyWaters.ability) && opposingSlot.Card.FaceDown)
+                    {
+                        cardsThatHitBaseCard.Add(attackingSlot.Card);
+                    }
+                }
+            }
         }
     }
 }

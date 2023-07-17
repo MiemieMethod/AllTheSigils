@@ -1,6 +1,7 @@
 ﻿using APIPlugin;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using UnityEngine;
 using Art = AllTheSigils.Artwork.Resources;
@@ -37,7 +38,7 @@ namespace AllTheSigils
             void_TakeOff_Energy.ability = test.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_TakeOff_Energy.ability] = "void_TakeOff_Energy";
+                Plugin.SigilWikiInfos[void_TakeOff_Energy.ability] = new Tuple<string, string>("void_TakeOff_Energy", "");
             }
         }
     }

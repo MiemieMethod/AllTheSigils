@@ -3,6 +3,7 @@
 using DiskCardGame;
 using InscryptionAPI.Card;
 using Pixelplacement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,9 +19,9 @@ namespace AllTheSigils
                  "Bait",
                  "When an opposing creature is played and there is no card opposite of [creature], the opposing creature will move to that spot.",
                  typeof(Bait),
-                 GetTexture("bait")
+                 GetTextureLily("bait")
              );
-            info.SetPixelAbilityIcon(GetTexture("bait", true));
+            info.SetPixelAbilityIcon(GetTextureLily("bait", true));
             info.powerLevel = 1;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = false;
@@ -29,7 +30,7 @@ namespace AllTheSigils
             Bait.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "bait";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("bait", "");
             }
         }
     }

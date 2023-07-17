@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,9 @@ namespace AllTheSigils
                          "Warper",
                          "At the end of its owner's turn, [creature] will move to the right, jumping over any creatures in its path, if it encounters the edge of the board, it will loop over to the other side.",
                          typeof(Warper),
-                         GetTexture("warper")
+                         GetTextureLily("warper")
                      );
-            info.SetPixelAbilityIcon(GetTexture("warper", true));
+            info.SetPixelAbilityIcon(GetTextureLily("warper", true));
             info.powerLevel = 1;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -30,7 +31,7 @@ namespace AllTheSigils
             Warper.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "warper";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("warper", "");
             }
         }
     }

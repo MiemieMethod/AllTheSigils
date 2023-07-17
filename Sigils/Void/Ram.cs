@@ -33,7 +33,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Ram.ability] = "void_shove";
+                Plugin.SigilWikiInfos[void_Ram.ability] = new Tuple<string, string>("void_shove", "");
             }
         }
     }
@@ -49,16 +49,15 @@ namespace AllTheSigils
 
         public override bool RespondsToResolveOnBoard()
         {
-            if (hasShoved || Plugin.voidCombatPhase)
+            if (hasShoved || SigilEffectUtils.combatPhase)
             {
                 return false;
             }
-            return base.Card.OnBoard && Plugin.voidCombatPhase == false;
+            return base.Card.OnBoard;
         }
 
         public override bool RespondsToUpkeep(bool playerUpkeep)
         {
-            Plugin.voidCombatPhase = false;
             return base.Card.OpponentCard != playerUpkeep && this.hasShoved == false;
         }
 

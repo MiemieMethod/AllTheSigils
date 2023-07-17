@@ -2,6 +2,7 @@
 // Modding Inscryption
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,9 +19,9 @@ namespace AllTheSigils
                "Charge",
                "Pay 3 bones to choose an enemy creature that [creature] will strike.",
                typeof(Fight_Activated),
-               GetTexture("charge")
+               GetTextureLily("charge")
            );
-            info.SetPixelAbilityIcon(new Texture2D(17, 17));
+            info.SetPixelAbilityIcon(GetTextureLily("placeholder", true));
             info.powerLevel = 5;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = false;
@@ -30,7 +31,7 @@ namespace AllTheSigils
             Fight_Activated.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "charge";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("charge", "");
             }
         }
     }

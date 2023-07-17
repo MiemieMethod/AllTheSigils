@@ -2,6 +2,7 @@
 using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_DoubleAttack.ability] = "void_double_attack";
+                Plugin.SigilWikiInfos[void_DoubleAttack.ability] = new Tuple<string, string>("void_double_attack", "");
             }
         }
     }

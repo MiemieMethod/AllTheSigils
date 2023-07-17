@@ -2,6 +2,7 @@
 using DiskCardGame;
 using InscryptionAPI.Card;
 // Modding Inscryption
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,9 @@ namespace AllTheSigils
                 "Support call",
                 "When [creature] is played, a card from your sidedeck is created in your hand.",
                 typeof(Draw_Side_Deck_OnSummon),
-                GetTexture("support_call")
+                GetTextureLily("support_call")
             );
-            info.SetPixelAbilityIcon(new Texture2D(17, 17));
+            info.SetPixelAbilityIcon(GetTextureLily("placeholder", true));
             info.powerLevel = 3;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -30,7 +31,7 @@ namespace AllTheSigils
             Draw_Side_Deck_OnSummon.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "support_call";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("support_call", "");
             }
         }
     }

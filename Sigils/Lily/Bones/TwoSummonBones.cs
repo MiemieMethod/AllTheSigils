@@ -4,6 +4,7 @@ using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -19,9 +20,9 @@ namespace AllTheSigils
                                 "Bone hoarder 2",
                                 "When [creature] is played, 2 bones are rewarded.",
                                 typeof(TwoSummonBones),
-                                GetTexture("twosummonbones")
+                                GetTextureLily("twosummonbones")
                             );
-            info.SetPixelAbilityIcon(GetTexture("twosummonbones", true));
+            info.SetPixelAbilityIcon(GetTextureLily("twosummonbones", true));
             info.powerLevel = 1;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -30,7 +31,7 @@ namespace AllTheSigils
             TwoSummonBones.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "twosummonbones";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("twosummonbones", "");
             }
         }
     }

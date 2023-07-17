@@ -2,6 +2,7 @@ using APIPlugin;
 using BepInEx.Configuration;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using UnityEngine;
 

@@ -7,11 +7,11 @@ using HarmonyLib;
 namespace AllTheSigils
 {
     // Token: 0x02000006 RID: 6
-    [HarmonyPatch(typeof(PlayableCard), "AttackIsBlocked", 0)]
-    public class Attackisblocked_patch
+    [HarmonyPatch(typeof(PlayableCard), "CanAttackDirectly", 0)]
+    public class CanAttackDirectly_patch
     {
         [HarmonyPostfix]
-        public static void Postfix(CardSlot opposingSlot, bool __result, ref PlayableCard __instance)
+        public static void Postfix(CardSlot opposingSlot, ref bool __result, ref PlayableCard __instance)
         {
             if (opposingSlot.Card != null)
             {

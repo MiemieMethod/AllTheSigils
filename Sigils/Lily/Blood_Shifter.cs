@@ -2,6 +2,7 @@
 // Modding Inscryption
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,9 +18,9 @@ namespace AllTheSigils
                     "Blood shifter",
                     "When [creature] kills another card, it will turn into that card.",
                     typeof(Blood_Shifter),
-                    GetTexture("blood_shifter")
+                    GetTextureLily("blood_shifter")
                 );
-            info.SetPixelAbilityIcon(GetTexture("blood_shifter", true));
+            info.SetPixelAbilityIcon(GetTextureLily("blood_shifter", true));
             info.powerLevel = 3;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = false;
@@ -28,7 +29,7 @@ namespace AllTheSigils
             Blood_Shifter.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "blood_shifter";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("blood_shifter", "");
             }
         }
     }

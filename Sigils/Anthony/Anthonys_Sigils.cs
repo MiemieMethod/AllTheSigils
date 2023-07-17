@@ -19,6 +19,7 @@ namespace AllTheSigils
 {
     public partial class Plugin
     {
+        public static GameObject anthonyClawPrefab;
         public static void AimWeaponAnim(GameObject TweenObj, Vector3 target)
         {
             Tween.LookAt(TweenObj.transform, target, Vector3.up, 0.075f, 0f, Tween.EaseInOut, Tween.LoopType.None, null, null, true);
@@ -32,6 +33,7 @@ namespace AllTheSigils
                     typeof(Bi_Blood),
                     GetTextureAnthony("activatedlatch-deathshield")
                 );
+            info.SetPixelAbilityIcon(GetTextureAnthony("placeholder_act2"));
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook };
             info.canStack = false;
             info.activated = true;
@@ -40,7 +42,7 @@ namespace AllTheSigils
             ActivatedLatchNanoShield.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "activatedlatch-deathshield";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("activatedlatch-deathshield", "");
             }
         }
         private void AddActivactedBrittle()
@@ -52,6 +54,7 @@ namespace AllTheSigils
                        typeof(ActivatedLatchBrittle),
                        GetTextureAnthony("activatedlatch-brittle")
                    );
+            info.SetPixelAbilityIcon(GetTextureAnthony("placeholder_act2"));
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook };
             info.canStack = false;
             info.activated = true;
@@ -60,7 +63,7 @@ namespace AllTheSigils
             ActivatedLatchBrittle.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "activatedlatch-brittle";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("activatedlatch-brittle", "");
             }
         }
         private void AddActivactedExplodeOnDeath()
@@ -72,6 +75,7 @@ namespace AllTheSigils
                        typeof(ActivatedLatchExplodeOnDeath),
                        GetTextureAnthony("activatedlatch-explodeondeath")
                    );
+            info.SetPixelAbilityIcon(GetTextureAnthony("placeholder_act2"));
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook };
             info.canStack = false;
             info.activated = true;
@@ -80,7 +84,7 @@ namespace AllTheSigils
             ActivatedLatchExplodeOnDeath.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "activatedlatch-explodeondeath";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("activatedlatch-explodeondeath", "");
             }
         }
         private void AddActivactedReach()
@@ -92,6 +96,7 @@ namespace AllTheSigils
                        typeof(ActivatedLatchReach),
                        GetTextureAnthony("acticatedlatch-Reach")
                    );
+            info.SetPixelAbilityIcon(GetTextureAnthony("placeholder_act2"));
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook };
             info.canStack = false;
             info.activated = true;
@@ -100,7 +105,7 @@ namespace AllTheSigils
             ActivatedLatchReach.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "acticatedlatch-Reach";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("acticatedlatch-Reach", "");
             }
         }
         private void AddIncreasePowerDecreaseHealth()
@@ -112,6 +117,7 @@ namespace AllTheSigils
                        typeof(IncreasePowerDecreaseHealth),
                        GetTextureAnthony("old-timer")
                    );
+            info.SetPixelAbilityIcon(GetTextureAnthony("placeholder_act2"));
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook };
             info.canStack = false;
             info.opponentUsable = true;
@@ -119,7 +125,7 @@ namespace AllTheSigils
             IncreasePowerDecreaseHealth.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "old-timer";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("old-timer", "");
             }
         }
         private void AddDecreasePowerIncreaseHealth()
@@ -131,6 +137,7 @@ namespace AllTheSigils
                        typeof(DecreasePowerIncreaseHealth),
                        GetTextureAnthony("docile")
                    );
+            info.SetPixelAbilityIcon(GetTextureAnthony("placeholder_act2"));
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook };
             info.canStack = false;
             info.opponentUsable = true;
@@ -138,7 +145,7 @@ namespace AllTheSigils
             DecreasePowerIncreaseHealth.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "docile";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("docile", "");
             }
         }
         private void AddEatChicken()
@@ -150,6 +157,7 @@ namespace AllTheSigils
                        typeof(EatChickens),
                        GetTextureAnthony("eatchicken")
                    );
+            info.SetPixelAbilityIcon(GetTextureAnthony("placeholder_act2"));
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook };
             info.canStack = false;
             info.opponentUsable = true;
@@ -157,7 +165,7 @@ namespace AllTheSigils
             EatChickens.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "eatchicken";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("eatchicken", "");
             }
         }
         private void AddChickenCard()
@@ -192,6 +200,7 @@ namespace AllTheSigils
                        typeof(JustChicken),
                        GetTextureAnthony("chicken")
                    );
+            info.SetPixelAbilityIcon(GetTextureAnthony("placeholder_act2"));
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook };
             info.canStack = false;
             info.opponentUsable = true;
@@ -199,7 +208,7 @@ namespace AllTheSigils
             JustChicken.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "chicken";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("chicken", "");
             }
         }
         private void AddTransformChickenOpp()
@@ -211,6 +220,7 @@ namespace AllTheSigils
                        typeof(TurnIntoChickenOpp),
                        GetTextureAnthony("TransformChick_Sigil")
                    );
+            info.SetPixelAbilityIcon(GetTextureAnthony("placeholder_act2"));
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook };
             info.canStack = false;
             info.opponentUsable = true;
@@ -218,7 +228,7 @@ namespace AllTheSigils
             TurnIntoChickenOpp.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "TransformChick_Sigil";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("TransformChick_Sigil", "");
             }
         }
         private void AddTransformChickenLooseCannon()
@@ -230,6 +240,7 @@ namespace AllTheSigils
                        typeof(TurnIntoChickenLooseCannon),
                        GetTextureAnthony("TransformChick_Sigil")
                    );
+            info.SetPixelAbilityIcon(GetTextureAnthony("placeholder_act2"));
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook };
             info.canStack = false;
             info.opponentUsable = true;
@@ -237,7 +248,7 @@ namespace AllTheSigils
             TurnIntoChickenLooseCannon.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "TransformChick_Sigil";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("TransformChick_Sigil", "");
             }
         }
         private void AddTransformChickenEnemyOnly()
@@ -249,6 +260,7 @@ namespace AllTheSigils
                        typeof(TurnIntoChickenEnemyOnly),
                        GetTextureAnthony("TransformChick_Sigil")
                    );
+            info.SetPixelAbilityIcon(GetTextureAnthony("placeholder_act2"));
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook };
             info.canStack = false;
             info.opponentUsable = true;
@@ -256,7 +268,7 @@ namespace AllTheSigils
             TurnIntoChickenEnemyOnly.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "TransformChick_Sigil";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("TransformChick_Sigil", "");
             }
         }
         public class TurnIntoChickenOpp : AbilityBehaviour

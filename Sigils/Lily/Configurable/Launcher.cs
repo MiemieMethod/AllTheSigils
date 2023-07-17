@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,9 @@ namespace AllTheSigils
                                "Launcher",
                                "At the end of its owner's turn, [creature] will create another creature on a random empty space on the owner's side of the table.",
                                typeof(Launcher),
-                               GetTexture("launcher")
+                               GetTextureLily("launcher")
                            );
-            info.SetPixelAbilityIcon(GetTexture("launcher", true));
+            info.SetPixelAbilityIcon(GetTextureLily("launcher", true));
             info.powerLevel = 5;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -31,7 +32,7 @@ namespace AllTheSigils
             Launcher.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "launcher";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("launcher", "Will use the ice cube parameter to define what creature it spawns.<br>Default: squirrel");
             }
         }
     }

@@ -31,7 +31,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Hourglass.ability] = "void_Hourglass";
+                Plugin.SigilWikiInfos[void_Hourglass.ability] = new Tuple<string, string>("void_Hourglass", "");
             }
         }
     }

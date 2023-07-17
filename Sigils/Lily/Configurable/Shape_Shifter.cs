@@ -4,6 +4,7 @@ using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -19,9 +20,9 @@ namespace AllTheSigils
                                "Shapeshifter",
                                "[creature] is ever changing. It will change its form once it's struck.",
                                typeof(Shape_Shifter),
-                               GetTexture("shape_shifter")
+                               GetTextureLily("shape_shifter")
                            );
-            info.SetPixelAbilityIcon(GetTexture("shape_shifter", true));
+            info.SetPixelAbilityIcon(GetTextureLily("shape_shifter", true));
             info.powerLevel = 5;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -30,7 +31,7 @@ namespace AllTheSigils
             Shape_Shifter.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "shape_shifter";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("shape_shifter", "Will use the ice cube parameter to define what creature it transforms into.<br>Default: amoeba");
             }
         }
     }

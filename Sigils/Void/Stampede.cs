@@ -3,6 +3,7 @@ using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
 using Pixelplacement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,7 +33,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Stampede.ability] = "void_stampede";
+                Plugin.SigilWikiInfos[void_Stampede.ability] = new Tuple<string, string>("void_stampede", "");
             }
         }
     }
@@ -54,13 +55,19 @@ namespace AllTheSigils
 
         public override IEnumerator OnResolveOnBoard()
         {
-            CardSlot slot = base.Card.slot;
-            List<CardSlot> attackingSlots = Singleton<BoardManager>.Instance.GetAdjacentSlots(slot);
+            List<CardSlot> attackingSlots = Singleton<BoardManager>.Instance.GetAdjacentSlots(base.Card.slot);
             if (attackingSlots.Count > 0)
             {
-                if (Plugin.voidCombatPhase == false)
+                if (!SigilEffectUtils.combatPhase)
                 {
-                    yield return AllTheSigils.Patches.FakeCombat.FakeCombatPhase(base.Card.slot.IsPlayerSlot, null, attackingSlots);
+                    foreach (CardSlot slot in attackingSlots)
+                    {
+                        if (slot.Card != null)
+                        {
+                            FakeCombatHandler.FakeCombatThing fakecombat = new FakeCombatHandler.FakeCombatThing();
+                            yield return fakecombat.FakeCombat(!base.Card.OpponentCard, null, slot);
+                        }
+                    }
                 }
             }
             yield return base.LearnAbility(0.25f);

@@ -1,6 +1,7 @@
 ﻿using APIPlugin;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +32,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Possessor_Powerful.ability] = "void_Possessor_Powerful";
+                Plugin.SigilWikiInfos[void_Possessor_Powerful.ability] = new Tuple<string, string>("void_Possessor_Powerful", "");
             }
 
         }

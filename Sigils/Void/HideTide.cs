@@ -32,7 +32,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_HighTide.ability] = "void_HighTide";
+                Plugin.SigilWikiInfos[void_HighTide.ability] = new Tuple<string, string>("void_HighTide", "");
             }
         }
     }

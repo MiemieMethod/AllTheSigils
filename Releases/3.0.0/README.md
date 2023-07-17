@@ -1,30 +1,37 @@
 # Intro
 
-A Combination of Another custom sigil mod, Extra Sigils and AnthonysSigils. Currently at... 150+ new or tweaked vanilla sigils. Do note, this pack has some negative Sigils in it. However there are way more good sigils than bad.
+A Combination of Another custom sigil mod, Extra Sigils and AnthonysSigils. Currently at 175+ new sigils.
 
-You can find all the sigils in this mod and their descriptions here:
+You can find all the sigils in this mod and their descriptions here:<br>
 https://github.com/Memez4Life7/AllTheSigils/wiki
 
-## Installation (automated)
-This is the recommended way to install the API on the game.
+## Installation
+This is the recommended way to install this mod.
 
 - Download and install [Thunderstore Mod Manager](https://www.overwolf.com/app/Thunderstore-Thunderstore_Mod_Manager) or [r2modman](https://timberborn.thunderstore.io/package/ebkr/r2modman/)
-- Click Install with Mod Manager button on top of the [page]
-- Run the game via the mod manager
+- Click on the "Install with Mod Manager" button at the top of this page
+- Start the game via the mod manager
 
-- IF YOU MANUALLLY INSTALL THE MOD, PUT THE CONTENTS OF THE PLUGINFOLDER TOGETHER! Lily and Anthony's sigils look for an Artwork folder in the directory that their .dll is in. so it will error if they are apart.
+- IF YOU MANUALLY INSTALL THIS MOD, TAKE THE CONTENTS OUT OF THE PLUGINS FOLDER! Some sigils look for their artwork in specific folders in the directory that the .dll is in, so if that specific directory doesn't exist the mod wil break.
 
+## Changelog
+<details>
+<summary>Click here to show the changelog.</summary>
+<br>
 
-## Change log
 v3.0.0
+Massive overhaul
 - updated a bunch of code to use the newer API functions
-- combined all dlls's into one
+- combined all dlls into one
 - made file names and code consistent
-- made it so all sigils can now also be added by using "ATS" as the guid instead of the old guid, any future sigils will only be able to be added by using this new guid
-- fixed the sigils: Puppet's gift, Launcher, Bond, Imbuing and Take-Off
+- made it so all sigils can now also be added to cards by using "ATS" as the guid instead of the old guid, any future sigils will only be able to be added by using this new guid
+- fixed the sigils: Puppet's gift, Asleep, Short, Launcher, Bond, Imbuing, Take-Off, Haste, Enforcer, Hasteful, Sluggish, Stampede, Trample, Sticky, Deadly Waters and Strong Wind
+- updated the icons for the sigils: Left scratch, Right scratch and Double scratch
+- added placeholder act 2 art to any old sigils without act 2 art, so that all sigils can now be used in starter decks
 - made all sigil descriptions compatible with act 2's naming system
 - fixed alot of grammatical and spelling errors in descriptions of sigils
-- replaced the old sigil documentation with a nice wiki that has images
+- replaced the old sigil documentation with a fancy new wiki that has images to show the sigil art and cost
+- added 22 new sigils! they are called: Mount, Parasite, Hermit, Draw Energy, Draw Mox, Draw Cost, Hyped, Resourceful, Hoodini, Inaccurate, Drunk, Underdog, Homing, Lullaby, Nurse, Medical Aid, Sympathetic, Shielded, Frightened, Terrified, Alternating Scratch and Choreography
 
 v2.5.6
 Lily's Sigils changes:
@@ -127,16 +134,10 @@ Sigil Manager
 - Temporarily removed to hasten the release for KCM and users.
 
 --- Check the old_Changelog included for older changes ---
-
-## Licenses
-This mod is under the MIT licenses. That means you are free to take, modify, and redistribute this mod as you wish as long as the resulting product is also under the MIT license. 
-
-The MIT license is how it was possible to port the original Sigil a Day sigils to this mod.
-
+</details>
 
 ## Credits
-This mod is a fork of Sigil a day, as such this produce is under the MIT licenses. Thus you are free to do what you want with this product, as long it remains under the MIT licenses. 
-
+Void Slime's credits:
 JamesGames, GeneralSpritz, Allie BONES, Cyantist, xXxStoner420BongMasterxXx, Lily's, Blind Eri, balrogBean, Yisus, Dragon, with more below
 
 

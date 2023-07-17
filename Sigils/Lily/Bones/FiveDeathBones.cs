@@ -2,6 +2,7 @@
 using DiskCardGame;
 using InscryptionAPI.Card;
 // Modding Inscryption
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,9 +19,9 @@ namespace AllTheSigils
                           "Bone lord 5",
                           "When [creature] dies, 5 bones are rewarded instead of 1.",
                           typeof(FiveDeathBones),
-                          GetTexture("fivedeathbones")
+                          GetTextureLily("fivedeathbones")
                       );
-            info.SetPixelAbilityIcon(GetTexture("fivedeathbones", true));
+            info.SetPixelAbilityIcon(GetTextureLily("fivedeathbones", true));
             info.powerLevel = 3;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -29,7 +30,7 @@ namespace AllTheSigils
             FiveDeathBones.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "fivedeathbones";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("fivedeathbones", "");
             }
         }
     }

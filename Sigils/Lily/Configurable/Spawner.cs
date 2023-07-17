@@ -2,6 +2,7 @@
 // Modding Inscryption
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,9 +18,9 @@ namespace AllTheSigils
                                "Spawner",
                                "At the end of its owner's turn, [creature] will move in the direction inscribed on the sigil and will create another creature in its old space.",
                                typeof(Spawner),
-                               GetTexture("spawner")
+                               GetTextureLily("spawner")
                            );
-            info.SetPixelAbilityIcon(GetTexture("spawner", true));
+            info.SetPixelAbilityIcon(GetTextureLily("spawner", true));
             info.powerLevel = 5;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -28,7 +29,7 @@ namespace AllTheSigils
             Spawner.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "spawner";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("spawner", "Will use the ice cube parameter to define what creature it spawns.<br>Default: squirrel");
             }
         }
     }

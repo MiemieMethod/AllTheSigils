@@ -1,7 +1,7 @@
-﻿using AllTheSigils.Patches;
-using APIPlugin;
+﻿using APIPlugin;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +31,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Sluggish.ability] = "void_Sluggish";
+                Plugin.SigilWikiInfos[void_Sluggish.ability] = new Tuple<string, string>("void_Sluggish", "");
             }
         }
     }
@@ -51,9 +51,8 @@ namespace AllTheSigils
         {
             yield return base.PreSuccessfulTriggerSequence();
             yield return new WaitForSeconds(0.1f);
-            var list = new List<CardSlot>();
-            list.Add(base.Card.slot);
-            yield return FakeCombat.FakeCombatPhase(base.Card.slot.IsPlayerSlot, null, list);
+            FakeCombatHandler.FakeCombatThing fakecombat = new FakeCombatHandler.FakeCombatThing();
+            yield return fakecombat.FakeCombat(!base.Card.OpponentCard, null, base.Card.slot);
             yield return new WaitForSeconds(0.1f);
             yield return base.LearnAbility(0.25f);
             yield return new WaitForSeconds(0.1f);

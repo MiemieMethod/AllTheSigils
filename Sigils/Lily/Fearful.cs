@@ -2,6 +2,7 @@
 // Modding Inscryption
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,9 +19,9 @@ namespace AllTheSigils
                 "Fearful",
                 "When [creature] is struck without it resulting in death, it will be returned to its owner's hand.",
                 typeof(Fearful),
-                GetTexture("fearful")
+                GetTextureLily("fearful")
             );
-            info.SetPixelAbilityIcon(GetTexture("fearful", true));
+            info.SetPixelAbilityIcon(GetTextureLily("fearful", true));
             info.powerLevel = -2;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = false;
@@ -29,7 +30,7 @@ namespace AllTheSigils
             Fearful.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "fearful";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("fearful", "");
             }
         }
     }

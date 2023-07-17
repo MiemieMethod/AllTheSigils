@@ -1,6 +1,7 @@
 ﻿using APIPlugin;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Draw Bone";
-            const string rulebookDescription = "When [creature] is played, a card costing bone is created in your hand.";
+            const string rulebookDescription = "When [creature] is played, a random card costing bone is created in your hand.";
             const string LearnDialogue = "What will it release on death?";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_DrawBone);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_DrawBone_a2);
@@ -32,7 +33,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_DrawBone.ability] = "void_drawbone";
+                Plugin.SigilWikiInfos[void_DrawBone.ability] = new Tuple<string, string>("void_drawbone", "");
             }
         }
     }

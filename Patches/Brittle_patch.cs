@@ -3,6 +3,7 @@ using DiskCardGame;
 using HarmonyLib;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO; // Loading Sigil and Card art.

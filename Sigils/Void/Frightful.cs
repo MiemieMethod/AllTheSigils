@@ -33,7 +33,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Frightful.ability] = "void_Frightful";
+                Plugin.SigilWikiInfos[void_Frightful.ability] = new Tuple<string, string>("void_Frightful", "");
             }
         }
     }

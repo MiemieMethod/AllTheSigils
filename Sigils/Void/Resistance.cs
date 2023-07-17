@@ -2,6 +2,7 @@
 using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
+using System;
 using UnityEngine;
 using Art = AllTheSigils.Artwork.Resources;
 
@@ -30,7 +31,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Resistant.ability] = "void_Resistant";
+                Plugin.SigilWikiInfos[void_Resistant.ability] = new Tuple<string, string>("void_Resistant", "");
             }
         }
     }

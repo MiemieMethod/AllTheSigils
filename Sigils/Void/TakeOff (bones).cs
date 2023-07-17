@@ -1,6 +1,7 @@
 ﻿using APIPlugin;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Reflection;
 using UnityEngine;
@@ -40,7 +41,7 @@ namespace AllTheSigils
             void_TakeOff_Bones.ability = test.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_TakeOff_Bones.ability] = "void_TakeOff_Bones";
+                Plugin.SigilWikiInfos[void_TakeOff_Bones.ability] = new Tuple<string, string>("void_TakeOff_Bones", "");
             }
         }
     }

@@ -33,7 +33,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_StrongWind.ability] = "void_StrongWind";
+                Plugin.SigilWikiInfos[void_StrongWind.ability] = new Tuple<string, string>("void_StrongWind", "");
             }
         }
     }
@@ -54,18 +54,14 @@ namespace AllTheSigils
             base.Card.Anim.LightNegationEffect();
             yield return base.PreSuccessfulTriggerSequence();
             yield return new WaitForSeconds(0.25f);
+
             CardModificationInfo negateMod = new CardModificationInfo();
-            //go through each of the cards default abilities and add them to the modifincation info
             negateMod.negateAbilities.Add(Ability.Flying);
-            //Clone the main card info so we don't touch the main card set
-            CardInfo OpponentCardInfo = otherCard.Info.Clone() as CardInfo;
-            //Add the modifincations
-            OpponentCardInfo.Mods.Add(negateMod);
-            OpponentCardInfo.Mods.AddRange(otherCard.Info.Mods);
-            //Update the card info
+
             otherCard.Anim.PlayTransformAnimation();
-            otherCard.SetInfo(OpponentCardInfo);
-            otherCard.Anim.PlayTransformAnimation();
+            yield return new WaitForSeconds(0.15f);
+            otherCard.AddTemporaryMod(negateMod);
+
             yield return new WaitForSeconds(0.3f);
             yield return base.LearnAbility(0.25f);
             yield break;

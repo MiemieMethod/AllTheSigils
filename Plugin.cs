@@ -18,12 +18,6 @@ namespace AllTheSigils
 
     // COMMENTS TO COMMUNICATE YAY :D
     //TO DO...
-    //Finish porting all missing sigils (done unless if there were more missing sigils besides Anthony's)
-    //Fix haste/stampede and other "fake combat" effects
-    //Fix Sticky
-    //Fix Strong Wind
-    //Fix Deadly Waters
-    //Fix Trample
     //Find out what the best method is to add all future sigils (if there is time all old sigils can also be updated to use this method)
 
 
@@ -35,36 +29,33 @@ namespace AllTheSigils
         public const string OldVoidPluginGuid = "extraVoid.inscryption.voidSigils";
         public const string OldAnthonyPluginGuid = "AnthonyPython.inscryption.AnthonysSigils";
 
-        public static List<String> OldPluginGuids = new List<String>() { OldLilyPluginGuid, OldVoidPluginGuid, OldAnthonyPluginGuid };
+        public static List<string> OldPluginGuids = new List<string>() { OldLilyPluginGuid, OldVoidPluginGuid, OldAnthonyPluginGuid };
 
         private const string PluginName = "AllTheSigils";
 
-        private const string PluginVersion = "1.0.0";
+        private const string PluginVersion = "3.0.0";
 
         public static string Directory;
 
         internal static ManualLogSource Log;
 
-        public static bool voidCombatPhase;
+        public static Dictionary<Ability, Tuple<string, string>> SigilWikiInfos = new Dictionary<Ability, Tuple<string, string>>();
 
-        public static GameObject anthonyClawPrefab;
+        public static Dictionary<Ability, string> NewSigilVersions = new Dictionary<Ability, string>();
 
-        public static Dictionary<Ability, String> SigilArtNames = new Dictionary<Ability, string>();
-
-        public static Dictionary<Ability, String> NewSigilVersions = new Dictionary<Ability, string>();
-
-        public static bool GenerateWiki = true;
+        public const bool GenerateWiki = false;
 
         private void Awake()
         {
             base.Logger.LogInfo("Loaded AllTheSigils!");
             Plugin.Log = base.Logger;
 
-            voidCombatPhase = false;
             AddConfigs();
 
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll();
+
+            Directory = base.Info.Location;
 
             //Lily's sigils
             AddBond();
@@ -106,7 +97,7 @@ namespace AllTheSigils
             AddInstakill();
 
             //Void's sigils
-            //Add Card
+            //Add Cards
             Voids_work.Cards.Acid_Puddle.AddCard();
             Voids_work.Cards.Jackalope.AddCard();
 
@@ -132,7 +123,7 @@ namespace AllTheSigils
             addCoinFinder();
             AddConsumer();
             AddCoward();
-            ///			AddDeadlyWaters();
+            AddDeadlyWaters();
             AddDeathburst();
             AddDesperation();
             AddDiseaseAbsorbtion();
@@ -179,14 +170,14 @@ namespace AllTheSigils
             AddPierce();
             AddPoisonous();
             AddPossessor();
-            AddPossessorPowerful(); // Powerful Possessor
-            AddMovingPowerUp(); // Power from movement
+            AddPossessorPowerful(); //Powerful Possessor
+            AddMovingPowerUp(); //Power from movement
             AddPredator();
             AddPrideful();
             AddProtector();
             AddRam();
             AddRandomStrafe();
-            AddBlind(); // Random Strikes
+            AddBlind(); //Random Strikes
             AddRecoil();
             AddRegenFull();
             AddRegen1();
@@ -197,7 +188,7 @@ namespace AllTheSigils
             AddRetaliate();
             AddSchooling();
             AddScissors();
-            //			AddShadowStep();
+            //			 AddShadowStep();
             AddSickness();
             AddSluggish();
             AddStampede();
@@ -225,6 +216,8 @@ namespace AllTheSigils
             AddWithering();
             AddZapper();
 
+            AddSticky();
+
             //Anthony's sigils
             anthonyClawPrefab = ResourceBank.Get<GameObject>("Prefabs/Cards/SpecificCardModels/LatchClaw");
             AddActivactedNanoShield();
@@ -239,6 +232,28 @@ namespace AllTheSigils
             AddChickenCard();
 
             //ATS sigils
+            AddMount();
+            AddParasite();
+            AddHermit();
+            AddDraw_Energy();
+            AddDraw_Mox();
+            AddDraw_Cost();
+            AddHyped();
+            AddResourceful();
+            AddHoodini();
+            AddInaccurate();
+            AddDrunk();
+            AddUnderdog();
+            AddHoming();
+            AddLullaby();
+            AddNurse();
+            AddMedical_Aid();
+            AddSympathetic();
+            AddArmoured();
+            AddFrightened();
+            AddTerrified();
+            AddAlternating_Scratch();
+            AddChoreography();
 
             if (GenerateWiki)
             {
@@ -291,11 +306,11 @@ namespace AllTheSigils
                             break;
                     }
 
-                    string sigilArtName = "";
+                    Tuple<string, string> sigilWikiInfo;
                     string link = "";
-                    if (SigilArtNames.TryGetValue(ability.ability, out sigilArtName))
+                    if (SigilWikiInfos.TryGetValue(ability.ability, out sigilWikiInfo))
                     {
-                        link = $"{assetFolderLink}/{folderName}/{sigilArtName}.png";
+                        link = $"{assetFolderLink}/{folderName}/{sigilWikiInfo.Item1}.png";
                     }
                     else
                     {
@@ -304,14 +319,14 @@ namespace AllTheSigils
                     string name = ability.rulebookName;
                     string powerLevel = ability.powerLevel.ToString();
                     string description = ability.rulebookDescription;
-                    SigilInfoText += $"\n|<img align=\"center\" src=\"{link}\">|**{name}**|{powerLevel}|{description}||";
+                    SigilInfoText += $"\n|<img align=\"center\" src=\"{link}\">|**{name}**|{powerLevel}|{description}|{sigilWikiInfo.Item2}|";
                 }
             }
 
             String WikiText = $"{TopText}{SigilInfoText}\n{BottomText}";
             File.WriteAllText(Path.Combine(dir, "wiki.txt"), WikiText);
 
-            Plugin.Log.LogWarning($"FINISHED WRITING WIKI TEXT TO:\n{Path.Combine(dir, "wiki.txt")}");
+            Plugin.Log.LogWarning($"FINISHED WRITING WIKI TEXT TO:\n{dir}wiki.txt");
         }
 
         public void AddTemporarySigils()
@@ -327,7 +342,7 @@ namespace AllTheSigils
                         ability.rulebookName,
                         ability.rulebookDescription,
                         typeof(EmptySigil),
-                        GetTexture("placeholder")
+                        GetTextureLily("placeholder")
                     );
                     NewSigilVersions.Add(info.ability, guid);
                 }
@@ -383,26 +398,57 @@ namespace AllTheSigils
         {
             AddDev_Activated();
             CardInfo Squirrel = CardManager.BaseGameCards.CardByName("Squirrel");
-            Squirrel.abilities = new List<Ability> { Wild_Hunger.ability };
+            Squirrel.abilities = new List<Ability> { Draw_Cost.ability };
+            //Squirrel.abilities = new List<Ability> { Armoured.ability, Draw_Cost.ability, Draw_Energy.ability, Draw_Mox.ability, Drunk.ability, Frightened.ability, Hermit.ability, Homing.ability };
+            Squirrel.baseAttack = 1;
 
-            CardInfo Geck = CardManager.BaseGameCards.CardByName("Geck");
-            Geck.abilities = new List<Ability> { Ability.IceCube };
-            Geck.SetIceCube(CardLoader.GetCardByName("Amalgam"));
+            CardInfo wolf = CardManager.BaseGameCards.CardByName("Wolf");
+            wolf.abilities = new List<Ability> { Draw_Mox.ability };
+            //wolf.abilities = new List<Ability> { Hoodini.ability, Hyped.ability, Inaccurate.ability, Lullaby.ability, Medical_Aid.ability, Mount.ability, Nurse.ability, Parasite.ability };
+
+            CardInfo mole = CardManager.BaseGameCards.CardByName("Mole");
+            mole.abilities = new List<Ability> { Draw_Energy.ability };
+            //mole.abilities = new List<Ability> { Resourceful.ability, Sympathetic.ability, Terrified.ability, Underdog.ability };
+            mole.baseAttack = 1;
+
+            CardInfo wolf_talking = CardManager.BaseGameCards.CardByName("Wolf_Talking");
+            wolf_talking.abilities = new List<Ability> { };
+
+            CardInfo grizzly = CardManager.BaseGameCards.CardByName("Grizzly");
+            grizzly.abilities = new List<Ability> { };
+            grizzly.baseAttack = 1;
+
+            CardInfo stoat = CardManager.BaseGameCards.CardByName("Stoat");
+            stoat.abilities = new List<Ability> { };
+
+            //CardInfo Geck = CardManager.BaseGameCards.CardByName("Geck");
+            //Geck.abilities = new List<Ability> { Ability.IceCube };
+            //Geck.SetIceCube(CardLoader.GetCardByName("Amalgam"));
         }
 
-        public Texture2D GetTexture(string path, bool Act2 = false)
+        public static Texture2D GetTexture(string path, bool Act2 = false)
         {
             string folder = Act2 ? "Act2" : "Act1";
-            byte[] imgBytes = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(base.Info.Location), "Artwork/", "Lily", $"{folder}/", $"{path}.png"));
+            byte[] imgBytes = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(Directory), "Artwork/", "ATS", $"{folder}/", $"{path}.png"));
             Texture2D tex = new Texture2D(2, 2);
             tex.LoadImage(imgBytes);
             tex.filterMode = FilterMode.Point;
             return tex;
         }
 
-        public Texture2D GetTextureAnthony(string path)
+        public static Texture2D GetTextureLily(string path, bool Act2 = false)
         {
-            byte[] imgBytes = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(base.Info.Location), "Artwork/", "Anthony", $"{path}.png"));
+            string folder = Act2 ? "Act2" : "Act1";
+            byte[] imgBytes = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(Directory), "Artwork/", "Lily", $"{folder}/", $"{path}.png"));
+            Texture2D tex = new Texture2D(2, 2);
+            tex.LoadImage(imgBytes);
+            tex.filterMode = FilterMode.Point;
+            return tex;
+        }
+
+        public static Texture2D GetTextureAnthony(string path)
+        {
+            byte[] imgBytes = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(Directory), "Artwork/", "Anthony", $"{path}.png"));
             Texture2D tex = new Texture2D(2, 2);
             tex.LoadImage(imgBytes);
             tex.filterMode = FilterMode.Point;

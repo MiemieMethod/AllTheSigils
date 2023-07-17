@@ -2,6 +2,7 @@
 using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Herd.ability] = "herd3-sigil-a2";
+                Plugin.SigilWikiInfos[void_Herd.ability] = new Tuple<string, string>("herd3-sigil-a2", "");
             }
 
         }

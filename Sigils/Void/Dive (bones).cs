@@ -1,6 +1,7 @@
 ﻿using APIPlugin;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,7 +43,7 @@ namespace AllTheSigils
 
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Dive_Bone.ability] = "void_Dive_Bones";
+                Plugin.SigilWikiInfos[void_Dive_Bone.ability] = new Tuple<string, string>("void_Dive_Bones", "");
             }
         }
     }

@@ -1,9 +1,9 @@
-﻿using AllTheSigils.Patches;
-using APIPlugin;
+﻿using APIPlugin;
 using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
 using Pixelplacement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,7 +33,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Enforcer.ability] = "void_enforcer";
+                Plugin.SigilWikiInfos[void_Enforcer.ability] = new Tuple<string, string>("void_enforcer", "");
             }
         }
     }
@@ -44,11 +44,6 @@ namespace AllTheSigils
 
         public static Ability ability;
 
-        public static bool isCombatPhase = false;
-
-
-        public int DamageDealtThisPhase { get; private set; }
-
         public override bool RespondsToUpkeep(bool playerUpkeep)
         {
             return base.Card.OpponentCard != playerUpkeep;
@@ -57,19 +52,15 @@ namespace AllTheSigils
 
         public override IEnumerator OnUpkeep(bool playerUpkeep)
         {
-            CardSlot slot = base.Card.slot;
-            List<CardSlot> attackingSlots = Singleton<BoardManager>.Instance.GetAdjacentSlots(slot);
+            List<CardSlot> attackingSlots = Singleton<BoardManager>.Instance.GetAdjacentSlots(base.Card.Slot);
             if (attackingSlots.Count > 0)
             {
-                if (Plugin.voidCombatPhase == false)
+                foreach (CardSlot slot in attackingSlots)
                 {
-                    yield return FakeCombat.FakeCombatPhase(base.Card.slot.IsPlayerSlot, null, attackingSlots);
-                }
-                else
-                {
-                    foreach (CardSlot attacker in attackingSlots)
+                    if (slot.Card != null)
                     {
-                        yield return Singleton<CombatPhaseManager>.Instance.SlotAttackSequence(attacker);
+                        FakeCombatHandler.FakeCombatThing fakecombat = new FakeCombatHandler.FakeCombatThing();
+                        yield return fakecombat.FakeCombat(!base.Card.OpponentCard, null, slot);
                     }
                 }
             }

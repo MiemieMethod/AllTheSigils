@@ -2,6 +2,7 @@
 // Modding Inscryption
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections.Generic;
 
 
@@ -16,9 +17,9 @@ namespace AllTheSigils
                     "Noble Sacrifice",
                     "[creature] is counted as 2 blood rather than 1 blood when sacrificed.",
                     typeof(Bi_Blood),
-                    GetTexture("bi_blood")
+                    GetTextureLily("bi_blood")
                 );
-            info.SetPixelAbilityIcon(GetTexture("bi_blood", true));
+            info.SetPixelAbilityIcon(GetTextureLily("bi_blood", true));
             info.powerLevel = 1;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -27,7 +28,7 @@ namespace AllTheSigils
             Bi_Blood.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "bi_blood";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("bi_blood", "");
             }
         }
     }

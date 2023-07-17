@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,9 +18,9 @@ namespace AllTheSigils
                        "Linguist",
                        "While [creature] is on the board, all talking cards on your side of the board get +1 attack.",
                        typeof(Linguist),
-                       GetTexture("linguist")
+                       GetTextureLily("linguist")
                    );
-            info.SetPixelAbilityIcon(new Texture2D(17, 17));
+            info.SetPixelAbilityIcon(GetTextureLily("placeholder", true));
             info.powerLevel = 3;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -28,7 +29,7 @@ namespace AllTheSigils
             Linguist.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "linguist";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("linguist", "");
             }
         }
     }

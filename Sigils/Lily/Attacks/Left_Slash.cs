@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections.Generic;
 
 
@@ -14,12 +15,12 @@ namespace AllTheSigils
             AbilityInfo info = AbilityManager.New(
                     OldLilyPluginGuid,
                     "Left scratch",
-                    "When [creature] attacks it also attacks the space on the left of the attacked slot.",
+                    "When [creature] attacks it will also attack the space on the left of the attacked slot.",
                     typeof(Left_Slash),
-                    GetTexture("left_scratch")
+                    GetTextureLily("left_scratch")
                 );
-            info.SetPixelAbilityIcon(GetTexture("left_scratch", true));
-            info.powerLevel = 5;
+            info.SetPixelAbilityIcon(GetTextureLily("left_scratch", true));
+            info.powerLevel = 4;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
             info.opponentUsable = true;
@@ -27,12 +28,12 @@ namespace AllTheSigils
             Left_Slash.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "left_scratch";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("left_scratch", "");
             }
         }
     }
 
-    public class Left_Slash : AbilityBehaviour
+    public class Left_Slash : ExtendedAbilityBehaviour
     {
         public static Ability ability;
 
@@ -42,6 +43,25 @@ namespace AllTheSigils
             {
                 return ability;
             }
+        }
+
+        public override bool RespondsToGetOpposingSlots()
+        {
+            return true;
+        }
+        public override List<CardSlot> GetOpposingSlots(List<CardSlot> originalSlots, List<CardSlot> otherAddedSlots)
+        {
+            List<CardSlot> opposingSlots = new List<CardSlot>();
+            CardSlot toLeftSlot = BoardManager.Instance.GetAdjacent(base.Card.Slot, true);
+            if (toLeftSlot != null)
+            {
+                opposingSlots.Add(toLeftSlot.opposingSlot);
+            }
+            else
+            {
+                opposingSlots.Add(base.Card.OpposingSlot());
+            }
+            return opposingSlots;
         }
     }
 }

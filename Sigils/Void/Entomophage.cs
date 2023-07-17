@@ -1,6 +1,7 @@
 ﻿using APIPlugin;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Entomophage.ability] = "void_insectKiller";
+                Plugin.SigilWikiInfos[void_Entomophage.ability] = new Tuple<string, string>("void_insectKiller", "");
             }
         }
     }

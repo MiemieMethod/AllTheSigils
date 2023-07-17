@@ -33,7 +33,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Bodyguard.ability] = "void_bodyguard";
+                Plugin.SigilWikiInfos[void_Bodyguard.ability] = new Tuple<string, string>("void_bodyguard", "");
             }
         }
     }

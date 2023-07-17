@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections.Generic;
 
 
@@ -16,9 +17,9 @@ namespace AllTheSigils
                           "Picky",
                           "[creature] cannnot be summoned by using any free cards as sacrifice.",
                           typeof(Picky),
-                          GetTexture("picky")
+                          GetTextureLily("picky")
                       );
-            info.SetPixelAbilityIcon(GetTexture("picky", true));
+            info.SetPixelAbilityIcon(GetTextureLily("picky", true));
             info.powerLevel = -2;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = false;
@@ -27,7 +28,7 @@ namespace AllTheSigils
             Picky.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "picky";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("picky", "");
             }
         }
     }

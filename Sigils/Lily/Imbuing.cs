@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,9 @@ namespace AllTheSigils
                  "Imbuing",
                  "[creature] will get specific buffs depending on which tribe is most promenent in the sacrifices that were used to summon it.",
                  typeof(Imbuing),
-                 GetTexture("imbuing")
+                 GetTextureLily("imbuing")
              );
-            info.SetPixelAbilityIcon(new Texture2D(17, 17));
+            info.SetPixelAbilityIcon(GetTextureLily("placeholder", true));
             info.powerLevel = 3;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = false;
@@ -31,7 +32,14 @@ namespace AllTheSigils
             Imbuing.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "imbuing";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("imbuing",
+                "Buffs per tribe:<br>" +
+                "- Canine: GaurdDog sigil, 1 attack and 1 health<br>" +
+                "- Bird: Flying sigil and 1 attack<br>" +
+                "- Reptile: TailOnHit sigil and 1 health<br>" +
+                "- Insect: Tribe Attack sigil<br>" +
+                "- Squirrel: Bi Blood sigil<br>" +
+                "- Hooved: SplitStrike sigil");
             }
         }
     }

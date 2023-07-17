@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,9 +18,9 @@ namespace AllTheSigils
                  "Exhaustion",
                  "The attack of [creature] will be decreased by the same amount as its lost health.",
                  typeof(Hydra),
-                 GetTexture("exhaustion")
+                 GetTextureLily("exhaustion")
              );
-            info.SetPixelAbilityIcon(GetTexture("exhaustion", true));
+            info.SetPixelAbilityIcon(GetTextureLily("exhaustion", true));
             info.powerLevel = -2;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -28,7 +29,7 @@ namespace AllTheSigils
             Hydra.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "exhaustion";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("exhaustion", "");
             }
         }
     }

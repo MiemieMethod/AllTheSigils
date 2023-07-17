@@ -33,7 +33,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_FishHook.ability] = "void_fish_hook";
+                Plugin.SigilWikiInfos[void_FishHook.ability] = new Tuple<string, string>("void_fish_hook", "");
             }
         }
     }

@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,9 +19,9 @@ namespace AllTheSigils
                        "Rushing march",
                        "At the end of its owner's turn, [creature] will move in the direction inscribed on the sigil, however if it hits a card whilst moving, [creature] will stop and the card it hit will perish.",
                        typeof(Rushing_March),
-                       GetTexture("rushing_march")
+                       GetTextureLily("rushing_march")
                    );
-            info.SetPixelAbilityIcon(GetTexture("rushing_march", true));
+            info.SetPixelAbilityIcon(GetTextureLily("rushing_march", true));
             info.powerLevel = -2;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -29,7 +30,7 @@ namespace AllTheSigils
             Rushing_March.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "rushing_march";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("rushing_march", "");
             }
         }
     }

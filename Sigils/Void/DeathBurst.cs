@@ -3,6 +3,7 @@ using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
 using Pixelplacement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Deathburst.ability] = "void_deathburst";
+                Plugin.SigilWikiInfos[void_Deathburst.ability] = new Tuple<string, string>("void_deathburst", "");
             }
 
         }

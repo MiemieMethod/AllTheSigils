@@ -31,7 +31,7 @@ namespace AllTheSigils
                                                                                     true, powerlevel, LeshyUsable, part1Shops, canStack).ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[void_Vicious.ability] = "void_vicious";
+                Plugin.SigilWikiInfos[void_Vicious.ability] = new Tuple<string, string>("void_vicious", "");
             }
         }
     }

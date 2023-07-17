@@ -2,6 +2,7 @@
 using DiskCardGame;
 // Modding Inscryption
 using InscryptionAPI.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,9 +19,9 @@ namespace AllTheSigils
                                "Host",
                                "[creature] is the host of other creatures. It will give you such creature when struck.",
                                typeof(Host),
-                               GetTexture("host")
+                               GetTextureLily("host")
                            );
-            info.SetPixelAbilityIcon(GetTexture("host", true));
+            info.SetPixelAbilityIcon(GetTextureLily("host", true));
             info.powerLevel = 5;
             info.metaCategories = new List<AbilityMetaCategory> { AbilityMetaCategory.Part1Rulebook, AbilityMetaCategory.Part1Modular };
             info.canStack = true;
@@ -29,7 +30,7 @@ namespace AllTheSigils
             Host.ability = info.ability;
             if (Plugin.GenerateWiki)
             {
-                Plugin.SigilArtNames[info.ability] = "host";
+                Plugin.SigilWikiInfos[info.ability] = new Tuple<string, string>("host", "Will use the ice cube parameter to define what creature it gives.<br>Default: ringworm");
             }
         }
     }
