@@ -302,7 +302,7 @@ namespace AllTheSigils
                             folderName = "Anthony";
                             break;
                         case PluginGuid:
-                            folderName = "ATS";
+                            folderName = "ATS/Act1";
                             break;
                     }
 
