@@ -33,7 +33,7 @@ namespace AllTheSigils
 
         private const string PluginName = "AllTheSigils";
 
-        private const string PluginVersion = "3.0.0";
+        private const string PluginVersion = "3.0.1";
 
         public static string Directory;
 
@@ -351,17 +351,17 @@ namespace AllTheSigils
 
         public void ReplaceNewSigilsOnCards()
         {
-
-            for (int i = 0; i < CardManager.BaseGameCards.Count; i++)
+            List<CardInfo> AllCards = ScriptableObjectLoader<CardInfo>.AllData;
+            for (int i = 0; i < AllCards.Count; i++)
             {
-                CardInfo card = CardManager.BaseGameCards[i];
+                CardInfo card = AllCards[i];
                 for (int j = 0; j < card.Abilities.Count; j++)
                 {
                     Ability ability = card.Abilities[j];
 
                     if (NewSigilVersions.ContainsKey(ability))
                     {
-                        CardManager.BaseGameCards[i].abilities[j] = GetCustomAbility(NewSigilVersions[ability], AbilitiesUtil.GetInfo(ability).rulebookName);
+                        AllCards[i].abilities[j] = GetCustomAbility(NewSigilVersions[ability], AbilitiesUtil.GetInfo(ability).rulebookName);
                     }
                 }
             }

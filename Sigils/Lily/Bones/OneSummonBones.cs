@@ -18,7 +18,7 @@ namespace AllTheSigils
                                 "Bone hoarder 1",
                                 "When [creature] is played, 1 bone is rewarded.",
                                 typeof(OneSummonBones),
-                                GetTextureLily("onesummonbones")
+                                GetTextureLily("onesummonbone")
                             );
             info.SetPixelAbilityIcon(GetTextureLily("onesummonbone", true));
             info.powerLevel = 1;
