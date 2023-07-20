@@ -66,7 +66,7 @@ namespace AllTheSigils
             List<CardSlot> opposingSlots = new List<CardSlot>();
             CardSlot toLeftSlot = BoardManager.Instance.GetAdjacent(base.Card.Slot, true);
             CardSlot toRightSlot = BoardManager.Instance.GetAdjacent(base.Card.Slot, false);
-            List<CardSlot> slots = new List<CardSlot>() { toLeftSlot.opposingSlot, toRightSlot.opposingSlot };
+            List<CardSlot> slots = new List<CardSlot>() { toLeftSlot?.opposingSlot, toRightSlot?.opposingSlot };
             slots = slots.Where(x => x != null).ToList();
 
             Random random = new Random();
