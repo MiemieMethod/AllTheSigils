@@ -52,7 +52,7 @@ namespace AllTheSigils
             if (oldSlot.Card == null)
             {
 
-                if (base.Card.Info.iceCubeParams.creatureWithin != null)
+                if (base.Card.Info?.iceCubeParams?.creatureWithin != null)
                 {
                     yield return Singleton<BoardManager>.Instance.CreateCardInSlot(base.Card.Info.iceCubeParams.creatureWithin, oldSlot, 0.1f, true);
                 }

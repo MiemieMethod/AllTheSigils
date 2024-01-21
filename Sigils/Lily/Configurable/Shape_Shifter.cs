@@ -68,7 +68,7 @@ namespace AllTheSigils
         // Token: 0x06001301 RID: 4865 RVA: 0x000433D2 File Offset: 0x000415D2
         public override IEnumerator OnTakeDamage(PlayableCard source)
         {
-            if (base.Card.Info.iceCubeParams.creatureWithin != null)
+            if (base.Card.Info?.iceCubeParams?.creatureWithin != null)
             {
                 yield return base.Card.TransformIntoCard(base.Card.Info.iceCubeParams.creatureWithin, null);
             }
