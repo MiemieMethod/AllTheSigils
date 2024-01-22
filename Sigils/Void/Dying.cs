@@ -21,7 +21,7 @@ namespace AllTheSigils
             const string LearnDialogue = "Tik Toc";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Dying);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Dying_a2);
-            int powerlevel = -1;
+            int powerlevel = -2;
             bool LeshyUsable = false;
             bool part1Shops = true;
             bool canStack = false;
@@ -174,7 +174,6 @@ namespace AllTheSigils
             Plugin.Log.LogMessage(this.numTurnsInPlay >= num);
             if (this.numTurnsInPlay >= num)
             {
-                Plugin.Log.LogMessage("did my check fire?");
                 yield return base.PreSuccessfulTriggerSequence();
                 base.Card.Anim.LightNegationEffect();
                 yield return base.Card.Die(false, null, true);

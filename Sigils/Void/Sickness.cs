@@ -20,7 +20,7 @@ namespace AllTheSigils
             const string LearnDialogue = "The creature's strength leaves it as it strikes.";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Sickness);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Sickness_a2);
-            int powerlevel = -1;
+            int powerlevel = -2;
             bool LeshyUsable = Plugin.configSickness.Value;
             bool part1Shops = true;
             bool canStack = false;

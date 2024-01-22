@@ -28,7 +28,7 @@ namespace AllTheSigils
             const string LearnDialogue = "The trail they leave behind, hurts.";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Sticky);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Sticky_a2);
-            int powerlevel = 4;
+            int powerlevel = 2;
             bool LeshyUsable = Plugin.configAcidTrail.Value;
             bool part1Shops = true;
             bool canStack = false;
@@ -61,7 +61,10 @@ namespace AllTheSigils
             List<CardSlot> AllSlots = base.Card.OpponentCard ? Singleton<BoardManager>.Instance.OpponentSlotsCopy : Singleton<BoardManager>.Instance.PlayerSlotsCopy;
             CardSlot baseCardNewSlot = AllSlots.Where(x => x.Index == newSlot.Index).First();
 
-            yield return SigilEffectUtils.moveCard(base.Card, baseCardNewSlot);
+            if (baseCardNewSlot.Card == null)
+            {
+                yield return SigilEffectUtils.moveCard(base.Card, baseCardNewSlot);
+            }
             yield break;
         }
     }

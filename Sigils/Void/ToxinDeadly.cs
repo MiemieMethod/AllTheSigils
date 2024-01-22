@@ -17,7 +17,7 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Toxin (Deadly)";
-            const string rulebookDescription = "When [creature] damages another creature, that creature gains the Dying Sigil. The Dying Sigil is defined as: When ever a creature bearing this sigil declares an attack, they will loose one health.";
+            const string rulebookDescription = "When [creature] damages another creature, that creature gains the Dying Sigil. The Dying Sigil is defined as: [creature] will die after 2 number of turns.";
             const string LearnDialogue = "Even once combat is over, it leaves a deadly mark";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Toxin_Deadly);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Toxin_Deadly_a2);
