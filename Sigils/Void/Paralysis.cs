@@ -26,7 +26,7 @@ namespace AllTheSigils
             int powerlevel = -1;
             bool LeshyUsable = Plugin.configParalysis.Value;
             bool part1Shops = true;
-            bool canStack = true;
+            bool canStack = false;
 
             // set ability to behaviour class
             void_Paralysis.ability = SigilUtils.CreateAbilityWithDefaultSettingsKCM(rulebookName, rulebookDescription, typeof(void_Paralysis), tex_a1, tex_a2, LearnDialogue,
