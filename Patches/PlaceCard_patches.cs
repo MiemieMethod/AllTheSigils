@@ -3,6 +3,7 @@ using BepInEx.Logging;
 using DiskCardGame;
 using HarmonyLib;
 using InscryptionAPI.Card;
+using InscryptionAPI.CardCosts;
 using InscryptionAPI.Guid;
 using InscryptionAPI.Saves;
 using System;
@@ -108,6 +109,14 @@ namespace AllTheSigils.Patches
                         }
                     }
 
+
+                    //Inserting the API custom cost code here till we figure out a better solution
+                    Dictionary<string, int> customCosts = new();
+                    foreach (CustomCardCost cost1 in card.GetCustomCardCosts())
+                        customCosts.Add(cost1.CostName, card.GetCustomCost(cost1.CostName));
+
+                    yield return Singleton<PlayerHand>.Instance.PlayCardOnSlot(card, lastSelectedSlot);
+
                     if (card.Info.BonesCost > 0)
                     {
                         yield return Singleton<ResourcesManager>.Instance.SpendBones(card.Info.BonesCost);
@@ -115,6 +124,13 @@ namespace AllTheSigils.Patches
                     if (card.EnergyCost > 0)
                     {
                         yield return Singleton<ResourcesManager>.Instance.SpendEnergy(card.EnergyCost);
+                    }
+
+                    //Inserting the API custom cost code here till we figure out a better solution
+                    foreach (var cost2 in card.GetCustomCardCosts())
+                    {
+                        if (customCosts.ContainsKey(cost2.CostName))
+                            yield return cost2.OnPlayed(customCosts[cost2.CostName], card);
                     }
                 }
             }
