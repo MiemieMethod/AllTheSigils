@@ -53,7 +53,7 @@ namespace AllTheSigils
 
         public override IEnumerator OnDealDamage(int amount, PlayableCard target)
         {
-            if (target)
+            if (target && target.LacksAbility(void_Burning.ability))
             {
                 Singleton<ViewManager>.Instance.SwitchToView(View.Board, false, true);
                 yield return new WaitForSeconds(0.1f);

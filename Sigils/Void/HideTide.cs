@@ -18,11 +18,11 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "High Tide";
-            const string rulebookDescription = "While [creature] is on the board, it will grant creatures that are on the same side of the board the waterborn sigil. Does not affect cards that are Airborne.";
+            const string rulebookDescription = "While [creature] is on the board, it will grant the waterborne sigil of cards that are played after it on it's side of the board. Does not affect cards that are Airborne.";
             const string LearnDialogue = "The waters rise.";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_HighTide);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_HighTide_a2);
-            int powerlevel = 1;
+            int powerlevel = 0;
             bool LeshyUsable = false;
             bool part1Shops = true;
             bool canStack = false;

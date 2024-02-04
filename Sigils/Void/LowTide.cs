@@ -18,7 +18,7 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Low Tide";
-            const string rulebookDescription = "While [creature] is on the board, it will negate the waterborne sigil of creatures on it's side of the board.";
+            const string rulebookDescription = "While [creature] is on the board, it will negate the waterborne sigil of cards that are played after it on it's side of the board.";
             const string LearnDialogue = "The waters rise.";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_LowTide);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_LowTide_a2);
