@@ -65,32 +65,64 @@ namespace AllTheSigils
         // Token: 0x06001425 RID: 5157 RVA: 0x0004453A File Offset: 0x0004273A
         protected virtual IEnumerator DoStrafe(CardSlot toLeft, CardSlot toRight)
         {
-            if (toLeft == null) { toLeft = Singleton<BoardManager>.Instance.playerSlots.Last(); }
-            if (toRight == null) { toRight = Singleton<BoardManager>.Instance.playerSlots.First(); }
+            if (base.Card.IsPlayerCard())
+            {
+                if (toLeft == null) { toLeft = Singleton<BoardManager>.Instance.playerSlots.Last(); }
+                if (toRight == null) { toRight = Singleton<BoardManager>.Instance.playerSlots.First(); }
 
-            CardSlot toLefttwice = Singleton<BoardManager>.Instance.GetAdjacent(toLeft, true);
-            CardSlot toRighttwice = Singleton<BoardManager>.Instance.GetAdjacent(toRight, false);
-            if (toLefttwice == null) { toLefttwice = Singleton<BoardManager>.Instance.playerSlots.Last(); }
-            if (toRighttwice == null) { toRighttwice = Singleton<BoardManager>.Instance.playerSlots.First(); }
+                CardSlot toLefttwice = Singleton<BoardManager>.Instance.GetAdjacent(toLeft, true);
+                CardSlot toRighttwice = Singleton<BoardManager>.Instance.GetAdjacent(toRight, false);
+                if (toLefttwice == null) { toLefttwice = Singleton<BoardManager>.Instance.playerSlots.Last(); }
+                if (toRighttwice == null) { toRighttwice = Singleton<BoardManager>.Instance.playerSlots.First(); }
 
-            bool canmoveleft = (toLeft.Card == null || toLefttwice.Card == null);
-            bool canmoveright = (toRight.Card == null || toRighttwice.Card == null);
-            if (this.movingLeft && !canmoveleft)
+                bool canmoveleft = (toLeft.Card == null || toLefttwice.Card == null);
+                bool canmoveright = (toRight.Card == null || toRighttwice.Card == null);
+                if (this.movingLeft && !canmoveleft)
+                {
+                    this.movingLeft = false;
+                }
+                if (!this.movingLeft && !canmoveright)
+                {
+                    this.movingLeft = true;
+                }
+                CardSlot destination = this.movingLeft ? toLeft : toRight;
+                if (destination.Card != null)
+                {
+                    destination = this.movingLeft ? toLefttwice : toRighttwice;
+                }
+                Plugin.Log.LogInfo(destination.Index);
+                yield return base.StartCoroutine(this.MoveToSlot(destination));
+                yield break;
+            } else
             {
-                this.movingLeft = false;
+                if (toLeft == null) { toLeft = Singleton<BoardManager>.Instance.opponentSlots.Last(); }
+                if (toRight == null) { toRight = Singleton<BoardManager>.Instance.opponentSlots.First(); }
+
+                CardSlot toLefttwice = Singleton<BoardManager>.Instance.GetAdjacent(toLeft, true);
+                CardSlot toRighttwice = Singleton<BoardManager>.Instance.GetAdjacent(toRight, false);
+                if (toLefttwice == null) { toLefttwice = Singleton<BoardManager>.Instance.opponentSlots.Last(); }
+                if (toRighttwice == null) { toRighttwice = Singleton<BoardManager>.Instance.opponentSlots.First(); }
+
+                bool canmoveleft = (toLeft.Card == null || toLefttwice.Card == null);
+                bool canmoveright = (toRight.Card == null || toRighttwice.Card == null);
+                if (this.movingLeft && !canmoveleft)
+                {
+                    this.movingLeft = false;
+                }
+                if (!this.movingLeft && !canmoveright)
+                {
+                    this.movingLeft = true;
+                }
+                CardSlot destination = this.movingLeft ? toLeft : toRight;
+                if (destination.Card != null)
+                {
+                    destination = this.movingLeft ? toLefttwice : toRighttwice;
+                }
+                Plugin.Log.LogInfo(destination.Index);
+                yield return base.StartCoroutine(this.MoveToSlot(destination));
+                yield break;
             }
-            if (!this.movingLeft && !canmoveright)
-            {
-                this.movingLeft = true;
-            }
-            CardSlot destination = this.movingLeft ? toLeft : toRight;
-            if (destination.Card != null)
-            {
-                destination = this.movingLeft ? toLefttwice : toRighttwice;
-            }
-            Plugin.Log.LogInfo(destination.Index);
-            yield return base.StartCoroutine(this.MoveToSlot(destination));
-            yield break;
+            
         }
 
         // Token: 0x06001426 RID: 5158 RVA: 0x00044557 File Offset: 0x00042757

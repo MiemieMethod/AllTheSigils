@@ -53,7 +53,7 @@ namespace AllTheSigils
 
         public bool RespondsToCardAssignedToSlotContext(PlayableCard card, CardSlot oldSlot, CardSlot newSlot)
         {
-            return base.Card.OnBoard && oldSlot == base.Card.OpposingSlot();
+            return base.Card.OnBoard && oldSlot == base.Card.OpposingSlot() && base.Card.OpposingCard() == null;
         }
 
         public IEnumerator OnCardAssignedToSlotContext(PlayableCard card, CardSlot oldSlot, CardSlot newSlot)
