@@ -1343,9 +1343,29 @@ namespace AllTheSigils.Artwork {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] void_Heard_0_a2 {
+            get {
+                object obj = ResourceManager.GetObject("void_Heard_0_a2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] void_Heard_1 {
             get {
                 object obj = ResourceManager.GetObject("void_Heard_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] void_Heard_1_a2 {
+            get {
+                object obj = ResourceManager.GetObject("void_Heard_1_a2", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1363,9 +1383,29 @@ namespace AllTheSigils.Artwork {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] void_Heard_2_a2 {
+            get {
+                object obj = ResourceManager.GetObject("void_Heard_2_a2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] void_Heard_3 {
             get {
                 object obj = ResourceManager.GetObject("void_Heard_3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] void_Heard_3_a2 {
+            get {
+                object obj = ResourceManager.GetObject("void_Heard_3_a2", resourceCulture);
                 return ((byte[])(obj));
             }
         }

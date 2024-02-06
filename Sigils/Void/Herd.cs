@@ -23,7 +23,7 @@ namespace AllTheSigils
             const string rulebookDescription = "[creature] will summon a copy of itself each upkeep, up to three times.";
             const string LearnDialogue = "Strength in Numbers";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Heard_3);
-            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.no_a2);
+            Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Heard_3_a2);
             int powerlevel = 4;
             bool LeshyUsable = false;
             bool part1Shops = true;
@@ -55,7 +55,7 @@ namespace AllTheSigils
 
         public override bool RespondsToUpkeep(bool playerUpkeep)
         {
-            if (herdCount != 0)
+            if (this.herdCount != 0)
             {
                 return base.Card.OnBoard && base.Card.OpponentCard != playerUpkeep;
             }
@@ -72,13 +72,31 @@ namespace AllTheSigils
             Texture2D tex1 = SigilUtils.LoadTextureFromResource(Art.void_Heard_1);
             Texture2D tex0 = SigilUtils.LoadTextureFromResource(Art.void_Heard_0);
 
+            if (SaveManager.saveFile.IsPart2)
+            {
+                SigilUtils.LoadTextureFromResource(Art.void_Heard_2_a2);
+                SigilUtils.LoadTextureFromResource(Art.void_Heard_1_a2);
+                SigilUtils.LoadTextureFromResource(Art.void_Heard_0_a2);
+            }
+
             List<CardSlot> allSlots = playerUpkeep ? Singleton<BoardManager>.Instance.playerSlots : Singleton<BoardManager>.Instance.opponentSlots;
             List<CardSlot> targets = allSlots.Where(slot => slot.Card == null).ToList();
 
             if (targets.Count > 0)
             {
-                CardSlot target = targets[Random.Range(0, targets.Count)];
+                this.herdCount--;
+
+                if (this.herdCount == 2)
+                    base.Card.RenderInfo.OverrideAbilityIcon(this.Ability, tex2);
+                else if (this.herdCount == 1)
+                    base.Card.RenderInfo.OverrideAbilityIcon(this.Ability, tex1);
+                else if (this.herdCount == 0)
+                    base.Card.RenderInfo.OverrideAbilityIcon(this.Ability, tex0);
+
+                base.Card.RenderCard();
+                yield return new WaitForSeconds(0.15f);
                 base.Card.Anim.LightNegationEffect();
+                CardSlot target = targets[Random.Range(0, targets.Count)];
                 yield return new WaitForSeconds(0.15f);
                 yield return base.PreSuccessfulTriggerSequence();
                 yield return Singleton<BoardManager>.Instance.CreateCardInSlot(base.Card.Info, target, 0.15f, true);
@@ -89,21 +107,12 @@ namespace AllTheSigils
                 CardInfo OpponentCardInfo = target.Card.Info.Clone() as CardInfo;
                 OpponentCardInfo.Mods.Add(negateMod);
                 target.Card.SetInfo(OpponentCardInfo);
+                target.Card.Anim.LightNegationEffect();
 
                 yield return new WaitForSeconds(0.15f);
                 yield return base.LearnAbility(0.25f);
-                herdCount--;
-
-                if (herdCount == 2)
-                    base.Card.RenderInfo.OverrideAbilityIcon(void_Herd.ability, tex2);
-                else if (herdCount == 1)
-                    base.Card.RenderInfo.OverrideAbilityIcon(void_Herd.ability, tex1);
-                else if (herdCount == 0)
-                    base.Card.RenderInfo.OverrideAbilityIcon(void_Herd.ability, tex0);
-
-                base.Card.RenderCard();
+                
             }
-
             yield break;
         }
     }

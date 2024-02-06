@@ -502,14 +502,26 @@
   <data name="void_Heard_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Void_Merged\void_Heard_0.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="void_Heard_0_a2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Void_Merged\void_Heard_0_a2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="void_Heard_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Void_Merged\void_Heard_1.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="void_Heard_1_a2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Void_Merged\void_Heard_1_a2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="void_Heard_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Void_Merged\void_Heard_2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="void_Heard_2_a2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Void_Merged\void_Heard_2_a2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="void_Heard_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Void_Merged\void_Heard_3.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="void_Heard_3_a2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Void_Merged\void_Heard_3_a2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="void_HighTide" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Void_Merged\void_HighTide.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
