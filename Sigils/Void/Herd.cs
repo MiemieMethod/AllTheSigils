@@ -48,7 +48,7 @@ namespace AllTheSigils
 
         public static Ability ability;
 
-        int herdCount = 3;
+        private int herdCount = 3;
 
 
 
