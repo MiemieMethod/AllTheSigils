@@ -66,6 +66,7 @@ namespace AllTheSigils.Patches
                 {
                     cardWasPlayed = true;
                     card.Anim.SetSelectedToPlay(false);
+                    var RemoveCard = false;
 
                     if (lastSelectedSlot.Card == null)
                     {
@@ -104,18 +105,30 @@ namespace AllTheSigils.Patches
                             cardInfo.Mods.Add(mod);
 
                             lastSelectedSlot.Card.SetInfo(cardInfo);
+                            lastSelectedSlot.Card.Anim.StrongNegationEffect();
                             lastSelectedSlot.Card.RenderCard();
-                            card.ExitBoard(0f, new Vector3(0f, 0f, 0f));
+                            RemoveCard = true;
+
                         }
                     }
 
-
                     //Inserting the API custom cost code here till we figure out a better solution
                     Dictionary<string, int> customCosts = new();
-                    foreach (CustomCardCost cost1 in card.GetCustomCardCosts())
-                        customCosts.Add(cost1.CostName, card.GetCustomCost(cost1.CostName));
+                    if (card.GetCustomCardCosts() != null)
+                    {
+                        foreach (CustomCardCost cost1 in card.GetCustomCardCosts())
+                        {
+                            if (cost1.CostName != null)
+                            {
+                                customCosts.Add(cost1.CostName, card.GetCustomCost(cost1.CostName));
+                            }
+                        }
+                    }
 
-                    yield return Singleton<PlayerHand>.Instance.PlayCardOnSlot(card, lastSelectedSlot);
+                    if (card != null && lastSelectedSlot != null)
+                    {
+                        yield return Singleton<PlayerHand>.Instance.PlayCardOnSlot(card, lastSelectedSlot);
+                    }
 
                     if (card.Info.BonesCost > 0)
                     {
@@ -127,11 +140,19 @@ namespace AllTheSigils.Patches
                     }
 
                     //Inserting the API custom cost code here till we figure out a better solution
-                    foreach (var cost2 in card.GetCustomCardCosts())
+                    if (card.GetCustomCardCosts() != null)
                     {
-                        if (customCosts.ContainsKey(cost2.CostName))
-                            yield return cost2.OnPlayed(customCosts[cost2.CostName], card);
+                        foreach (var cost2 in card.GetCustomCardCosts())
+                        {
+                            if (customCosts.ContainsKey(cost2.CostName))
+                                yield return cost2.OnPlayed(customCosts[cost2.CostName], card);
+                        }
                     }
+                    if (RemoveCard == true)
+                    {
+                        card.ExitBoard(0f, new Vector3(0f, 0f, 0f));
+                    }
+
                 }
             }
             if (!cardWasPlayed)
