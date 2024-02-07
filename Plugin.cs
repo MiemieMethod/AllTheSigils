@@ -194,6 +194,7 @@ namespace AllTheSigils
             AddStampede();
             AddStrongWind();
             AddSubmergedAmbush();
+            AddSwallower();
             AddTakeOffBones();
             AddTakeOffEnergy();
             AddThickShell();

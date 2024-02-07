@@ -2563,6 +2563,26 @@ namespace AllTheSigils.Artwork {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] void_swallower {
+            get {
+                object obj = ResourceManager.GetObject("void_swallower", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] void_swallower_a2 {
+            get {
+                object obj = ResourceManager.GetObject("void_swallower_a2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] void_TakeDisease {
             get {
                 object obj = ResourceManager.GetObject("void_TakeDisease", resourceCulture);

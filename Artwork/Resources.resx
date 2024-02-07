@@ -868,6 +868,12 @@
   <data name="void_SubmergedAmbush_a2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Void_Merged\void_SubmergedAmbush_a2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="void_swallower" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Void_Merged\void_swallower.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="void_swallower_a2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Void_Merged\void_swallower_a2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="void_TakeDisease" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Void_Merged\void_takeDisease.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

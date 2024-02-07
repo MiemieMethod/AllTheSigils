@@ -62,16 +62,8 @@ namespace AllTheSigils
         public override IEnumerator OnResolveOnBoard()
         {
             yield return base.PreSuccessfulTriggerSequence();
-            bool flag = Singleton<ViewManager>.Instance.CurrentView != this.DrawCardView;
-            if (flag)
-            {
-                yield return new WaitForSeconds(0.2f);
-                Singleton<ViewManager>.Instance.SwitchToView(this.DrawCardView, false, false);
-                yield return new WaitForSeconds(0.2f);
-            }
-            yield return Singleton<CardSpawner>.Instance.SpawnCardToHand(this.CardToDraw, base.Card.TemporaryMods, 0.25f, null);
-            yield return new WaitForSeconds(0.45f);
-            yield return base.LearnAbility(0.1f);
+            yield return base.CreateDrawnCard();
+            yield return base.LearnAbility(0f);
             yield break;
         }
 
@@ -92,8 +84,13 @@ namespace AllTheSigils
             }
             else
             {
-                result = CardLoader.Clone(list[SeededRandom.Range(0, list.Count, randomSeed)]);
+                result = CardLoader.GetCardByName(list[SeededRandom.Range(0, list.Count, randomSeed)].name);
             }
+
+            if (result == null) {
+                result = CardLoader.GetCardByName("Stoat");
+            }
+
             return result;
         }
     }

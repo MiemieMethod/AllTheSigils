@@ -99,7 +99,7 @@ namespace AllTheSigils
                 CardSlot target = targets[Random.Range(0, targets.Count)];
                 yield return new WaitForSeconds(0.15f);
                 yield return base.PreSuccessfulTriggerSequence();
-                yield return Singleton<BoardManager>.Instance.CreateCardInSlot(base.Card.Info, target, 0.15f, true);
+                yield return Singleton<BoardManager>.Instance.CreateCardInSlot(CardLoader.Clone(base.Card.Info), target, 0.15f, true);
 
                 CardModificationInfo negateMod = new CardModificationInfo();
                 negateMod.negateAbilities.Add(void_Herd.ability);
