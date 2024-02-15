@@ -1,6 +1,7 @@
 ﻿using APIPlugin;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using InscryptionAPI.Guid;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -17,12 +18,12 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Burning";
-            const string rulebookDescription = "[creature] is on fire, and will gain 1 power and loose 1 health each upkeep.";
+            const string rulebookDescription = "[creature] is on fire, and will gain 1 power and loose 1 health each upkeep. Blocked by Fire Resistance.";
             const string LearnDialogue = "It rampages while on fire.";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Burning);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Burning_a2);
             int powerlevel = 0;
-            bool LeshyUsable = Plugin.configToxin.Value;
+            bool LeshyUsable = Plugin.configBurning.Value;
             bool part1Shops = true;
             bool canStack = false;
 
@@ -44,11 +45,18 @@ namespace AllTheSigils
 
         public static Ability ability;
 
-
-
         public override bool RespondsToUpkeep(bool playerUpkeep)
         {
-            return base.Card.OpponentCard != playerUpkeep;
+
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("nevernamed.inscryption.sigils"))
+            {
+                return base.Card.OpponentCard != playerUpkeep && base.Card.LacksAbility(InscryptionAPI.Guid.GuidManager.GetEnumValue<Ability>("nevernamed.inscryption.sigils", "Fire Resistant"));
+            
+            } 
+            else
+            {
+                return base.Card.OpponentCard != playerUpkeep;
+            }
         }
 
         public override IEnumerator OnUpkeep(bool playerUpkeep)
