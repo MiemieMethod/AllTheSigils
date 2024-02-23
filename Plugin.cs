@@ -255,6 +255,7 @@ namespace AllTheSigils
             AddTerrified();
             AddAlternating_Scratch();
             AddChoreography();
+			AddChangePortraitWhenMerged();
 
             if (GenerateWiki)
             {
