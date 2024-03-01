@@ -110,19 +110,10 @@ namespace AllTheSigils
             {
                 cardModificationInfo.nullifyGemsCost = true;
             }
-            CardInfo ClonedCardInfo = base.Card.Info.Clone() as CardInfo;
 
-            //Add the modifincations
-            ClonedCardInfo.Mods.Add(cardModificationInfo);
-
-            for (int index = 0; index < base.Card.Info.Mods.Count; index++)
-            {
-                ClonedCardInfo.Mods.Add(base.Card.Info.Mods[index]);
-            }
-
-
-            //Update the card info
-            base.Card.SetInfo(ClonedCardInfo);
+            base.Card.AddTemporaryMod(cardModificationInfo);
+            base.Card.UpdateAppearanceBehaviours();
+            base.Card.RenderCard();
         }
     }
 }

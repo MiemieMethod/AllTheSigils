@@ -109,6 +109,7 @@ namespace AllTheSigils
 
         public override IEnumerator OnOtherCardResolve(PlayableCard otherCard)
         {
+            yield return new WaitForSeconds(0.5f);
             yield return this.FireAtOpposingSlot(otherCard);
             yield break;
         }
@@ -120,12 +121,14 @@ namespace AllTheSigils
 
         public override IEnumerator OnOtherCardAssignedToSlot(PlayableCard otherCard)
         {
+            yield return new WaitForSeconds(0.5f);
             yield return this.FireAtOpposingSlot(otherCard);
             yield break;
         }
 
         private bool RespondsToTrigger(PlayableCard otherCard)
         {
+
             return !base.Card.Dead && !otherCard.Dead && otherCard.Slot == base.Card.Slot.opposingSlot;
         }
 
@@ -136,12 +139,14 @@ namespace AllTheSigils
                 this.lastShotCard = otherCard;
                 this.lastShotTurn = Singleton<TurnManager>.Instance.TurnNumber;
                 Singleton<ViewManager>.Instance.SwitchToView(View.Board, false, true);
-                yield return new WaitForSeconds(0.25f);
+                yield return new WaitForSeconds(0.5f);
                 int num;
                 for (int i = 0; i < this.NumShots; i = num + 1)
                 {
                     if (otherCard != null && !otherCard.Dead)
                     {
+
+                        yield return new WaitForSeconds(0.5f);
                         yield return base.PreSuccessfulTriggerSequence();
                         base.Card.Anim.LightNegationEffect();
                         yield return new WaitForSeconds(0.5f);

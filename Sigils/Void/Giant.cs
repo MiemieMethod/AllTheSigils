@@ -21,7 +21,7 @@ namespace AllTheSigils
             const string LearnDialogue = "What a large creature you have there";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Giant);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Giant_a2);
-            int powerlevel = 4;
+            int powerlevel = 3;
             bool LeshyUsable = false;
             bool part1Shops = true;
             bool canStack = false;
@@ -59,24 +59,14 @@ namespace AllTheSigils
         private void AddMod()
         {
             CardModificationInfo cardModificationInfo = new CardModificationInfo();
-            cardModificationInfo.attackAdjustment = 1;
-            cardModificationInfo.healthAdjustment = 2;
+            cardModificationInfo.SetAttackAndHealth(1, 2);
             cardModificationInfo.nameReplacement = string.Format(Localization.Translate("Giant {0}"), base.Card.Info.DisplayedNameLocalized);
-            cardModificationInfo.bloodCostAdjustment = 1;
-
-            CardInfo ClonedCardInfo = base.Card.Info.Clone() as CardInfo;
-
-            //Add the modifincations
-            ClonedCardInfo.Mods.Add(cardModificationInfo);
-
-            for (int index = 0; index < base.Card.Info.Mods.Count; index++)
-            {
-                ClonedCardInfo.Mods.Add(base.Card.Info.Mods[index]);
-            }
+            cardModificationInfo.SetBloodCost(1);
 
 
-            //Update the card info
-            base.Card.SetInfo(ClonedCardInfo);
+            base.Card.AddTemporaryMod(cardModificationInfo);
+            base.Card.UpdateAppearanceBehaviours();
+            base.Card.RenderCard();
         }
     }
 }
