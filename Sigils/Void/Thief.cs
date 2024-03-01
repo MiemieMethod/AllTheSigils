@@ -18,7 +18,7 @@ namespace AllTheSigils
         {
             // setup ability
             const string rulebookName = "Thief";
-            const string rulebookDescription = "[creature] will try to steal a random default sigil from an opposing creature when played, or at the start of the owner's turn until it does.";
+            const string rulebookDescription = "[creature] will try to steal a random default sigil from the opposing lane when played, or at the start of the owner's turn until it does.";
             const string LearnDialogue = "If only I could steal the moon...";
             Texture2D tex_a1 = SigilUtils.LoadTextureFromResource(Art.void_Thief);
             Texture2D tex_a2 = SigilUtils.LoadTextureFromResource(Art.void_Thief_a2);
