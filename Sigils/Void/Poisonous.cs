@@ -51,7 +51,7 @@ namespace AllTheSigils
         {
             yield return base.PreSuccessfulTriggerSequence();
             yield return new WaitForSeconds(0.25f);
-            if (killer != null)
+            if (killer != null && killer.LacksAbility(Ability.MadeOfStone))
             {
                 yield return killer.Die(false, base.Card, true);
                 if (Singleton<BoardManager>.Instance is BoardManager3D)
