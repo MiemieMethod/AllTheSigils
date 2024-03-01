@@ -43,19 +43,19 @@ namespace AllTheSigils
 
         public static Ability ability;
 
-        public bool hasStolen = false;
+        private bool hasStolen = false;
 
 
         public override bool RespondsToResolveOnBoard()
         {
-            return base.Card.OnBoard && hasStolen == false;
+            return base.Card.OnBoard && this.hasStolen == false;
         }
 
 
         public override IEnumerator OnResolveOnBoard()
         {
             PlayableCard card = base.Card.Slot.opposingSlot.Card;
-            if (card != null && card.Info.DefaultAbilities.Count > 0)
+            if (card != null && card.Info.abilities.Count > 0)
             {
 
                 if (!card.FaceDown)
@@ -83,7 +83,7 @@ namespace AllTheSigils
                     yield return new WaitForSeconds(0.1f);
                     yield return base.LearnAbility(0.5f);
                     Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Unlocked;
-                    hasStolen = true;
+                    this.hasStolen = true;
                     yield break;
                 }
             }
@@ -95,7 +95,7 @@ namespace AllTheSigils
         {
 
             //Get the opponant's card
-            CardSlot OpponentCardSlot = base.Card.GetOpposingSlots()[0];
+            CardSlot OpponentCardSlot = base.Card.Slot.opposingSlot;
 
             //Get the list of abilities from the opponant and make a list to return them to the card
             List<Ability> OpponentCardAbilities = OpponentCardSlot.Card.Info.DefaultAbilities;
@@ -131,7 +131,7 @@ namespace AllTheSigils
                 && base.Card.HasAbility(void_Thief.ability))
             {
                 PlayableCard card = base.Card.Slot.opposingSlot.Card;
-
+                
                 if (card.Info.HasTrait(Trait.Uncuttable))
                 {
                     CustomCoroutine.Instance.StartCoroutine(Singleton<TextDisplayer>.Instance.ShowThenClear(
@@ -177,7 +177,7 @@ namespace AllTheSigils
                             yield return new WaitForSeconds(0.1f);
                             yield return base.LearnAbility(0.5f);
                             Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Unlocked;
-                            hasStolen = true;
+                            this.hasStolen = true;
                             yield break;
                         }
                     }
