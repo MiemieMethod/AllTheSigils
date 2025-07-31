@@ -16,7 +16,7 @@ namespace AllTheSigils.Patches
         [HarmonyPrefix]
         public static bool SlotAttackSlotPrefix(ref CardSlot attackingSlot, ref CardSlot opposingSlot, float waitAfter = 0f)
         {
-            if (opposingSlot.Card != null)
+            if (opposingSlot.Card != null && attackingSlot.Card != null)
             {
                 if (attackingSlot.Card.HasAbility(Sympathetic.ability) && opposingSlot.Card.Health < attackingSlot.Card.Health)
                 {
